@@ -10,7 +10,7 @@ const Footer = () => {
 			{/* Camada de fundo */}
 			<div
 				className="bg-layer"
-				style={{ backgroundImage: "url(images/background/f-bottom-bg.svg)" }}
+				style={{ backgroundImage: "url(/images/background/f-bottom-bg.svg)" }}
 			></div>
 
 			{/* Ícone flutuante */}
@@ -41,7 +41,7 @@ const Footer = () => {
 							</div>
 							<div className="footer-text">
 								zebra foi fundada em ???? por um grupo de profissionais focados
-								em ????? que criaram o "?? ??????" para rigorosamente avaliar
+								em ????? que criaram o ?? ?????? para rigorosamente avaliar
 								operadores de charter aéreo.
 							</div>
 						</div>
