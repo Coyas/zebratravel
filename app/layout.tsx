@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Script from "next/script";
 
 export const metadata: Metadata = {
 	title: "Zebra Travel Viagens & Turismo",
@@ -36,7 +37,10 @@ export default function RootLayout({
 				/>
 				<link href="/css/responsive.css" rel="stylesheet" />
 				{/* <!--[if lt IE 9]> */}
-				<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+				<Script
+					src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"
+					strategy="lazyOnload"
+				/>
 				{/* <![endif]-->  */}
 			</head>
 
@@ -59,16 +63,16 @@ export default function RootLayout({
 					</span>
 				</div>
 
-				<script src="/js/jquery.js"></script>
-				<script src="/js/popper.min.js"></script>
-				<script src="/js/bootstrap.min.js"></script>
-				<script src="/js/jquery-ui.js"></script>
-				<script src="/js/jquery.fancybox.js"></script>
-				<script src="/js/isotope.js"></script>
-				<script src="/js/touchspin.js"></script>
-				<script src="/js/owl.js"></script>
-				<script src="/js/wow.js"></script>
-				<script src="/js/custom-script.js"></script>
+				<Script src="/js/jquery.js" strategy="lazyOnload" />
+				<Script src="/js/popper.min.js" strategy="lazyOnload" />
+				<Script src="/js/bootstrap.min.js" strategy="lazyOnload" />
+				<Script src="/js/jquery-ui.js" strategy="lazyOnload" />
+				<Script src="/js/jquery.fancybox.js" strategy="lazyOnload" />
+				<Script src="/js/isotope.js" strategy="lazyOnload" />
+				<Script src="/js/touchspin.js" strategy="lazyOnload" />
+				<Script src="/js/owl.js" strategy="lazyOnload" />
+				<Script src="/js/wow.js" strategy="lazyOnload" />
+				<Script src="/js/custom-script.js" strategy="lazyOnload" />
 			</body>
 		</html>
 	);
