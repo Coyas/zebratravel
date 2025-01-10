@@ -11,9 +11,9 @@ const Header = () => {
 	const navLinks = [
 		{ href: "/", title: "Home" },
 		{ href: "/hotels", title: "Acomodações" },
-		// { href: "/jazzebra", title: "Restaurante" },
+		{ href: "/jazzebra", title: "Restaurante" },
 		{ href: "/trekking", title: "Excursões" },
-		{ href: "/destinations", title: "Destinos" },
+		// { href: "/destinations", title: "Destinos" },
 		{ href: "/shop", title: "Loja" },
 		{ href: "/blog", title: "Notiçias" },
 		// { href: "/about", title: "Sobre Nós" },
