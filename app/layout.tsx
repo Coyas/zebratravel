@@ -47,7 +47,7 @@ export default function RootLayout({
 			<body>
 				<div className="page-wrapper">
 					{/* <!-- Preloader --> */}
-					<div className="preloader"></div>
+					{/* <div className="preloader"></div> */}
 
 					<div className="search-backdrop"></div>
 					<Navbar />
@@ -63,17 +63,17 @@ export default function RootLayout({
 					</span>
 				</div>
 
-				<Script src="/js/jquery.js" async />
-				<Script src="/js/popper.min.js" async />
-				<Script src="/js/bootstrap.min.js" async />
-				<Script src="/js/jquery-ui.js" async />
-				<Script src="/js/jquery.fancybox.js" async />
-				<Script src="/js/isotope.js" async />
-				<Script src="/js/touchspin.js" async />
-				<Script src="/js/owl.js" async />
-				<Script src="/js/wow.js" async />
-				<Script src="/js/custom-script.js" async />
-				{/* async */}
+				<Script src="/js/jquery.js" defer />
+				<Script src="/js/popper.min.js" defer />
+				<Script src="/js/bootstrap.min.js" defer />
+				<Script src="/js/jquery-ui.js" defer />
+				<Script src="/js/jquery.fancybox.js" defer />
+				<Script src="/js/isotope.js" defer />
+				<Script src="/js/touchspin.js" defer />
+				<Script src="/js/owl.js" defer />
+				<Script src="/js/wow.js" defer />
+				<Script src="/js/custom-script.js" defer />
+				{/* async defer strategy="afterInteractive" */}
 			</body>
 		</html>
 	);
