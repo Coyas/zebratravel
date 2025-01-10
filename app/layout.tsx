@@ -39,7 +39,7 @@ export default function RootLayout({
 				{/* <!--[if lt IE 9]> */}
 				<Script
 					src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"
-					strategy="afterInteractive"
+					defer
 				/>
 				{/* <![endif]-->  */}
 			</head>
@@ -63,16 +63,17 @@ export default function RootLayout({
 					</span>
 				</div>
 
-				<Script src="/js/jquery.js" strategy="afterInteractive" />
-				<Script src="/js/popper.min.js" strategy="afterInteractive" />
-				<Script src="/js/bootstrap.min.js" strategy="afterInteractive" />
-				<Script src="/js/jquery-ui.js" strategy="afterInteractive" />
-				<Script src="/js/jquery.fancybox.js" strategy="afterInteractive" />
-				<Script src="/js/isotope.js" strategy="afterInteractive" />
-				<Script src="/js/touchspin.js" strategy="afterInteractive" />
-				<Script src="/js/owl.js" strategy="afterInteractive" />
-				<Script src="/js/wow.js" strategy="afterInteractive" />
-				<Script src="/js/custom-script.js" strategy="afterInteractive" />
+				<Script src="/js/jquery.js" async />
+				<Script src="/js/popper.min.js" async />
+				<Script src="/js/bootstrap.min.js" async />
+				<Script src="/js/jquery-ui.js" async />
+				<Script src="/js/jquery.fancybox.js" async />
+				<Script src="/js/isotope.js" async />
+				<Script src="/js/touchspin.js" async />
+				<Script src="/js/owl.js" async />
+				<Script src="/js/wow.js" async />
+				<Script src="/js/custom-script.js" async />
+				{/* async */}
 			</body>
 		</html>
 	);
