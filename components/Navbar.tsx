@@ -11,11 +11,11 @@ const Header = () => {
 	const navLinks = [
 		{ href: "/", title: "Home" },
 		{ href: "/hotels", title: "Acomodações" },
-		{ href: "/jazzebra", title: "Restaurante" },
+		// { href: "/jazzebra", title: "Restaurante" },
 		{ href: "/trekking", title: "Excursões" },
 		{ href: "/destinations", title: "Destinos" },
 		{ href: "/shop", title: "Loja" },
-		// { href: "/blog", title: "Notiçias" },
+		{ href: "/blog", title: "Notiçias" },
 		// { href: "/about", title: "Sobre Nós" },
 		{ href: "/contact", title: "Contato" },
 	];
@@ -35,7 +35,7 @@ const Header = () => {
 								</li>
 								<li>
 									<i className="icon fa fa-phone-circle"></i>
-									<a href="tel:+11256326501">+11 256 3265 01</a>
+									<a href="tel:+2382813373">+238 281 33 73</a>
 								</li>
 							</ul>
 						</div>
