@@ -65,7 +65,7 @@ const HFooter = () => {
 									<h6>Fogo</h6>
 									<div className="info">
 										<ul>
-											<li>Alto Saó Pedro, São Filipe</li>
+											<li>Alto Sâo Pedro, São Filipe</li>
 											<li>
 												<a href="tel:+2382813373">+238 281 33 73</a>
 											</li>
@@ -84,7 +84,11 @@ const HFooter = () => {
 									<h6>Brava</h6>
 									<div className="info">
 										<ul>
+<<<<<<< HEAD:components/Footer/HFooter.tsx
 											<li>Padre Pio - rua brava</li>
+=======
+											<li>Rua Padre Pio - Nova Sintra</li>
+>>>>>>> 78b46a6bf47b217ec99063325659c5301b7e843c:components/Footer.tsx
 											<li>
 												<a href="tel:+2385981981">+238 598 19 81</a>
 											</li>
