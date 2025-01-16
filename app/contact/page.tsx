@@ -19,11 +19,11 @@ import bgImage from "@/public/images/background/banner-image-1.jpg";
 // };
 
 // Definindo os tipos dos itens de menu
-interface MenuItem {
-	label: string;
-	href: string;
-	subMenu?: MenuItem[];
-}
+// interface MenuItem {
+// 	label: string;
+// 	href: string;
+// 	subMenu?: MenuItem[];
+// }
 
 // interface HeaderProps {
 // 	menuItems: MenuItem[];
