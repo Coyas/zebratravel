@@ -25,7 +25,7 @@ export default function RootLayout({
 				<link href="/css/style.css" rel="stylesheet" />
 				<link
 					rel="shortcut icon"
-					href="images/favicon.png"
+					href="/images/favicon.png"
 					type="image/x-icon"
 				/>
 				<link rel="icon" href="images/favicon.png" type="image/x-icon" />
