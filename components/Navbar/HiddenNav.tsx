@@ -4,7 +4,7 @@ import Link from "next/link"; // Importando Link do Next.js
 import Image from "next/image"; // Importando Image do Next.js
 
 // Estrutura de dados para os links de navegação
-const navigationLinks = [
+const navigationLinks: NavigationLink[] = [
 	{
 		label: "Home",
 		url: "/",
@@ -100,7 +100,7 @@ const HiddenNav: React.FC = () => {
 								{/* Usando o componente Link do Next.js */}
 								{link.subLinks.length > 0 && (
 									<ul>
-										{link.subLinks.map((subLink: any, subIndex: any) => (
+										{link.subLinks.map((subLink, subIndex) => (
 											<li key={subIndex}>
 												<Link href={subLink.url}>{subLink.label}</Link>{" "}
 												{/* Usando o componente Link */}
