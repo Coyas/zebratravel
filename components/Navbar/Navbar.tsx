@@ -1,25 +1,39 @@
-"use client";
+import React, { useState } from "react";
 
-import Link from "next/link";
-import { useState } from "react";
-import { usePathname } from "next/navigation"; // Importing usePathname
+interface NavItem {
+	label: string;
+	href: string;
+	subMenu?: NavItem[];
+}
 
-const Header = () => {
-	const [isSearchVisible, setSearchVisible] = useState(false);
-	const pathname = usePathname(); // Use the usePathname hook to get the current path
+interface HeaderProps {
+	contactEmail: string;
+	contactPhone: string;
+	languageOptions: string[];
+	loginText: string;
+	logoSrc: string;
+	navItems: NavItem[];
+}
 
-	const navLinks = [
-		{ href: "/", title: "Home" },
-		{ href: "/hotels", title: "Acomodações" },
-		{ href: "/jazzebra", title: "Restaurante" },
-		{ href: "/trekking", title: "Excursões" },
-		// { href: "/destinations", title: "Destinos" },
-		{ href: "/shop", title: "Loja" },
-		{ href: "/blog", title: "Notiçias" },
-		// { href: "/about", title: "Sobre Nós" },
-		{ href: "/contact", title: "Contato" },
-	];
+const Navbar: React.FC<HeaderProps> = ({
+	contactEmail,
+	contactPhone,
+	languageOptions,
+	loginText,
+	logoSrc,
+	navItems,
+}) => {
+	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+	const [isSearchOpen, setIsSearchOpen] = useState(false);
 
+	const toggleSidebar = () => {
+		setIsSidebarOpen(!isSidebarOpen);
+	};
+
+	const toggleSearch = () => {
+		setIsSearchOpen(!isSearchOpen);
+	};
+	const contactEmail2 = contactEmail.replace(/\s+/g, "");
 	return (
 		<header className="main-header">
 			<div className="header-top">
@@ -28,14 +42,12 @@ const Header = () => {
 						<div className="top-left clearfix">
 							<ul className="info clearfix">
 								<li>
-									<i className="icon fa fa-envelope"></i>
-									<a href="mailto:geral@zebratravel.net">
-										GERAL@ZEBRATRAVEL.NET
-									</a>
+									<i className="icon fa fa-envelope"></i>{" "}
+									<a href={`mailto:${contactEmail2}`}>{contactEmail}</a>
 								</li>
 								<li>
-									<i className="icon fa fa-phone-circle"></i>
-									<a href="tel:+2382813373">+238 281 33 73</a>
+									<i className="icon fa fa-phone-circle"></i>{" "}
+									<a href={`tel:${contactPhone}`}>{contactPhone}</a>
 								</li>
 							</ul>
 						</div>
@@ -47,62 +59,58 @@ const Header = () => {
 									<span className="icon far fa-angle-down"></span>
 								</div>
 								<ul className="lang-list">
-									<li>
-										<a href="#">EN</a>
-									</li>
-									<li>
-										<a href="#">Esp</a>
-									</li>
-									<li>
-										<a href="#">Rus</a>
-									</li>
+									{languageOptions.map((lang, index) => (
+										<li key={index}>
+											<a href="#">{lang}</a>
+										</li>
+									))}
 								</ul>
 							</div>
 							<div className="login">
-								<i className="icon fa fa-user"></i>
-								<Link href="/signin">SIGN IN</Link>
+								<i className="icon fa fa-user"></i> <a href="#">{loginText}</a>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-
 			<div className="header-upper">
 				<div className="auto-container">
 					<div className="main-box clearfix">
 						<div className="logo-box">
 							<div className="logo">
-								<Link href="/" passHref>
-									<img src="/images/logo.svg" alt="Treker" title="Treker" />
-								</Link>
+								<a href="index.html" title="Treker">
+									<img src={logoSrc} alt="Treker Logo" />
+								</a>
 							</div>
 						</div>
-
 						<div className="nav-box clearfix">
 							<div className="nav-outer clearfix">
 								<nav className="main-menu">
 									<ul className="navigation clearfix">
-										{navLinks.map(({ href, title }) => (
+										{navItems.map((item, index) => (
 											<li
-												key={href}
-												className={pathname === href ? "current" : ""} // Compare pathname to determine active link
+												key={index}
+												className={item.subMenu ? "dropdown" : ""}
 											>
-												<Link
-													href={href}
-													onClick={() => setSearchVisible(false)} // Close search if a link is clicked
-												>
-													{title}
-												</Link>
+												<a href={item.href}>{item.label}</a>
+												{item.subMenu && (
+													<ul>
+														{item.subMenu.map((subItem, subIndex) => (
+															<li key={subIndex}>
+																<a href={subItem.href}>{subItem.label}</a>
+															</li>
+														))}
+													</ul>
+												)}
 											</li>
 										))}
 									</ul>
 								</nav>
 							</div>
-
 							<div className="links-box clearfix">
 								<div
 									className="link search-btn search-toggle"
-									onClick={() => setSearchVisible(!isSearchVisible)}
+									onClick={toggleSearch}
 								>
 									<span className="icon far fa-search"></span>
 								</div>
@@ -122,11 +130,10 @@ const Header = () => {
 									</a>
 								</div>
 							</div>
-
 							<div className="nav-toggler">
-								<button className="hidden-bar-opener">
+								<button className="hidden-bar-opener" onClick={toggleSidebar}>
 									<span className="icon">
-										<img src="/images/icons/menu-icon.svg" alt="" />
+										<img src="images/icons/menu-icon.svg" alt="" />
 									</span>
 								</button>
 							</div>
@@ -134,16 +141,12 @@ const Header = () => {
 					</div>
 				</div>
 			</div>
-
-			{isSearchVisible && (
+			{isSearchOpen && (
 				<div className="search-box">
 					<div className="outer-container">
 						<div className="inner-box">
 							<div className="form-box">
-								<div
-									className="s-close-btn"
-									onClick={() => setSearchVisible(false)}
-								>
+								<div className="s-close-btn" onClick={toggleSearch}>
 									<span className="icon far fa-times"></span>
 								</div>
 								<span className="s-icon fa fa-search"></span>
@@ -152,6 +155,7 @@ const Header = () => {
 										<input
 											type="search"
 											name="search"
+											value=""
 											placeholder="Search Here"
 											required
 										/>
@@ -162,8 +166,14 @@ const Header = () => {
 					</div>
 				</div>
 			)}
+			{isSidebarOpen && (
+				<div className="hidden-sidebar">
+					{/* Implement hidden sidebar content here */}
+					<button onClick={toggleSidebar}></button>
+				</div>
+			)}
 		</header>
 	);
 };
 
-export default Header;
+export default Navbar;
