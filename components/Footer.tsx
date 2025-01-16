@@ -65,7 +65,7 @@ const Footer = () => {
 									<h6>Fogo</h6>
 									<div className="info">
 										<ul>
-											<li>Alto Saó Pedro, São Filipe</li>
+											<li>Alto Sâo Pedro, São Filipe</li>
 											<li>
 												<a href="tel:+2382813373">+238 281 33 73</a>
 											</li>
