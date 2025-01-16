@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import Script from "next/script";
+import QualSection from "@/components/Footer/qualSection";
+import HiddenNav from "@/components/Navbar/HiddenNav";
 
 export const metadata: Metadata = {
 	title: "Zebra Travel Viagens & Turismo",
@@ -50,9 +50,26 @@ export default function RootLayout({
 					{/* <div className="preloader"></div> */}
 
 					<div className="search-backdrop"></div>
-					<Navbar />
+
+					{/* <!-- Main Header--> */}
+					<QualSection sectionType={1} />
+					{/* <!--End Main Header --> */}
+
+					{/* <!--Search Backdrop--> */}
+					<div className="search-backdrop"></div>
+
+					{/* <!-- Menu Backdrop --> */}
+					<div className="menu-backdrop"></div>
+					{/* menu mobile */}
+					<HiddenNav />
+					{/* end menu mobile */}
+					<div className="cart-backdrop"></div>
+
 					{children}
-					<Footer />
+
+					{/* footer */}
+					<QualSection sectionType={0} />
+					{/* end footer */}
 				</div>
 				{/* <!--End pagewrapper-->  */}
 
