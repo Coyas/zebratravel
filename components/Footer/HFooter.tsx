@@ -4,7 +4,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const Footer = () => {
+const HFooter = () => {
 	return (
 		<footer className="main-footer">
 			{/* Camada de fundo */}
@@ -84,9 +84,9 @@ const Footer = () => {
 									<h6>Brava</h6>
 									<div className="info">
 										<ul>
-											<li>Europe 45 Gloucester Road London DT1M 3BF</li>
+											<li>Padre Pio - rua brava</li>
 											<li>
-												<a href="tel:+44(0)2036715709">+44 (0)20 3671 5709</a>
+												<a href="tel:+2385981981">+238 598 19 81</a>
 											</li>
 										</ul>
 									</div>
@@ -243,4 +243,4 @@ const Footer = () => {
 	);
 };
 
-export default Footer;
+export default HFooter;
