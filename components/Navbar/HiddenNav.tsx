@@ -1,46 +1,24 @@
 "use client";
 import React, { useState } from "react";
+import Link from "next/link"; // Importando Link do Next.js
+import Image from "next/image"; // Importando Image do Next.js
 
-// Home
-// Acomodações
-// Restaurante
-// Excursões
-// Loja
-// Notiçias
-// Contato
 // Estrutura de dados para os links de navegação
 const navigationLinks = [
 	{
 		label: "Home",
 		url: "/",
-		subLinks: [
-			// { label: "Home 01", url: "index.html" },
-			// { label: "Home 02", url: "index-2.html" },
-		],
+		subLinks: [],
 	},
 	{
 		label: "Acomodações",
 		url: "/Acomodacao",
-		subLinks: [
-			// { label: "Our Team", url: "team.html" },
-			// { label: "Team Member", url: "team-member.html" },
-			// { label: "FAQs", url: "faq.html" },
-			// { label: "Gallery", url: "gallery.html" },
-		],
+		subLinks: [],
 	},
 	{
 		label: "Restaurante",
 		url: "/jazzebra",
-		subLinks: [
-			// { label: "Our Shop", url: "shop.html" },
-			// { label: "Product Details", url: "product-single.html" },
-			// { label: "My Wishlist", url: "wishlist.html" },
-			// { label: "Shopping Cart", url: "shopping-cart.html" },
-			// { label: "Checkout", url: "checkout.html" },
-			// { label: "Signup", url: "signup.html" },
-			// { label: "Login", url: "login.html" },
-			// { label: "Forgot Password", url: "reset-password.html" },
-		],
+		subLinks: [],
 	},
 	{
 		label: "Excursões",
@@ -55,27 +33,21 @@ const navigationLinks = [
 	{
 		label: "Notiçias",
 		url: "/noticias",
-		subLinks: [
-			// { label: "Activities", url: "activities.html" },
-			// { label: "Destinations 02", url: "destinations-2.html" },
-			// { label: "Tours", url: "tours.html" },
-			// { label: "Packages 01", url: "packages.html" },
-			// { label: "Packages 02", url: "packages-2.html" },
-			// { label: "Booking", url: "booking.html" },
-			// { label: "Terms & Conditions", url: "terms-conditions.html" },
-			// { label: "404 Page", url: "error-page.html" },
-		],
+		subLinks: [],
 	},
 	{
 		label: "Contato",
 		url: "/contato",
-		subLinks: [
-			// { label: "Our Blog", url: "blog.html" },
-			// { label: "Blog Classic", url: "blog-2.html" },
-			// { label: "Blog Details", url: "blog-single.html" },
-		],
+		subLinks: [],
 	},
 ];
+
+// Definindo tipos mais específicos para os itens de navegação
+interface NavigationLink {
+	label: string;
+	url: string;
+	subLinks: Array<{ label: string; url: string }>;
+}
 
 const HiddenNav: React.FC = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -87,7 +59,7 @@ const HiddenNav: React.FC = () => {
 	return (
 		<section className={`hidden-bar ${isOpen ? "open" : ""}`}>
 			<div className="hidden-bar-wrapper">
-				{/* Close Button */}
+				{/* Botão de Fechar */}
 				<div className="hidden-bar-closer" onClick={toggleNav}>
 					<span className="icon">
 						<svg className="icon-close" role="presentation" viewBox="0 0 16 14">
@@ -101,29 +73,37 @@ const HiddenNav: React.FC = () => {
 					</span>
 				</div>
 
-				{/* Logo Section */}
+				{/* Seção de Logo */}
 				<div className="nav-logo-box">
 					<div className="logo">
-						<a href="/" title="Treker">
-							<img src="/images/logo.svg" alt="Treker Logo" />
-						</a>
+						<Link href="/" title="Treker">
+							{/* Usando o componente Image do Next.js */}
+							<Image
+								src="/images/logo.svg"
+								alt="Treker Logo"
+								width={150}
+								height={50}
+							/>
+						</Link>
 					</div>
 				</div>
 
-				{/* Navigation Menu */}
+				{/* Menu de Navegação */}
 				<div className="side-menu">
 					<ul className="navigation clearfix">
-						{navigationLinks.map((link: any, index: any) => (
+						{navigationLinks.map((link, index) => (
 							<li
 								key={index}
 								className={link.subLinks.length > 0 ? "dropdown" : ""}
 							>
-								<a href={link.url}>{link.label}</a>
+								<Link href={link.url}>{link.label}</Link>{" "}
+								{/* Usando o componente Link do Next.js */}
 								{link.subLinks.length > 0 && (
 									<ul>
 										{link.subLinks.map((subLink: any, subIndex: any) => (
 											<li key={subIndex}>
-												<a href={subLink.url}>{subLink.label}</a>
+												<Link href={subLink.url}>{subLink.label}</Link>{" "}
+												{/* Usando o componente Link */}
 											</li>
 										))}
 									</ul>
@@ -133,22 +113,22 @@ const HiddenNav: React.FC = () => {
 					</ul>
 				</div>
 
-				{/* Links Section */}
+				{/* Seção de Links Extras */}
 				<div className="links-box clearfix">
 					<div className="clearfix">
 						<div className="link">
-							<a href="login.html" className="theme-btn btn-style-one">
+							<Link href="login.html" className="theme-btn btn-style-one">
 								<span>
 									Login<i className="icon far fa-angle-right"></i>
 								</span>
-							</a>
+							</Link>
 						</div>
 						<div className="link">
-							<a href="signup.html" className="theme-btn btn-style-two">
+							<Link href="signup.html" className="theme-btn btn-style-two">
 								<span>
 									Sign Up<i className="icon far fa-angle-right"></i>
 								</span>
-							</a>
+							</Link>
 						</div>
 					</div>
 				</div>

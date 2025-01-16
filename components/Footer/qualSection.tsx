@@ -12,34 +12,28 @@ const navItems = [
 	{
 		label: "Home",
 		href: "/",
-		// subMenu: [
-		// 	{ label: "Home 01", href: "index.html" },
-		// 	{ label: "Home 02", href: "index-2.html" },
-		// ],
 	},
 	{
 		label: "Sobre Nós",
 		href: "/about",
-		// subMenu: [
-		// 	{ label: "Our Team", href: "team.html" },
-		// 	{ label: "Team Member", href: "team-member.html" },
-		// 	{ label: "FAQs", href: "faq.html" },
-		// ],
 	},
 	{
 		label: "Loja",
 		href: "/store",
-		// subMenu: [
-		// 	{ label: "Our Shop", href: "shop.html" },
-		// 	{ label: "Product Details", href: "product-single.html" },
-		// ],
 	},
-	// { label: "D", href: "destinations.html" },
-	{ label: "Expedições", href: "/tours" },
-	{ label: "Contato", href: "/contact" },
+	{
+		label: "Expedições",
+		href: "/tours",
+	},
+	{
+		label: "Contato",
+		href: "/contact",
+	},
 ];
 
-const QualSection = ({ sectionType }: any) => {
+type SectionType = 0 | 1; // Tipando como número para os valores possíveis (0 ou 1)
+
+const QualSection = ({ sectionType }: { sectionType: SectionType }) => {
 	const pathname = usePathname();
 
 	// Verifica se a rota atual é a página inicial
@@ -53,63 +47,58 @@ const QualSection = ({ sectionType }: any) => {
 		imageUrl: string;
 	};
 
-	type CartSidebarProps = {
-		items: CartItem[];
-		subtotal: number;
-		onClose: () => void;
+	// Dados de exemplo para o carrinho
+	const cartItems: CartItem[] = [
+		{
+			id: 1,
+			name: "Smart Air Bag Travel",
+			price: 225.0,
+			quantity: 1,
+			imageUrl: "/images/resource/shop/shop-thumb-1.jpg",
+		},
+		{
+			id: 2,
+			name: "Smart Backpack",
+			price: 150.0,
+			quantity: 2,
+			imageUrl: "/images/resource/shop/shop-thumb-2.jpg",
+		},
+		{
+			id: 3,
+			name: "Smart Backpack",
+			price: 150.0,
+			quantity: 2,
+			imageUrl: "/images/resource/shop/shop-thumb-2.jpg",
+		},
+		{
+			id: 4,
+			name: "Smart Backpack",
+			price: 150.0,
+			quantity: 2,
+			imageUrl: "/images/resource/shop/shop-thumb-2.jpg",
+		},
+		{
+			id: 5,
+			name: "Smart Backpack",
+			price: 150.0,
+			quantity: 2,
+			imageUrl: "/images/resource/shop/shop-thumb-2.jpg",
+		},
+	];
+
+	// Calculando o subtotal
+	const subtotal = cartItems.reduce(
+		(total, item) => total + item.price * item.quantity,
+		0
+	);
+
+	const [isCartOpen, setIsCartOpen] = useState(false);
+
+	const handleCartToggle = () => {
+		setIsCartOpen(!isCartOpen);
 	};
 
-	// Condições de renderização com base no valor de sectionType
-	const renderSection = (type: any) => {
-		const cartItems = [
-			{
-				id: 1,
-				name: "Smart Air Bag Travel",
-				price: 225.0,
-				quantity: 1,
-				imageUrl: "/images/resource/shop/shop-thumb-1.jpg",
-			},
-			{
-				id: 2,
-				name: "Smart Backpack",
-				price: 150.0,
-				quantity: 2,
-				imageUrl: "/images/resource/shop/shop-thumb-2.jpg",
-			},
-			{
-				id: 3,
-				name: "Smart Backpack",
-				price: 150.0,
-				quantity: 2,
-				imageUrl: "/images/resource/shop/shop-thumb-2.jpg",
-			},
-			{
-				id: 4,
-				name: "Smart Backpack",
-				price: 150.0,
-				quantity: 2,
-				imageUrl: "/images/resource/shop/shop-thumb-2.jpg",
-			},
-			{
-				id: 5,
-				name: "Smart Backpack",
-				price: 150.0,
-				quantity: 2,
-				imageUrl: "/images/resource/shop/shop-thumb-2.jpg",
-			},
-		];
-
-		// Calculando o subtotal
-		const subtotal = cartItems.reduce(
-			(total, item) => total + item.price * item.quantity,
-			0
-		);
-		const [isCartOpen, setIsCartOpen] = useState(false);
-
-		const handleCartToggle = () => {
-			setIsCartOpen(!isCartOpen);
-		};
-
+	const renderSection = (type: SectionType) => {
 		if (type === 1) {
 			return (
 				<>
@@ -129,7 +118,6 @@ const QualSection = ({ sectionType }: any) => {
 							navItems={navItems}
 						/>
 					)}
-
 					{/* Header é renderizado em todas as páginas, exceto na home */}
 					{!isHomePage && <Header />}
 				</>
@@ -139,7 +127,6 @@ const QualSection = ({ sectionType }: any) => {
 				<>
 					{/* HFooter é renderizado apenas na página inicial */}
 					{isHomePage && <HFooter />}
-
 					{/* Footer é renderizado em todas as páginas, exceto na home */}
 					{!isHomePage && <Footer />}
 				</>
