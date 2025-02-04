@@ -117,14 +117,14 @@ const HiddenNav: React.FC = () => {
 				<div className="links-box clearfix">
 					<div className="clearfix">
 						<div className="link">
-							<Link href="login.html" className="theme-btn btn-style-one">
+							<Link href="#" className="theme-btn btn-style-one">
 								<span>
 									Login<i className="icon far fa-angle-right"></i>
 								</span>
 							</Link>
 						</div>
 						<div className="link">
-							<Link href="signup.html" className="theme-btn btn-style-two">
+							<Link href="#" className="theme-btn btn-style-two">
 								<span>
 									Sign Up<i className="icon far fa-angle-right"></i>
 								</span>

@@ -40,9 +40,11 @@ const HFooter = () => {
 								</Link>
 							</div>
 							<div className="footer-text">
-								zebra foi fundada em ???? por um grupo de profissionais focados
-								em ????? que criaram o ?? ?????? para rigorosamente avaliar
-								operadores de charter aéreo.
+								A ZebraTravel -Turismo e Viagens, Lda. é uma agência de Turismo
+								e Viagens com sede em Alto S.Pedro, São Filipe - Ilha do Fogo. O
+								seu escritório funciona No res do chão de um dos sobrados mais
+								antigos da cidade, que foi restaurado e transformado numa
+								pousada que demos o nome COLONIAL HOUSE
 							</div>
 						</div>
 
@@ -53,7 +55,7 @@ const HFooter = () => {
 									<h6>Santiago</h6>
 									<div className="info">
 										<ul>
-											<li>Avenida Amílcar Cabral Praia - Plateau, Praia</li>
+											<li>Avenida Amílcar Cabral, Plateau - Praia</li>
 											<li>
 												<a href="tel:+2382625610">+238 262 56 10</a>
 											</li>

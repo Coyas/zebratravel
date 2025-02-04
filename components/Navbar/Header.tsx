@@ -81,7 +81,7 @@ const Header: React.FC = () => {
 						<div className="logo-box">
 							<div className="logo">
 								<a href="index.html" title="Treker">
-									<img src="images/logo.svg" alt="Treker" title="Treker" />
+									<img src="/images/logo.svg" alt="Treker" title="Treker" />
 								</a>
 							</div>
 						</div>
@@ -137,7 +137,7 @@ const Header: React.FC = () => {
 							<div className="nav-toggler">
 								<button className="hidden-bar-opener">
 									<span className="icon">
-										<img src="images/icons/menu-icon.svg" alt="" />
+										<img src="/images/icons/menu-icon.svg" alt="" />
 									</span>
 								</button>
 							</div>
@@ -155,7 +155,7 @@ const Header: React.FC = () => {
 								<span className="icon far fa-times"></span>
 							</div>
 							<span className="s-icon fa fa-search"></span>
-							<form method="post" action="index.html">
+							<form method="post" action="#">
 								<div className="form-group">
 									<input
 										type="search"

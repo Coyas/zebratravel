@@ -78,8 +78,8 @@ const Navbar: React.FC<HeaderProps> = ({
 					<div className="main-box clearfix">
 						<div className="logo-box">
 							<div className="logo">
-								<a href="index.html" title="Treker">
-									<img src={logoSrc} alt="Treker Logo" />
+								<a href="/" title="Zebra">
+									<img src={logoSrc} alt="Zebra Logo" />
 								</a>
 							</div>
 						</div>
@@ -133,7 +133,7 @@ const Navbar: React.FC<HeaderProps> = ({
 							<div className="nav-toggler">
 								<button className="hidden-bar-opener" onClick={toggleSidebar}>
 									<span className="icon">
-										<img src="images/icons/menu-icon.svg" alt="" />
+										<img src="/images/icons/menu-icon.svg" alt="" />
 									</span>
 								</button>
 							</div>
@@ -150,7 +150,7 @@ const Navbar: React.FC<HeaderProps> = ({
 									<span className="icon far fa-times"></span>
 								</div>
 								<span className="s-icon fa fa-search"></span>
-								<form method="post" action="index.html">
+								<form method="post" action="#">
 									<div className="form-group">
 										<input
 											type="search"
