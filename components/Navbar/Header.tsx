@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 // Definindo os tipos dos itens de menu
 interface MenuItem {
@@ -80,9 +81,9 @@ const Header: React.FC = () => {
 						{/* Logo */}
 						<div className="logo-box">
 							<div className="logo">
-								<a href="index.html" title="Treker">
+								<Link href="index.html" title="Treker">
 									<img src="/images/logo.svg" alt="Treker" title="Treker" />
-								</a>
+								</Link>
 							</div>
 						</div>
 
@@ -96,12 +97,12 @@ const Header: React.FC = () => {
 												key={index}
 												className={item.subMenu ? "dropdown" : ""}
 											>
-												<a href={item.href}>{item.label}</a>
+												<Link href={item.href}>{item.label}</Link>
 												{item.subMenu && (
 													<ul>
 														{item.subMenu.map((subItem, subIndex) => (
 															<li key={subIndex}>
-																<a href={subItem.href}>{subItem.label}</a>
+																<Link href={subItem.href}>{subItem.label}</Link>
 															</li>
 														))}
 													</ul>
@@ -118,18 +119,18 @@ const Header: React.FC = () => {
 									<span className="icon far fa-search"></span>
 								</div>
 								<div className="link fav-btn">
-									<a href="#">
+									<Link href="#">
 										<span className="icon far fa-heart"></span>
 										<span className="count">02</span>
-									</a>
+									</Link>
 								</div>
 								<div className="link cart-btn">
-									<a href="#" className="clearfix">
+									<Link href="#" className="clearfix">
 										<div className="cart-info">
 											<span className="icon far fa-shopping-cart"></span>00
 											Items
 										</div>
-									</a>
+									</Link>
 								</div>
 							</div>
 

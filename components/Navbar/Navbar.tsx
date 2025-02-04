@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Link from "next/link";
 
 interface NavItem {
 	label: string;
@@ -43,11 +44,11 @@ const Navbar: React.FC<HeaderProps> = ({
 							<ul className="info clearfix">
 								<li>
 									<i className="icon fa fa-envelope"></i>{" "}
-									<a href={`mailto:${contactEmail2}`}>{contactEmail}</a>
+									<Link href={`mailto:${contactEmail2}`}>{contactEmail}</Link>
 								</li>
 								<li>
 									<i className="icon fa fa-phone-circle"></i>{" "}
-									<a href={`tel:${contactPhone}`}>{contactPhone}</a>
+									<Link href={`tel:${contactPhone}`}>{contactPhone}</Link>
 								</li>
 							</ul>
 						</div>
@@ -61,13 +62,14 @@ const Navbar: React.FC<HeaderProps> = ({
 								<ul className="lang-list">
 									{languageOptions.map((lang, index) => (
 										<li key={index}>
-											<a href="#">{lang}</a>
+											<Link href="#">{lang}</Link>
 										</li>
 									))}
 								</ul>
 							</div>
 							<div className="login">
-								<i className="icon fa fa-user"></i> <a href="#">{loginText}</a>
+								<i className="icon fa fa-user"></i>{" "}
+								<Link href="#">{loginText}</Link>
 							</div>
 						</div>
 					</div>
@@ -78,9 +80,9 @@ const Navbar: React.FC<HeaderProps> = ({
 					<div className="main-box clearfix">
 						<div className="logo-box">
 							<div className="logo">
-								<a href="/" title="Zebra">
+								<Link href="/" title="Zebra">
 									<img src={logoSrc} alt="Zebra Logo" />
-								</a>
+								</Link>
 							</div>
 						</div>
 						<div className="nav-box clearfix">
@@ -92,12 +94,12 @@ const Navbar: React.FC<HeaderProps> = ({
 												key={index}
 												className={item.subMenu ? "dropdown" : ""}
 											>
-												<a href={item.href}>{item.label}</a>
+												<Link href={item.href}>{item.label}</Link>
 												{item.subMenu && (
 													<ul>
 														{item.subMenu.map((subItem, subIndex) => (
 															<li key={subIndex}>
-																<a href={subItem.href}>{subItem.label}</a>
+																<Link href={subItem.href}>{subItem.label}</Link>
 															</li>
 														))}
 													</ul>
@@ -115,19 +117,19 @@ const Navbar: React.FC<HeaderProps> = ({
 									<span className="icon far fa-search"></span>
 								</div>
 								<div className="link fav-btn">
-									<a href="#">
+									<Link href="#">
 										<span className="icon far fa-heart"></span>
 										<span className="count">02</span>
-									</a>
+									</Link>
 								</div>
 								<div className="link cart-btn">
-									<a href="#" className="clearfix">
+									<Link href="#" className="clearfix">
 										<div className="cart-info">
 											<span className="icon far fa-shopping-cart"></span>00
 											Items
 										</div>
 										<div className="amount">$ 00:00</div>
-									</a>
+									</Link>
 								</div>
 							</div>
 							<div className="nav-toggler">
