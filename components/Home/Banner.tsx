@@ -25,7 +25,7 @@ const Banner = () => {
 											</div>
 											<h2>Nunca Para de</h2>
 											<h1>
-												<span>Explorars</span>
+												<span>Explorar</span>
 											</h1>
 											<div className="text">
 												A ZebraTravel oferece uma experiência única em turismo e
