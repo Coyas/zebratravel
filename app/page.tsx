@@ -5,6 +5,7 @@ import PopularTrekking from "@/components/Home/Tourspop";
 import WhyChoose from "@/components/Home/Wwedo";
 import Topdestinos from "@/components/Home/Topdestinos";
 import ProductSection from "@/components/Home/Products";
+import GroupTravel from "@/components/Home/GroupTravel";
 
 export default function Home() {
 	return (
@@ -32,6 +33,10 @@ export default function Home() {
 			{/*<!-- Products Section--> */}
 			<ProductSection />
 			{/*<!-- End Products Section--> */}
+
+			{/* <!--Group Travel Section--> */}
+			<GroupTravel />
+			{/* <!--Group Travel Section--> */}
 		</>
 	);
 }
