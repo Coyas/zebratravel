@@ -69,10 +69,10 @@ const ProductSection: React.FC = () => {
 			</div>
 			<div className="auto-container">
 				<div className="title-box centered">
-					<div className="subtitle">Shop Now</div>
+					<div className="subtitle">Comprar agora</div>
 					<h2>
 						<i className="bg-vector"></i>
-						<span>Featured Trekking Products</span>
+						<span>Produtos em destaques</span>
 					</h2>
 				</div>
 
@@ -95,13 +95,13 @@ const ProductSection: React.FC = () => {
 												<div className="hvr-content">
 													<div className="link">
 														<a href={product.link} className="theme-btn">
-															<i className="far fa-shopping-cart"></i> Add To
-															Cart
+															<i className="far fa-shopping-cart"></i> adicionar
+															ao carinhho
 														</a>
 													</div>
 													<div className="link">
 														<a href={product.link} className="theme-btn">
-															<i className="far fa-bars"></i> Details
+															<i className="far fa-bars"></i> Detalhes
 														</a>
 													</div>
 												</div>
@@ -130,7 +130,7 @@ const ProductSection: React.FC = () => {
 				<div className="see-more-link">
 					<a href="shop.html" className="theme-btn btn-style-one">
 						<span>
-							View All Products{" "}
+							Ver todos os produtos{" "}
 							<i className="icon">
 								<img src="/images/icons/logo-icon.svg" alt="Logo Icon" />
 							</i>
