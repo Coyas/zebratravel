@@ -4,6 +4,7 @@ import AboutSection from "@/components/Home/About";
 import PopularTrekking from "@/components/Home/Tourspop";
 import WhyChoose from "@/components/Home/Wwedo";
 import Topdestinos from "@/components/Home/Topdestinos";
+import ProductSection from "@/components/Home/Products";
 
 export default function Home() {
 	return (
@@ -27,6 +28,10 @@ export default function Home() {
 			{/* <!-- Trending Destinations Section--> */}
 			<Topdestinos />
 			{/* <!-- End Trending Destinations Section--> */}
+
+			{/*<!-- Products Section--> */}
+			<ProductSection />
+			{/*<!-- End Products Section--> */}
 		</>
 	);
 }
