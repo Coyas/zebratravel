@@ -1,4 +1,4 @@
-// components/NewsSection.tsx
+"use client";
 import React from "react";
 
 interface NewsItem {
