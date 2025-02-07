@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import Swal from "sweetalert2";
 
 type FormValues = {
 	name: string;
@@ -20,6 +21,24 @@ const ContactForm: React.FC = () => {
 
 	const onSubmit: SubmitHandler<FormValues> = (data) => {
 		console.log(data);
+		if (data) {
+			Swal.fire({
+				position: "center",
+				icon: "success",
+				title: "Sua mensagem foi enviada",
+				showConfirmButton: false,
+				timer: 1500,
+			});
+		} else {
+			Swal.fire({
+				position: "center",
+				icon: "error",
+				title: "não foi possivel enviar a mensagem",
+				showConfirmButton: false,
+				timer: 1500,
+			});
+		}
+
 		// Handle form submission logic here (e.g., send to an API)
 	};
 
