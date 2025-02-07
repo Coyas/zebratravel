@@ -27,9 +27,11 @@ const Footer: React.FC = () => {
 								</div>
 							</div>
 							<div className="footer-text">
-								zebra foi fundada em ???? por um grupo de profissionais focados
-								em ????? que criaram o ?? ?????? para rigorosamente avaliar
-								operadores de charter aéreo.
+								A ZebraTravel -Turismo e Viagens, Lda. é uma agência de Turismo
+								e Viagens com sede em Alto S.Pedro, São Filipe - Ilha do Fogo. O
+								seu escritório funciona No res do chão de um dos sobrados mais
+								antigos da cidade, que foi restaurado e transformado numa
+								pousada que demos o nome COLONIAL HOUSE
 							</div>
 							<div className="social-links">
 								<ul className="clearfix">
