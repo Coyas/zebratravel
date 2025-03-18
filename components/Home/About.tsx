@@ -79,7 +79,8 @@ const AboutSection = () => {
 						>
 							<div className="bg-image">
 								<Image
-									src="/images/resource/about-vector-1.png"
+									//src="/images/resource/about-vector-1.png"
+									src="https://res.cloudinary.com/zebratravel-net/image/upload/c_crop,w_874,h_619,x_0,y_0/v1742317334/Banner_ag%C3%AAncia_de_viagens_rio_de_janeiro_simples_formas_azul_e_nude_r8lbz0.png"
 									alt="Ilha do Fogo"
 									title="Ilha do Fogo"
 									width={800}

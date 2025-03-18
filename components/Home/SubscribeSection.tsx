@@ -24,9 +24,10 @@ const SubscribeSection = () => {
 			<div className="auto-container">
 				<div className="content-box">
 					<div
-						className="bg-layer"
+						className="bg-layer " //filter grayscale
 						style={{
-							backgroundImage: "url(images/background/newsletter-bg.png)",
+							backgroundImage:
+								"url(https://res.cloudinary.com/zebratravel-net/image/upload/v1742301223/zebratravelImages/BoaVistac_cjrtv8_j5ebad.jpg)",
 						}}
 					></div>
 					<div className="row clearfix">
@@ -35,7 +36,7 @@ const SubscribeSection = () => {
 							<div className="inner">
 								<div className="image">
 									<img
-										src="images/resource/newsletter-image.svg"
+										src="/images/resource/newsletter-image.svg"
 										alt="Newsletter"
 									/>
 								</div>
@@ -48,7 +49,7 @@ const SubscribeSection = () => {
 								<div className="title">
 									<div className="subtitle">Newsletter</div>
 									<h2>SUBSCREVA AGORA</h2>
-									<div className="text">
+									<div className="text ">
 										Fique por dentro das novidades! Inscreva-se na nossa
 										newsletter e receba as últimas atualizações sobre nossas
 										promoções, eventos e muito mais diretamente no seu e-mail!

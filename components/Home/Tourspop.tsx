@@ -101,7 +101,10 @@ const PopularExcursions = () => {
 		<section className="popular-section">
 			<div
 				className="bg-layer"
-				style={{ backgroundImage: "url(images/background/image-1.jpg)" }}
+				style={{
+					backgroundImage:
+						"url(https://res.cloudinary.com/zebratravel-net/image/upload/v1742301228/zebratravelImages/BoaVista_f7rvab_f987iv.jpg)",
+				}}
 			></div>
 			<div className="auto-container">
 				<div className="title-box centered">

@@ -40,7 +40,9 @@ const GroupTravel: React.FC = () => {
 		<section className="group-travel">
 			<div
 				className="bg-layer"
-				style={{ backgroundImage: `url(${travelPackages[0].imageUrl})` }}
+				style={{
+					backgroundImage: `url(https://res.cloudinary.com/zebratravel-net/image/upload/c_crop,w_4032,h_1495,x_0,y_186/v1742318424/20241013_131906_ao1ctr.jpg)`,
+				}}
 			></div>
 			<div className="auto-container">
 				<div className="content-box">

@@ -2,14 +2,14 @@
 
 import Banner from "@/components/Home/Banner";
 import AboutSection from "@/components/Home/About";
-// import PopularTrekking from "@/components/Home/Tourspop";
-// import WhyChoose from "@/components/Home/Wwedo";
-// import Topdestinos from "@/components/Home/Topdestinos";
-// import ProductSection from "@/components/Home/Products";
-// import GroupTravel from "@/components/Home/GroupTravel";
-// import Testimonials from "@/components/Home/Testimonials";
-// import Sponsors from "@/components/Home/Sponsors";
-// import NewsSection from "@/components/Home/NewsSection";
+import PopularTrekking from "@/components/Home/Tourspop";
+import WhyChoose from "@/components/Home/Wwedo";
+import Topdestinos from "@/components/Home/Topdestinos";
+import ProductSection from "@/components/Home/Products";
+import GroupTravel from "@/components/Home/GroupTravel";
+import Testimonials from "@/components/Home/Testimonials";
+import Sponsors from "@/components/Home/Sponsors";
+import NewsSection from "@/components/Home/NewsSection";
 import SubscribeSection from "@/components/Home/SubscribeSection";
 
 export default function Home() {
@@ -24,35 +24,35 @@ export default function Home() {
 			{/* <!--End About Us Section--> */}
 
 			{/* <!-- Popular Section--> */}
-			{/* <PopularTrekking /> */}
+			<PopularTrekking />
 			{/* <!-- End Popular Section--> */}
 
 			{/* <!-- Why Section--> */}
-			{/* <WhyChoose /> */}
+			<WhyChoose />
 			{/* <!-- End Why Section--> */}
 
 			{/* <!-- Trending Destinations Section--> */}
-			{/* <Topdestinos /> */}
+			<Topdestinos />
 			{/* <!-- End Trending Destinations Section--> */}
 
 			{/*<!-- Products Section--> */}
-			{/* <ProductSection /> */}
+			<ProductSection />
 			{/*<!-- End Products Section--> */}
 
 			{/* <!--Group Travel Section--> */}
-			{/* <GroupTravel /> */}
+			<GroupTravel />
 			{/* <!--Group Travel Section--> */}
 
 			{/* <!-- Testimonials Section--> */}
-			{/* <Testimonials /> */}
+			<Testimonials />
 			{/* <!-- End Testimonials Section--> */}
 
 			{/* <!--Sponsors Section--> */}
-			{/* <Sponsors /> */}
+			<Sponsors />
 			{/* <!-- End Sponsors Section--> */}
 
 			{/* <!--News Section--> */}
-			{/* <NewsSection /> */}
+			<NewsSection />
 			{/* <!-- End News Section--> */}
 
 			{/* <!--Subscribe Section--> */}
