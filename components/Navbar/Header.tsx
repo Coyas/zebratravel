@@ -21,12 +21,12 @@ const menuData: MenuItem[] = [
 	{
 		label: "About Us",
 		href: "/about",
-		// subMenu: [
-		// 	{ label: "Our Team", href: "team.html" },
-		// 	{ label: "Team Member", href: "team-member.html" },
-		// 	{ label: "FAQs", href: "faq.html" },
-		// 	{ label: "Gallery", href: "gallery.html" },
-		// ],
+		subMenu: [
+			// { label: "Our Team", href: "team.html" },
+			// { label: "Team Member", href: "team-member.html" },
+			// { label: "FAQs", href: "faq.html" },
+			{ label: "Galeria", href: "/galeria" },
+		],
 	},
 	{
 		label: "Loja",
