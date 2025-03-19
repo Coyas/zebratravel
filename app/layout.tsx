@@ -84,10 +84,8 @@ export default function RootLayout({
 				<Script src="/js/popper.min.js" defer />
 				<Script src="/js/bootstrap.min.js" defer />
 				<Script src="/js/jquery-ui.js" defer />
-				{/* <Script src="https://code.jquery.com/jquery-3.6.0.min.js" />
-				<Script src="https://cdn.jsdelivr.net/npm/mixitup@3.3.1/dist/mixitup.min.js" /> */}
-
 				<Script src="/js/jquery.fancybox.js" defer />
+				<Script src="/js/mixitup.js" defer />
 				<Script src="/js/isotope.js" defer />
 				<Script src="/js/touchspin.js" defer />
 				<Script src="/js/owl.js" defer />
@@ -97,4 +95,17 @@ export default function RootLayout({
 			</body>
 		</html>
 	);
+}
+
+{
+	/* <script src="js/jquery.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/jquery.fancybox.js"></script>
+<script src="js/mixitup.js"></script>
+<script src="js/touchspin.js"></script>
+<script src="js/owl.js"></script>
+<script src="js/wow.js"></script>
+<script src="js/custom-script.js"></script> */
 }
