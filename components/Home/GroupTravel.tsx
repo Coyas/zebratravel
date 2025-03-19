@@ -41,7 +41,7 @@ const GroupTravel: React.FC = () => {
 			<div
 				className="bg-layer"
 				style={{
-					backgroundImage: `url(https://res.cloudinary.com/zebratravel-net/image/upload/c_crop,w_4032,h_1495,x_0,y_186/v1742318424/20241013_131906_ao1ctr.jpg)`,
+					backgroundImage: `url(https://res.cloudinary.com/zebratravel-net/image/upload/v1742405461/zebratravelImages/pexels-pixabay-531756_edncyp.webp)`,
 				}}
 			></div>
 			<div className="auto-container">
