@@ -97,9 +97,8 @@ const HFooter = () => {
 									</h6>
 									<div className="links">
 										<ul>
-											{/* // @ts-ignore */}
 											{
-												// @ts-ignore
+												// @ts-expect-error
 												footerData.footerLinks[section].map(
 													(link: any, linkIndex: any) => (
 														<li key={linkIndex}>
