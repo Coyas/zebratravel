@@ -1,38 +1,10 @@
+// src/app/components/FindUs.tsx
+
 "use client";
 
 import { useState } from "react";
-
-interface LocationPoint {
-	id: number;
-	address: string;
-	link: string;
-}
-
-const locations: LocationPoint[] = [
-	{ id: 1, address: "Avenida Amilcar Cabral, Plateau - Praia", link: "#" },
-	{
-		id: 2,
-		address: "Alto São Pedro, São Filipe - Fogo",
-		link: "https://maps.app.goo.gl/EhmhbDyUW7TGAg759",
-	},
-	{ id: 3, address: "Mosteiros - Fogo", link: "#" },
-	{ id: 4, address: "Rua Padre Pio, Nova Sintra - Brava", link: "#" },
-];
-
-const accordionItems = [
-	{
-		title: "Como localizar a zebra?",
-		content: "",
-	},
-	{
-		title: "Tem restaurante na zebratravel?",
-		content: "",
-	},
-	{
-		title: "Devo-me preocupar com a altitude do vulcão?",
-		content: "",
-	},
-];
+import { locations } from "@/app/Dados/contact/locationData"; // Importando os dados de localização
+import { accordionItems } from "@/app/Dados/contact/accordionData"; // Importando os dados do acordeão
 
 const FindUs = () => {
 	const [activeAccordion, setActiveAccordion] = useState<number | null>(null);
