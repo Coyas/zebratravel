@@ -3,7 +3,7 @@
 "use client";
 
 import React from "react";
-import { products } from "@/app/Dados/productsData"; // Importando os dados
+import { productsData } from "@/app/Dados/productsData"; // Importando os dados
 
 const ProductSection: React.FC = () => {
 	return (
@@ -24,7 +24,7 @@ const ProductSection: React.FC = () => {
 				</div>
 
 				<div className="row clearfix">
-					{products.map((product, index) => (
+					{productsData.map((product, index) => (
 						<div
 							key={index}
 							className="prod-block col-xl-3 col-lg-4 col-md-6 col-sm-12"
@@ -34,7 +34,7 @@ const ProductSection: React.FC = () => {
 									<div className="image-box">
 										<div className="image">
 											<a href={product.link}>
-												<img src={product.imageUrl} alt={product.title} />
+												<img src={product.imagemUrl} alt={product.titulo} />
 											</a>
 										</div>
 										<div className="hvr-box">
@@ -62,10 +62,10 @@ const ProductSection: React.FC = () => {
 									</div>
 									<div className="lower-box">
 										<h5>
-											<a href={product.link}>{product.title}</a>
+											<a href={product.link}>{product.titulo}</a>
 										</h5>
 										<div className="price">
-											<span>{product.price}</span>
+											<span>{product.preco}</span>
 										</div>
 									</div>
 								</div>
