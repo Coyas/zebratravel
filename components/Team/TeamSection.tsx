@@ -1,64 +1,8 @@
 import React from "react";
 import TeamMember from "./TeamMember";
+import { teamMembers } from "@/app/Dados/teamsMember";
 
 const TeamSection = () => {
-	const teamMembers = [
-		{
-			id: 1,
-			name: "Andree Hoy",
-			designation: "Tour Guide",
-			image: "/images/resource/team-1.jpg",
-		},
-		{
-			id: 2,
-			name: "Andree Hoy",
-			designation: "Tour Guide",
-			image: "/images/resource/team-2.jpg",
-		},
-		{
-			id: 3,
-			name: "Andree Hoy",
-			designation: "Tour Guide",
-			image: "/images/resource/team-3.jpg",
-		},
-		{
-			id: 4,
-			name: "Andree Hoy",
-			designation: "Tour Guide",
-			image: "/images/resource/team-1.jpg",
-		},
-		{
-			id: 5,
-			name: "Andree Hoy",
-			designation: "Tour Guide",
-			image: "/images/resource/team-2.jpg",
-		},
-		{
-			id: 6,
-			name: "Andree Hoy",
-			designation: "Tour Guide",
-			image: "/images/resource/team-3.jpg",
-		},
-		{
-			id: 7,
-			name: "Andree Hoy",
-			designation: "Tour Guide",
-			image: "/images/resource/team-1.jpg",
-		},
-		{
-			id: 8,
-			name: "Andree Hoy",
-			designation: "Tour Guide",
-			image: "/images/resource/team-2.jpg",
-		},
-		{
-			id: 9,
-			name: "Andree Hoy",
-			designation: "Tour Guide",
-			image: "/images/resource/team-3.jpg",
-		},
-	];
-
 	return (
 		<section className="team-section">
 			<div className="floated-icon left">
@@ -70,7 +14,7 @@ const TeamSection = () => {
 			<div className="auto-container">
 				<div className="title-box centered">
 					<h2>
-						<span>Meet Our Tour Guide</span>
+						<span>Conheça os Nossos Guias Turísticos</span>
 					</h2>
 				</div>
 				<div className="carousel-box">
