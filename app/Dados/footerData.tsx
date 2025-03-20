@@ -10,25 +10,25 @@ interface Contact {
 	}[];
 }
 
-interface Link {
-	name: string;
-	url: string;
-}
+// interface Link {
+// 	name: string;
+// 	url: string;
+// }
 
-interface SocialLink {
-	platform: string;
-	url: string;
-	icon: string;
-}
+// interface SocialLink {
+// 	platform: string;
+// 	url: string;
+// 	icon: string;
+// }
 
-interface Copyright {
-	text: string;
-	developedBy: {
-		text: string;
-		url: string;
-		name: string;
-	};
-}
+// interface Copyright {
+// 	text: string;
+// 	developedBy: {
+// 		text: string;
+// 		url: string;
+// 		name: string;
+// 	};
+// }
 
 export const footerData = {
 	companyInfo: {
