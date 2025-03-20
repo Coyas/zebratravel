@@ -27,27 +27,25 @@ const Navbar: React.FC<HeaderProps> = ({
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 	const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-	const toggleSidebar = () => {
-		setIsSidebarOpen(!isSidebarOpen);
-	};
+	const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+	const toggleSearch = () => setIsSearchOpen(!isSearchOpen);
 
-	const toggleSearch = () => {
-		setIsSearchOpen(!isSearchOpen);
-	};
 	const contactEmail2 = contactEmail.replace(/\s+/g, "");
+
 	return (
 		<header className="main-header">
+			{/* Header Top Section */}
 			<div className="header-top">
 				<div className="auto-container">
 					<div className="inner clearfix">
 						<div className="top-left clearfix">
 							<ul className="info clearfix">
 								<li>
-									<i className="icon fa fa-envelope"></i>{" "}
+									<i className="icon fa fa-envelope"></i>
 									<Link href={`mailto:${contactEmail2}`}>{contactEmail}</Link>
 								</li>
 								<li>
-									<i className="icon fa fa-phone-circle"></i>{" "}
+									<i className="icon fa fa-phone-circle"></i>
 									<Link href={`tel:${contactPhone}`}>{contactPhone}</Link>
 								</li>
 							</ul>
@@ -68,16 +66,19 @@ const Navbar: React.FC<HeaderProps> = ({
 								</ul>
 							</div>
 							<div className="login">
-								<i className="icon fa fa-user"></i>{" "}
+								<i className="icon fa fa-user"></i>
 								<Link href="#">{loginText}</Link>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+
+			{/* Header Upper Section */}
 			<div className="header-upper">
 				<div className="auto-container">
 					<div className="main-box clearfix">
+						{/* Logo */}
 						<div className="logo-box">
 							<div className="logo">
 								<Link href="/" title="Zebra">
@@ -85,6 +86,8 @@ const Navbar: React.FC<HeaderProps> = ({
 								</Link>
 							</div>
 						</div>
+
+						{/* Navigation */}
 						<div className="nav-box clearfix">
 							<div className="nav-outer clearfix">
 								<nav className="main-menu">
@@ -109,6 +112,8 @@ const Navbar: React.FC<HeaderProps> = ({
 									</ul>
 								</nav>
 							</div>
+
+							{/* Links Section */}
 							<div className="links-box clearfix">
 								<div
 									className="link search-btn search-toggle"
@@ -132,10 +137,12 @@ const Navbar: React.FC<HeaderProps> = ({
 									</Link>
 								</div>
 							</div>
+
+							{/* Sidebar Toggler */}
 							<div className="nav-toggler">
 								<button className="hidden-bar-opener" onClick={toggleSidebar}>
 									<span className="icon">
-										<img src="/images/icons/menu-icon.svg" alt="" />
+										<img src="/images/icons/menu-icon.svg" alt="Menu Icon" />
 									</span>
 								</button>
 							</div>
@@ -143,6 +150,8 @@ const Navbar: React.FC<HeaderProps> = ({
 					</div>
 				</div>
 			</div>
+
+			{/* Search Box */}
 			{isSearchOpen && (
 				<div className="search-box">
 					<div className="outer-container">
@@ -157,7 +166,6 @@ const Navbar: React.FC<HeaderProps> = ({
 										<input
 											type="search"
 											name="search"
-											value=""
 											placeholder="Search Here"
 											required
 										/>
@@ -168,10 +176,12 @@ const Navbar: React.FC<HeaderProps> = ({
 					</div>
 				</div>
 			)}
+
+			{/* Sidebar */}
 			{isSidebarOpen && (
 				<div className="hidden-sidebar">
 					{/* Implement hidden sidebar content here */}
-					<button onClick={toggleSidebar}></button>
+					<button onClick={toggleSidebar}>Close Sidebar</button>
 				</div>
 			)}
 		</header>
