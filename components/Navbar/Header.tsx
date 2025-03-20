@@ -2,8 +2,10 @@
 import React from "react";
 import Link from "next/link";
 import { menuData } from "@/app/Dados/menu";
+import { produtosFavoritos } from "@/app/Dados/produtosFavoritos";
 
 const Header: React.FC = () => {
+	const proNumber: number = produtosFavoritos.length;
 	return (
 		<header className="main-header header-style-two">
 			{/* Header Upper */}
@@ -52,9 +54,9 @@ const Header: React.FC = () => {
 									<span className="icon far fa-search"></span>
 								</div>
 								<div className="link fav-btn">
-									<Link href="#">
+									<Link href="/favoritos">
 										<span className="icon far fa-heart"></span>
-										<span className="count">02</span>
+										<span className="count">{proNumber}</span>
 									</Link>
 								</div>
 								<div className="link cart-btn">

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
+import { produtosFavoritos } from "@/app/Dados/produtosFavoritos";
 
 interface NavItem {
 	label: string;
@@ -31,6 +32,8 @@ const Navbar: React.FC<HeaderProps> = ({
 	const toggleSearch = () => setIsSearchOpen(!isSearchOpen);
 
 	const contactEmail2 = contactEmail.replace(/\s+/g, "");
+
+	const proNumber: number = produtosFavoritos.length;
 
 	return (
 		<header className="main-header">
@@ -124,11 +127,11 @@ const Navbar: React.FC<HeaderProps> = ({
 								<div className="link fav-btn">
 									<Link href="#">
 										<span className="icon far fa-heart"></span>
-										<span className="count">02</span>
+										<span className="count">{proNumber}</span>
 									</Link>
 								</div>
 								<div className="link cart-btn">
-									<Link href="#" className="clearfix">
+									<Link href="/favoritos" className="clearfix">
 										<div className="cart-info">
 											<span className="icon far fa-shopping-cart"></span>00
 											Items
