@@ -1,4 +1,11 @@
-export const termsData = [
+// src/app/Dados/termos.ts
+
+export interface Term {
+	title: string;
+	text: string;
+}
+
+export const termsData: Term[] = [
 	{
 		title: "Isenção de Responsabilidade",
 		text: "A nossa loja compromete-se a fornecer produtos de alta qualidade e garantir que todas as informações fornecidas sejam precisas e completas. No entanto, em caso de falha de um produto adquirido, a nossa loja poderá ser obrigada a fornecer compensação financeira ao cliente, conforme as circunstâncias. Essa compensação será determinada de acordo com a natureza do produto, a avaliação do dano e o nível de risco envolvido. A empresa não se responsabiliza por danos indiretos, consequentes ou acidentais, incluindo, mas não se limitando a, perda de lucros, danos à reputação ou à propriedade, caso o produto falhe de acordo com os termos acordados.",

@@ -1,15 +1,17 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { termsData } from "@/app/Dados/termos"; // Importa os dados simulados
+import { termsData, Term } from "@/app/Dados/termos"; // Importa os dados simulados
 import InerBanner from "@/components/InerBanner";
 import bgImage from "@/public/images/background/banner-image-1.jpg";
 
+// Definindo a interface para o componente TermBlock
 interface TermBlockProps {
 	title: string;
 	text: string;
 }
 
+// Componente TermBlock
 const TermBlock: React.FC<TermBlockProps> = ({ title, text }) => {
 	return (
 		<div className="term-block">
@@ -23,8 +25,10 @@ const TermBlock: React.FC<TermBlockProps> = ({ title, text }) => {
 	);
 };
 
+// Componente principal de termos e condições
 const TermsSection: React.FC = () => {
-	const [terms, setTerms] = useState<any[]>([]);
+	// Usando o tipo correto para o estado
+	const [terms, setTerms] = useState<Term[]>([]);
 
 	// Simula a chamada da API
 	useEffect(() => {
