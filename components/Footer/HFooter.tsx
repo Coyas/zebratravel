@@ -1,6 +1,4 @@
-"use client";
-
-// components/Footer.tsx
+import { footerData } from "@/app/Dados/footerData"; // Ajuste o caminho conforme necessário
 import Image from "next/image";
 import Link from "next/link";
 
@@ -32,67 +30,48 @@ const HFooter = () => {
 							<div className="footer-logo">
 								<Link href="/" title="Treker">
 									<Image
-										src="/images/logo.svg"
-										alt="Treker Logo"
+										src={footerData.companyInfo.logoSrc}
+										alt={footerData.companyInfo.logoAlt}
 										width={150}
 										height={40}
 									/>
 								</Link>
 							</div>
-							<div className="footer-text">
-								A ZebraTravel -Turismo e Viagens, Lda. é uma agência de Turismo
-								e Viagens com sede em Alto S.Pedro, São Filipe - Ilha do Fogo. O
-								seu escritório funciona No res do chão de um dos sobrados mais
-								antigos da cidade, que foi restaurado e transformado numa
-								pousada que demos o nome COLONIAL HOUSE
-							</div>
+							<div className="footer-text">{footerData.companyInfo.text}</div>
 						</div>
 
 						{/* Contato */}
 						<div className="col-xl-8 col-lg-12 col-md-12 col-sm-12">
 							<div className="row clearfix">
-								<div className="info-block col-lg-4 col-md-4 col-sm-12">
-									<h6>Santiago</h6>
-									<div className="info">
-										<ul>
-											<li>Avenida Amílcar Cabral, Plateau - Praia</li>
-											<li>
-												<a href="tel:+2382625610">+238 262 56 10</a>
-											</li>
-										</ul>
+								{footerData.contacts.map((contact, index) => (
+									<div
+										key={index}
+										className="info-block col-lg-4 col-md-4 col-sm-12"
+									>
+										<h6>{contact.location}</h6>
+										<div className="info">
+											<ul>
+												<li>{contact.address}</li>
+												<li>
+													<a href={`tel:${contact.phone}`}>{contact.phone}</a>
+												</li>
+												{contact.additionalContacts &&
+													contact.additionalContacts.map(
+														(subContact, subIndex) => (
+															<div key={subIndex}>
+																<li>{subContact.address}</li>
+																<li>
+																	<a href={`tel:${subContact.phone}`}>
+																		{subContact.phone}
+																	</a>
+																</li>
+															</div>
+														)
+													)}
+											</ul>
+										</div>
 									</div>
-								</div>
-
-								<div className="info-block col-lg-4 col-md-4 col-sm-12">
-									<h6>Fogo</h6>
-									<div className="info">
-										<ul>
-											<li>Alto Sâo Pedro, São Filipe</li>
-											<li>
-												<a href="tel:+2382813373">+238 281 33 73</a>
-											</li>
-											<li>
-												<hr />
-											</li>
-											<li>Mosteiros, fogo</li>
-											<li>
-												<a href="tel:+2382832190">+238 283 21 90</a>
-											</li>
-										</ul>
-									</div>
-								</div>
-
-								<div className="info-block col-lg-4 col-md-4 col-sm-12">
-									<h6>Brava</h6>
-									<div className="info">
-										<ul>
-											<li>Rua Padre Pio - Nova Sintra</li>
-											<li>
-												<a href="tel:+2385981981">+238 598 19 81</a>
-											</li>
-										</ul>
-									</div>
-								</div>
+								))}
 							</div>
 						</div>
 					</div>
@@ -104,100 +83,35 @@ const HFooter = () => {
 				<div className="auto-container">
 					<div className="content-box">
 						<div className="row clearfix">
-							<div className="col-xl-8 col-lg-12 col-md-12 col-sm-12">
-								<div className="row clearfix">
-									<div className="footer-column col-lg-4 col-md-4 col-sm-12">
-										<h6>Sobre nós</h6>
-										<div className="links">
-											<ul>
-												<li>
-													<Link href="#">Sobre Nós</Link>
-												</li>
-												<li>
-													<Link href="#">Blog da Comunidade</Link>
-												</li>
-												<li>
-													<Link href="#">Recompensas</Link>
-												</li>
-												<li>
-													<Link href="#">Trabalhe Conosco</Link>
-												</li>
-												<li>
-													<Link href="#">Contato</Link>
-												</li>
-											</ul>
-										</div>
-									</div>
-
-									<div className="footer-column col-lg-4 col-md-4 col-sm-12">
-										<h6>Links Úteis</h6>
-										<div className="links">
-											<ul>
-												<li>
-													<Link href="#">Conta</Link>
-												</li>
-												<li>
-													<Link href="#">Política de Privacidade</Link>
-												</li>
-												<li>
-													<Link href="#">Programa de Afiliados</Link>
-												</li>
-												<li>
-													<Link href="#">Nosso Parceiro</Link>
-												</li>
-											</ul>
-										</div>
-									</div>
-
-									<div className="footer-column col-lg-4 col-md-4 col-sm-12">
-										<h6>Acesso Rápidos</h6>
-										<div className="links">
-											<ul>
-												<li>
-													<Link href="#">Sobre nós</Link>
-												</li>
-												<li>
-													<Link href="#">Notícias & Press</Link>
-												</li>
-												<li>
-													<Link href="#">Blog</Link>
-												</li>
-												<li>
-													<Link href="#">FAQs</Link>
-												</li>
-												<li>
-													<Link href="#">Carreiras</Link>
-												</li>
-											</ul>
-										</div>
+							{Object.keys(footerData.footerLinks).map((section, index) => (
+								<div
+									key={index}
+									className="footer-column col-lg-4 col-md-4 col-sm-12"
+								>
+									<h6>
+										{section === "aboutUs"
+											? "Sobre nós"
+											: section === "usefulLinks"
+											? "Links Úteis"
+											: "Acesso Rápidos"}
+									</h6>
+									<div className="links">
+										<ul>
+											{/* // @ts-ignore */}
+											{
+												// @ts-ignore
+												footerData.footerLinks[section].map(
+													(link: any, linkIndex: any) => (
+														<li key={linkIndex}>
+															<Link href={link.url}>{link.name}</Link>
+														</li>
+													)
+												)
+											}
+										</ul>
 									</div>
 								</div>
-							</div>
-
-							{/* Galeria de imagens */}
-							<div className="footer-column col-xl-4 col-lg-6 col-md-8 col-sm-12">
-								<h6>Galeria</h6>
-								<div className="footer-gallery">
-									<div className="inner clearfix">
-										<div className="image-block">
-											<div className="image">
-												<a
-													href="/images/resource/footer-thumb-1.jpg"
-													className="lightbox-image"
-												>
-													<Image
-														src="/images/resource/footer-thumb-1.jpg"
-														alt="Imagem do Rodapé 1"
-														width={80}
-														height={80}
-													/>
-												</a>
-											</div>
-										</div>
-										{/* Adicione as outras imagens aqui */}
-									</div>
-								</div>
-							</div>
+							))}
 						</div>
 					</div>
 				</div>
@@ -209,34 +123,27 @@ const HFooter = () => {
 					<div className="inner clearfix">
 						<div className="social-links">
 							<ul className="clearfix">
-								<li>
-									<a href="#">
-										<i className="fab fa-facebook-f"></i>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<i className="fab fa-twitter"></i>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<i className="fab fa-youtube"></i>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<i className="fab fa-instagram"></i>
-									</a>
-								</li>
+								{footerData.socialLinks.map((social, index) => (
+									<li key={index}>
+										<a href={social.url} target="_blank">
+											<i className={social.icon}></i>
+										</a>
+									</li>
+								))}
 							</ul>
 						</div>
 						<div className="copyright">
-							Copyright &copy; 2025 ZebraTravel. Todos os direitos reservados.
-							Desenvolvido por{" "}
-							<a href="https://terrasystem.cv" target="_blank">
-								TerraSystem
-							</a>
+							{footerData.copyright.text}{" "}
+							<span>
+								{footerData.copyright.developedBy.text}{" "}
+								<a
+									href={footerData.copyright.developedBy.url}
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									{footerData.copyright.developedBy.name}
+								</a>
+							</span>
 						</div>
 					</div>
 				</div>
