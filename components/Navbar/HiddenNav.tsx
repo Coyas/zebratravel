@@ -1,53 +1,9 @@
+// HiddenNav.tsx
 "use client";
 import React, { useState } from "react";
 import Link from "next/link"; // Importando Link do Next.js
 import Image from "next/image"; // Importando Image do Next.js
-
-// Estrutura de dados para os links de navegação
-const navigationLinks: NavigationLink[] = [
-	{
-		label: "Home",
-		url: "/",
-		subLinks: [],
-	},
-	{
-		label: "Acomodações",
-		url: "/Acomodacao",
-		subLinks: [],
-	},
-	{
-		label: "Restaurante",
-		url: "/jazzebra",
-		subLinks: [],
-	},
-	{
-		label: "Excursões",
-		url: "/excursoes",
-		subLinks: [],
-	},
-	{
-		label: "Loja",
-		url: "/Loja",
-		subLinks: [],
-	},
-	{
-		label: "Notiçias",
-		url: "/noticias",
-		subLinks: [],
-	},
-	{
-		label: "Contato",
-		url: "/contato",
-		subLinks: [],
-	},
-];
-
-// Definindo tipos mais específicos para os itens de navegação
-interface NavigationLink {
-	label: string;
-	url: string;
-	subLinks: Array<{ label: string; url: string }>;
-}
+import { menuData } from "@/app/Dados/menu"; // Importa o menuData
 
 const HiddenNav: React.FC = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -91,18 +47,20 @@ const HiddenNav: React.FC = () => {
 				{/* Menu de Navegação */}
 				<div className="side-menu">
 					<ul className="navigation clearfix">
-						{navigationLinks.map((link, index) => (
+						{menuData.map((link, index) => (
 							<li
 								key={index}
-								className={link.subLinks.length > 0 ? "dropdown" : ""}
+								className={
+									link.subMenu && link.subMenu.length > 0 ? "dropdown" : ""
+								}
 							>
-								<Link href={link.url}>{link.label}</Link>{" "}
+								<Link href={link.href}>{link.label}</Link>{" "}
 								{/* Usando o componente Link do Next.js */}
-								{link.subLinks.length > 0 && (
+								{link.subMenu && link.subMenu.length > 0 && (
 									<ul>
-										{link.subLinks.map((subLink, subIndex) => (
+										{link.subMenu.map((subLink, subIndex) => (
 											<li key={subIndex}>
-												<Link href={subLink.url}>{subLink.label}</Link>{" "}
+												<Link href={subLink.href}>{subLink.label}</Link>{" "}
 												{/* Usando o componente Link */}
 											</li>
 										))}
