@@ -1,39 +1,9 @@
+// src/app/components/GroupTravel.tsx
+
 "use client";
 
 import React from "react";
-
-interface TravelPackage {
-	title: string;
-	duration: string;
-	location: string;
-	price: string;
-	description: string;
-	link: string;
-	imageUrl: string;
-}
-
-const travelPackages: TravelPackage[] = [
-	{
-		title: "Grupo para Vulcao",
-		duration: "5 days",
-		location: "259P, Himalaya Ag",
-		price: "$235.00",
-		description:
-			"Richly varied landscapes, luxurious accommodation and a wide range of wild experiences await you.",
-		link: "#",
-		imageUrl: "/images/background/image-2.jpg",
-	},
-	{
-		title: "Grupo para Salinas",
-		duration: "5 days",
-		location: "259P, Himalaya Ag",
-		price: "$235.00",
-		description:
-			"Richly varied landscapes, luxurious accommodation and a wide range of wild experiences await you.",
-		link: "#",
-		imageUrl: "/images/background/image-2.jpg",
-	},
-];
+import { travelPackages } from "@/app/Dados/travelPackagesData"; // Importando os dados
 
 const GroupTravel: React.FC = () => {
 	return (
@@ -41,7 +11,7 @@ const GroupTravel: React.FC = () => {
 			<div
 				className="bg-layer"
 				style={{
-					backgroundImage: `url(https://res.cloudinary.com/zebratravel-net/image/upload/v1742405461/zebratravelImages/pexels-pixabay-531756_edncyp.webp)`,
+					backgroundImage: `url(https://res.cloudinary.com/zebratravel-net/image/upload/c_crop,w_5760,h_1430,x_0,y_0/v1742301220/zebratravelImages/BoaVistab_epxham_1_zjuivt.webp)`,
 				}}
 			></div>
 			<div className="auto-container">
