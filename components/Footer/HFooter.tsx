@@ -98,7 +98,7 @@ const HFooter = () => {
 									<div className="links">
 										<ul>
 											{
-												// @ts-expect-error
+												// @ts-expect-error: Ignoring type error due to "nao sei q pora acontece aqui"
 												footerData.footerLinks[section].map(
 													(link: any, linkIndex: any) => (
 														<li key={linkIndex}>
