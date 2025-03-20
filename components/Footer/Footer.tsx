@@ -2,10 +2,12 @@
 
 import React from "react";
 import Link from "next/link";
+import { footerData } from "@/app/Dados/footerData"; // Importando o arquivo de dados
 
 const Footer: React.FC = () => {
 	return (
 		<footer className="footer-two">
+			{/* Camada de fundo */}
 			<div
 				className="bg-layer"
 				style={{ backgroundImage: "url(/images/background/footer-bg.png)" }}
@@ -17,108 +19,74 @@ const Footer: React.FC = () => {
 							{/* Logo */}
 							<div className="footer-logo">
 								<div className="logo">
-									<Link href="index.html" title="ZebraTravel">
+									<Link href="/" title="ZebraTravel">
 										<img
-											src="/images/logo.svg"
-											alt="ZebraTravel"
+											src={footerData.companyInfo.logoSrc}
+											alt={footerData.companyInfo.logoAlt}
 											title="ZebraTravel"
 										/>
 									</Link>
 								</div>
 							</div>
-							<div className="footer-text">
-								A ZebraTravel -Turismo e Viagens, Lda. é uma agência de Turismo
-								e Viagens com sede em Alto S.Pedro, São Filipe - Ilha do Fogo. O
-								seu escritório funciona No res do chão de um dos sobrados mais
-								antigos da cidade, que foi restaurado e transformado numa
-								pousada que demos o nome COLONIAL HOUSE
-							</div>
+							<div className="footer-text">{footerData.companyInfo.text}</div>
+							{/* Links de redes sociais */}
 							<div className="social-links">
 								<ul className="clearfix">
-									<li>
-										<Link href="#">
-											<i className="fab fa-facebook-f"></i>
-										</Link>
-									</li>
-									<li>
-										<Link href="#">
-											<i className="fab fa-twitter"></i>
-										</Link>
-									</li>
-									<li>
-										<Link href="#">
-											<i className="fab fa-youtube"></i>
-										</Link>
-									</li>
-									<li>
-										<Link href="#">
-											<i className="fab fa-instagram"></i>
-										</Link>
-									</li>
+									{footerData.socialLinks.map((social, index) => (
+										<li key={index}>
+											<Link href={social.url} target="_blank">
+												<i className={social.icon}></i>
+											</Link>
+										</li>
+									))}
 								</ul>
 							</div>
 						</div>
 
+						{/* Links e informações */}
 						<div className="big-column col-xl-8 col-lg-12 col-md-12 col-sm-12">
 							<div className="row clearfix">
+								{/* Links Úteis */}
 								<div className="footer-column col-lg-3 col-md-4 col-sm-12">
-									<h6>Úteis </h6>
+									<h6>Úteis</h6>
 									<div className="links">
 										<ul>
-											<li>
-												<Link href="#">Account</Link>
-											</li>
-											<li>
-												<Link href="#">Privacy Policy</Link>
-											</li>
-											<li>
-												<Link href="#">Afiliados</Link>
-											</li>
-											<li>
-												<Link href="#">Eventos</Link>
-											</li>
-											<li>
-												<Link href="#">Nossos Parceiros</Link>
-											</li>
+											{footerData.footerLinks.usefulLinks.map((link, index) => (
+												<li key={index}>
+													<Link href={link.url}>{link.name}</Link>
+												</li>
+											))}
 										</ul>
 									</div>
 								</div>
 
+								{/* Menu */}
 								<div className="footer-column col-lg-3 col-md-4 col-sm-12">
 									<h6>Menu</h6>
 									<div className="links">
 										<ul>
-											<li>
-												<Link href="#">Spobre Nós</Link>
-											</li>
-											<li>
-												<Link href="#">Novidades</Link>
-											</li>
-											<li>
-												<Link href="#">Blog</Link>
-											</li>
-											<li>
-												<Link href="#">FAQs</Link>
-											</li>
-											<li>
-												<Link href="#">Trabalhe Conosco</Link>
-											</li>
+											{footerData.footerLinks.aboutUs.map((link, index) => (
+												<li key={index}>
+													<Link href={link.url}>{link.name}</Link>
+												</li>
+											))}
 										</ul>
 									</div>
 								</div>
 
+								{/* Endereço */}
 								<div className="info-block col-lg-6 col-md-4 col-sm-12">
 									<h6>Address</h6>
 									<div className="info">
 										<ul>
-											<li>
-												Avenida Amílcar Cabral, Plateau - Praia
-												<Link href="tel:+2382625610">+238 262 56 10</Link>
-											</li>
-											<li>
-												Alto São Pedro, São Filipe - Fogo
-												<Link href="tel:+2382813373">+238 281 33 73</Link>
-											</li>
+											{footerData.contacts.map((contact, index) => (
+												<li key={index}>
+													{contact.address}
+													<Link href={`tel:${contact.phone}`}>
+														{contact.phone}
+													</Link>
+												</li>
+											))}
 										</ul>
 									</div>
 								</div>
@@ -128,14 +96,15 @@ const Footer: React.FC = () => {
 				</div>
 			</div>
 
+			{/* Rodapé Inferior */}
 			<div className="f-bottom">
 				<div className="auto-container">
 					<div className="inner clearfix">
 						<div className="copyright">
-							Copyright &copy; 2025 ZebraTravel. Todos os direitos reservados.
-							Desenvolvido pela{" "}
-							<a href="https://terrasystem.cv" target="_blank">
-								TerraSystem
+							{footerData.copyright.text}
+							Desenvolvido por{" "}
+							<a href={footerData.copyright.developedBy.url} target="_blank">
+								{footerData.copyright.developedBy.name}
 							</a>
 						</div>
 					</div>
