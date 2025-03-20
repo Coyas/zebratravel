@@ -1,17 +1,53 @@
-import { footerData } from "@/app/Dados/footerData"; // Ajuste o caminho conforme necessário
+import { footerData } from "@/app/Dados/footerData";
 import Image from "next/image";
 import Link from "next/link";
+
+interface Contact {
+	location: string;
+	address: string;
+	phone: string;
+	additionalContacts?: {
+		address: string;
+		phone: string;
+	}[];
+}
+
+interface LinkType {
+	name: string;
+	url: string;
+}
+
+interface SocialLink {
+	platform: string;
+	url: string;
+	icon: string;
+}
+
+interface Copyright {
+	text: string;
+	developedBy: {
+		text: string;
+		url: string;
+		name: string;
+	};
+}
+
+interface FooterLinks {
+	aboutUs: LinkType[];
+	usefulLinks: LinkType[];
+	quickAccess: LinkType[];
+}
+
+type FooterLinkKeys = keyof FooterLinks;
 
 const HFooter = () => {
 	return (
 		<footer className="main-footer">
-			{/* Camada de fundo */}
 			<div
 				className="bg-layer"
 				style={{ backgroundImage: "url(/images/background/f-bottom-bg.svg)" }}
 			></div>
 
-			{/* Ícone flutuante */}
 			<div className="floated-icon">
 				<Image
 					src="/images/resource/footer-stones.svg"
@@ -21,12 +57,10 @@ const HFooter = () => {
 				/>
 			</div>
 
-			{/* Seção de informações */}
 			<div className="info-section">
 				<div className="auto-container">
 					<div className="row clearfix">
 						<div className="footer-column col-xl-4 col-lg-12 col-md-12 col-sm-12">
-							{/* Logo */}
 							<div className="footer-logo">
 								<Link href="/" title="Treker">
 									<Image
@@ -40,10 +74,9 @@ const HFooter = () => {
 							<div className="footer-text">{footerData.companyInfo.text}</div>
 						</div>
 
-						{/* Contato */}
 						<div className="col-xl-8 col-lg-12 col-md-12 col-sm-12">
 							<div className="row clearfix">
-								{footerData.contacts.map((contact, index) => (
+								{footerData.contacts.map((contact: Contact, index) => (
 									<div
 										key={index}
 										className="info-block col-lg-4 col-md-4 col-sm-12"
@@ -78,45 +111,43 @@ const HFooter = () => {
 				</div>
 			</div>
 
-			{/* Seção inferior */}
 			<div className="lower-section">
 				<div className="auto-container">
 					<div className="content-box">
 						<div className="row clearfix">
-							{Object.keys(footerData.footerLinks).map((section, index) => (
-								<div
-									key={index}
-									className="footer-column col-lg-4 col-md-4 col-sm-12"
-								>
-									<h6>
-										{section === "aboutUs"
-											? "Sobre nós"
-											: section === "usefulLinks"
-											? "Links Úteis"
-											: "Acesso Rápidos"}
-									</h6>
-									<div className="links">
-										<ul>
-											{
-												// @ts-expect-error: Ignoring type error due to "nao sei q pora acontece aqui"
-												footerData.footerLinks[section].map(
-													(link: any, linkIndex: any) => (
+							{Object.keys(footerData.footerLinks).map((sectionKey) => {
+								const section = sectionKey as FooterLinkKeys;
+								return (
+									<div
+										key={section}
+										className="footer-column col-lg-4 col-md-4 col-sm-12"
+									>
+										<h6>
+											{section === "aboutUs"
+												? "Sobre nós"
+												: section === "usefulLinks"
+												? "Links Úteis"
+												: "Acesso Rápidos"}
+										</h6>
+										<div className="links">
+											<ul>
+												{footerData.footerLinks[section].map(
+													(link, linkIndex) => (
 														<li key={linkIndex}>
 															<Link href={link.url}>{link.name}</Link>
 														</li>
 													)
-												)
-											}
-										</ul>
+												)}
+											</ul>
+										</div>
 									</div>
-								</div>
-							))}
+								);
+							})}
 						</div>
 					</div>
 				</div>
 			</div>
 
-			{/* Rodapé Inferior */}
 			<div className="f-bottom">
 				<div className="auto-container">
 					<div className="inner clearfix">

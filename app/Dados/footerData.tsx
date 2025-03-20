@@ -1,5 +1,35 @@
 // data/footerData.ts
 
+interface Contact {
+	location: string;
+	address: string;
+	phone: string;
+	additionalContacts?: {
+		address: string;
+		phone: string;
+	}[];
+}
+
+interface Link {
+	name: string;
+	url: string;
+}
+
+interface SocialLink {
+	platform: string;
+	url: string;
+	icon: string;
+}
+
+interface Copyright {
+	text: string;
+	developedBy: {
+		text: string;
+		url: string;
+		name: string;
+	};
+}
+
 export const footerData = {
 	companyInfo: {
 		logoAlt: "Treker Logo",
@@ -28,7 +58,7 @@ export const footerData = {
 			address: "Rua Padre Pio - Nova Sintra",
 			phone: "+238 598 19 81",
 		},
-	],
+	] as Contact[], // Adicionando a tipagem aqui
 	footerLinks: {
 		aboutUs: [
 			{ name: "Sobre Nós", url: "/about" },
