@@ -1,25 +1,11 @@
+// src/app/components/Sponsors.tsx
+
 "use client";
 
 import React from "react";
-
-interface Sponsor {
-	image: string;
-	link: string;
-}
+import { sponsors } from "@/app/Dados/sponsorsData"; // Importando os dados
 
 const Sponsors: React.FC = () => {
-	// Definindo os dados diretamente
-	const sponsors: Sponsor[] = [
-		{ image: "/images/resource/sponsor-1.png", link: "#" },
-		{ image: "/images/resource/sponsor-2.png", link: "#" },
-		{ image: "/images/resource/sponsor-3.png", link: "#" },
-		{ image: "/images/resource/sponsor-4.png", link: "#" },
-		{ image: "/images/resource/sponsor-1.png", link: "#" },
-		{ image: "/images/resuorce/sponsor-2.png", link: "#" },
-		{ image: "/images/resource/sponsor-3.png", link: "#" },
-		{ image: "/images/resource/sponsor-4.png", link: "#" },
-	];
-
 	return (
 		<section className="sponsors-one">
 			<div className="auto-container">
