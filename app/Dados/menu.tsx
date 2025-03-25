@@ -58,7 +58,7 @@ export const menuData: MenuItem[] = [
 	},
 	{
 		label: "Notícias",
-		href: "/news",
+		href: "/posts",
 		// subMenu: [
 		// 	{ label: "Our Blog", href: "blog.html" },
 		// 	{ label: "Blog Classic", href: "blog-2.html" },
