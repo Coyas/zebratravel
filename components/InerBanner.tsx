@@ -8,7 +8,7 @@ interface BannerProps {
 	backgroundImage: string; // Imagem fornecida manualmente
 }
 
-const InerBanner: React.FC<BannerProps> = ({ backgroundImage }) => {
+const InnerBanner: React.FC<BannerProps> = ({ backgroundImage }) => {
 	const pathname = usePathname(); // Usando o hook usePathname() para acessar o pathname atual
 
 	// Obter o pathname atual da URL
@@ -53,7 +53,9 @@ const InerBanner: React.FC<BannerProps> = ({ backgroundImage }) => {
 										item.name // Exibe o nome do breadcrumb atual sem link
 									) : (
 										<>
-											<span className="icon-home fa fa-home"></span>
+											{index === 0 && ( // Adiciona o ícone do Home apenas para o primeiro item
+												<span className="icon-home fa fa-home"></span>
+											)}
 											<Link href={item.href}>{item.name}</Link>{" "}
 											{/* Link para os breadcrumbs anteriores */}
 										</>
@@ -68,4 +70,4 @@ const InerBanner: React.FC<BannerProps> = ({ backgroundImage }) => {
 	);
 };
 
-export default InerBanner;
+export default InnerBanner;
