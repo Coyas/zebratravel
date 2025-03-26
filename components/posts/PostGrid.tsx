@@ -1,10 +1,23 @@
 import PostCard from "@/components/posts/PostCard";
 
-const PostGrid = ({ posts }: any) => {
-	return (
+interface Post {
+	id: string;
+	title: string;
+	author: string;
+	date: string;
+	image: string;
+	content: string; // Se necessário
+	category: string; // Adicione estas propriedades
+	description: string; // Adicione estas propriedades
+	slug: string; // Adicione estas propriedades
+}
+
+
+const PostGrid = ({ posts }: { posts: Post[] }) => {
+					
 		<div className="blog-grid">
 			<div className="row clearfix">
-				{posts.map((post: any) => (
+				{posts.map((post) => (
 					<PostCard key={post.id} {...post} />
 				))}
 			</div>

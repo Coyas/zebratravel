@@ -4,7 +4,9 @@ import PostDetails from "@/components/posts/single/PostDetails";
 import Sidebar from "@/components/posts/single/Sidebar";
 import { posts } from "@/app/Dados/postsData";
 
-const PostPage = ({ params }: { params: Promise<{ slug: string }> }) => {
+const PostPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
+	const { slug } = await params;
+
 	return (
 		<>
 			{/* Passando a URL da imagem diretamente */}
@@ -14,6 +16,7 @@ const PostPage = ({ params }: { params: Promise<{ slug: string }> }) => {
 				<div className="auto-container">
 					<div className="row clearfix">
 						{/* <!-- Content Side --> */}
+						<p>{slug}</p>
 						<PostDetails posts={posts} />
 
 						{/* <!-- Sidebar Column --> */}
