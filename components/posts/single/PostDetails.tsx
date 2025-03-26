@@ -2,7 +2,19 @@ import Comments from "./content-side/Comments";
 import RelatedPosts from "./content-side/RelatedPosts";
 import CommentsForm from "./content-side/CommentsForm";
 
-const PostDetails = ({ posts }: any) => {
+interface Post {
+	id: string;
+	title: string;
+	author: string;
+	date: string;
+	image: string;
+	content: string; // Se necessário
+	category: string; // Adicione estas propriedades
+	description: string; // Adicione estas propriedades
+	slug: string; // Adicione estas propriedades
+}
+
+const PostDetails = ({ posts }: { posts: Post }) => {
 	return (
 		<>
 			<div className="content-side col-xl-8 col-lg-7 col-md-12 col-sm-12">
