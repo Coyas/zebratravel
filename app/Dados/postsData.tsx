@@ -4,7 +4,7 @@ export const posts = [
 		title: "THE UPCOMING WBC CHAMP SHIPS 2022 in Feb",
 		author: "Sword Joy",
 		date: "20 March 2022",
-		image: "images/resource/news-1.jpg",
+		image: "/images/resource/news-1.jpg",
 		category: "Trekking",
 		description:
 			"Fight School has specialized in martial arts since 1986 and has one of the most innovative.",
@@ -15,7 +15,7 @@ export const posts = [
 		title: "THE BEST BOXERS IN THEIR WEIGHT CATEGORY",
 		author: "Sword Joy",
 		date: "20 March 2022",
-		image: "images/resource/news-2.jpg",
+		image: "/images/resource/news-2.jpg",
 		category: "Trekking",
 		description:
 			"Fight School has specialized in martial arts since 1986 and has one of the most innovative.",
