@@ -41,7 +41,7 @@ export const menuData: MenuItem[] = [
 		// ],
 	},
 	// { label: "Destinations", href: "destinations.html" },
-	{ label: "Excursões", href: "/tours" },
+	{ label: "Excursões", href: "/excurcoes" },
 	{
 		label: "Destinos",
 		href: "/destinos",
