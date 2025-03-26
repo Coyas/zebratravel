@@ -3,7 +3,7 @@ import RelatedPosts from "./content-side/RelatedPosts";
 import CommentsForm from "./content-side/CommentsForm";
 
 interface Post {
-	id: string;
+	id: number;
 	title: string;
 	author: string;
 	date: string;

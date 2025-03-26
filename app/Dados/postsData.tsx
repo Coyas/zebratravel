@@ -5,6 +5,7 @@ export const posts = [
 		author: "Sword Joy",
 		date: "20 March 2022",
 		image: "/images/resource/news-1.jpg",
+		content: "sadsdaasas",
 		category: "Trekking",
 		description:
 			"Fight School has specialized in martial arts since 1986 and has one of the most innovative.",
@@ -16,6 +17,7 @@ export const posts = [
 		author: "Sword Joy",
 		date: "20 March 2022",
 		image: "/images/resource/news-2.jpg",
+		content: "sadsdaasas",
 		category: "Trekking",
 		description:
 			"Fight School has specialized in martial arts since 1986 and has one of the most innovative.",
