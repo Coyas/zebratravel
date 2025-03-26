@@ -2,7 +2,7 @@
 
 import bgImage from "@/public/images/background/banner-image-1.jpg";
 import InerBanner from "@/components/InerBanner";
-import { useState } from "react";
+// import { useState } from "react";
 import { tourData } from "@/app/Dados/tourData";
 import DestinosCard from "@/components/destinos/destinosCard";
 import Testimonials from "@/components/Home/Testimonials";
