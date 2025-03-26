@@ -43,7 +43,7 @@ export const menuData: MenuItem[] = [
 	// { label: "Destinations", href: "destinations.html" },
 	{ label: "Excursões", href: "/tours" },
 	{
-		label: "Pages",
+		label: "Destinos",
 		href: "#",
 		// subMenu: [
 		// 	{ label: "Activities", href: "activities.html" },
