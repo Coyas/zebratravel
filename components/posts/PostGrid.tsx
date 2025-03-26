@@ -12,9 +12,8 @@ interface Post {
 	slug: string; // Adicione estas propriedades
 }
 
-
 const PostGrid = ({ posts }: { posts: Post[] }) => {
-					
+	return (
 		<div className="blog-grid">
 			<div className="row clearfix">
 				{posts.map((post) => (
