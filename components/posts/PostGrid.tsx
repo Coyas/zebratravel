@@ -1,11 +1,10 @@
 import PostCard from "@/components/posts/PostCard";
-import { posts } from "@/app/Dados/postsData";
 
-const PostGrid = () => {
+const PostGrid = ({ posts }: any) => {
 	return (
 		<div className="blog-grid">
 			<div className="row clearfix">
-				{posts.map((post) => (
+				{posts.map((post: any) => (
 					<PostCard key={post.id} {...post} />
 				))}
 			</div>
