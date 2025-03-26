@@ -1,7 +1,7 @@
 import PostCard from "@/components/posts/PostCard";
 
 interface Post {
-	id: string;
+	id: number;
 	title: string;
 	author: string;
 	date: string;
