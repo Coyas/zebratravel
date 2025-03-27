@@ -1,6 +1,6 @@
 import bgImage from "@/public/images/background/banner-image-1.jpg";
 import InerBanner from "@/components/InerBanner";
-import excursoesData from "@/app/Dados/excurcoesData";
+// import excursoesData from "@/app/Dados/excurcoesData";
 import ExcurcoesDetails from "@/components/excursoes/ExcurcoesDatails";
 
 const ExcurcoesID = async ({
