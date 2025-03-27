@@ -1,6 +1,7 @@
 import React from "react";
 
 interface ExcursoesCardProps {
+	slug: string;
 	title: string;
 	image: string;
 	price: number;
@@ -13,6 +14,7 @@ interface ExcursoesCardProps {
 }
 
 const ExcursoesCard: React.FC<ExcursoesCardProps> = ({
+	slug,
 	title,
 	image,
 	price,
@@ -33,7 +35,7 @@ const ExcursoesCard: React.FC<ExcursoesCardProps> = ({
 			<div className="inner-box">
 				<div className="image-box">
 					<div className="image">
-						<a href="#">
+						<a href={`/excurcoes/${slug}`}>
 							<img src={image} alt={title} title={title} />
 						</a>
 					</div>
@@ -49,7 +51,7 @@ const ExcursoesCard: React.FC<ExcursoesCardProps> = ({
 				</div>
 				<div className="lower-content">
 					<h4>
-						<a href="#">{title}</a>
+						<a href={`/excurcoes/${slug}`}>{title}</a>
 					</h4>
 					<div className="ratings clearfix">
 						<div className="stars">
@@ -61,7 +63,7 @@ const ExcursoesCard: React.FC<ExcursoesCardProps> = ({
 							))}
 						</div>
 						<div className="rev">
-							<a href="#">
+							<a href={`/excurcoes/${slug}`}>
 								{reviews} Review{reviews > 1 ? "s" : ""}
 							</a>
 						</div>
@@ -70,7 +72,7 @@ const ExcursoesCard: React.FC<ExcursoesCardProps> = ({
 				</div>
 				<div className="bottom-box clearfix">
 					<div className="more-link">
-						<a href="#" className="theme-btn">
+						<a href={`/excurcoes/${slug}`} className="theme-btn">
 							<span>
 								Ver Detalhes{" "}
 								<i className="icon">
