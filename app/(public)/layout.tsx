@@ -1,17 +1,11 @@
-import type { Metadata } from "next";
-import "./globals.css";
+
+import "../globals.css";
 import Script from "next/script";
 import QualSection from "@/components/Footer/qualSection";
 import HiddenNav from "@/components/Navbar/HiddenNav";
 import Maintenance from "@/components/Maintenance";
 
-export const metadata: Metadata = {
-	title: "Zebra Travel Viagens & Turismo",
-	description:
-		"Descubra o mundo com a nossa agência de viagens e crie memórias inesquecíveis",
-};
-
-export default function RootLayout({
+export default function PublicLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
@@ -117,17 +111,4 @@ export default function RootLayout({
 			</body>
 		</html>
 	);
-}
-
-{
-	/* <script src="js/jquery.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery-ui.js"></script>
-<script src="js/jquery.fancybox.js"></script>
-<script src="js/mixitup.js"></script>
-<script src="js/touchspin.js"></script>
-<script src="js/owl.js"></script>
-<script src="js/wow.js"></script>
-<script src="js/custom-script.js"></script> */
 }
