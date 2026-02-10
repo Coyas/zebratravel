@@ -3,6 +3,7 @@ import "./globals.css";
 import Script from "next/script";
 import QualSection from "@/components/Footer/qualSection";
 import HiddenNav from "@/components/Navbar/HiddenNav";
+import Maintenance from "@/components/Maintenance";
 
 export const metadata: Metadata = {
 	title: "Zebra Travel Viagens & Turismo",
@@ -15,6 +16,27 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const MANUT: number = 1; // 0 = site online, 1 = site em manutenção (site offline)
+
+	if (MANUT === 1) {
+		return (
+			<html lang="pt">
+				<head>
+					<meta charSet="utf-8" />
+					<title>Site em Manutenção</title>
+					<meta
+						name="viewport"
+						content="width=device-width, initial-scale=1.0"
+					/>
+					<script src="https://cdn.tailwindcss.com"></script>
+				</head>
+				<body>
+					<Maintenance />
+				</body>
+			</html>
+		);
+	}
+
 	return (
 		<html lang="pt">
 			<head>
