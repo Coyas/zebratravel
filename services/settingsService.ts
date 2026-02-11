@@ -2,11 +2,11 @@
 // This is a singleton service to hold the state in memory.
 // In a real app, this would query a database.
 
-let maintenanceMode = 0; // 0 = online, 1 = maintenance
+let maintenanceMode = 1; // 1 = maintenance
 
 export const settingsService = {
     getMaintenanceMode: async (): Promise<number> => {
-        return maintenanceMode;
+        return 1; // Always active
     },
 
     setMaintenanceMode: async (mode: number): Promise<void> => {
