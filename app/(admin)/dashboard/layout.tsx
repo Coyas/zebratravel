@@ -1,11 +1,35 @@
+"use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function DashboardLayout({
 	children,
 }: {
 	children: React.ReactNode;
 }) {
+	const router = useRouter();
+	const [isLoading, setIsLoading] = useState(true);
+
+	useEffect(() => {
+		const isLoggedIn = localStorage.getItem("isLoggedIn");
+		if (isLoggedIn !== "true") {
+			router.push("/login");
+		} else {
+			setIsLoading(false);
+		}
+	}, [router]);
+
+	const handleLogout = () => {
+		localStorage.removeItem("isLoggedIn");
+		router.push("/login");
+	};
+
+	if (isLoading) {
+		return <div className="flex h-screen items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white">Verificando autenticação...</div>;
+	}
+
 	return (
 		<div className="flex h-screen bg-gray-100 dark:bg-gray-900">
 			{/* Sidebar */}
@@ -95,9 +119,14 @@ export default function DashboardLayout({
 							/>
 						</svg>
 					</button>
-					<div className="flex items-center">
-						<span className="text-gray-700 dark:text-gray-200">Admin</span>
-						{/* User Avatar could go here */}
+					<div className="flex items-center gap-4">
+						<span className="text-gray-700 dark:text-gray-200 font-medium">TerraSystem Admin</span>
+						<button
+							onClick={handleLogout}
+							className="text-sm bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded transition-colors"
+						>
+							Sair
+						</button>
 					</div>
 				</header>
 

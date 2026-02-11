@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 // import Image from "next/image";
 
@@ -10,10 +10,18 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     const router = useRouter();
 
+    useEffect(() => {
+        const isLoggedIn = localStorage.getItem("isLoggedIn");
+        if (isLoggedIn === "true") {
+            router.push("/dashboard");
+        }
+    }, [router]);
+
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
-        // Mock login logic
-        if (email === "admin@zebratravel.com" && password === "admin123") {
+        // Update to user requested credentials
+        if (email === "terra.systemltd@gmail.com" && password === "terrasystem1") {
+            localStorage.setItem("isLoggedIn", "true");
             router.push("/dashboard");
         } else {
             alert("Credenciais inválidas");
