@@ -40,7 +40,23 @@ interface FooterLinks {
 
 type FooterLinkKeys = keyof FooterLinks;
 
-const HFooter = () => {
+interface HFooterProps {
+	content?: {
+		companyInfo: {
+			text: string;
+		};
+		copyright: string;
+	};
+}
+
+const HFooter = ({ content }: HFooterProps) => {
+	const data = {
+		companyInfo: {
+			text: content?.companyInfo?.text || footerData.companyInfo.text,
+		},
+		copyright: content?.copyright || footerData.copyright.text
+	};
+
 	return (
 		<footer className="main-footer">
 			<div
@@ -71,7 +87,7 @@ const HFooter = () => {
 									/>
 								</Link>
 							</div>
-							<div className="footer-text">{footerData.companyInfo.text}</div>
+							<div className="footer-text">{data.companyInfo.text}</div>
 						</div>
 
 						<div className="col-xl-8 col-lg-12 col-md-12 col-sm-12">
@@ -126,8 +142,8 @@ const HFooter = () => {
 											{section === "aboutUs"
 												? "Sobre nós"
 												: section === "usefulLinks"
-												? "Links Úteis"
-												: "Acesso Rápidos"}
+													? "Links Úteis"
+													: "Acesso Rápidos"}
 										</h6>
 										<div className="links">
 											<ul>
@@ -163,7 +179,7 @@ const HFooter = () => {
 							</ul>
 						</div>
 						<div className="copyright">
-							{footerData.copyright.text}{" "}
+							{data.copyright}{" "}
 							<span>
 								{footerData.copyright.developedBy.text}{" "}
 								<a

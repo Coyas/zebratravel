@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import { faqTabs } from "@/app/Dados/faqDataAll"; // Importando os dados de FAQ
 
-const FAQTwo: React.FC = () => {
+interface FAQTwoProps {
+	content?: any[];
+}
+
+const FAQTwo: React.FC<FAQTwoProps> = ({ content }) => {
 	const [activeTab, setActiveTab] = useState<number>(0);
+	const data = content || faqTabs;
 
 	const handleTabClick = (index: number) => {
 		setActiveTab(index);
@@ -24,7 +29,7 @@ const FAQTwo: React.FC = () => {
 				</div>
 				<div className="tabs-box">
 					<ul className="tab-buttons clearfix">
-						{faqTabs.map((tab, index) => (
+						{data.map((tab, index) => (
 							<li
 								key={index}
 								className={`tab-btn ${activeTab === index ? "active-btn" : ""}`}
@@ -35,7 +40,7 @@ const FAQTwo: React.FC = () => {
 						))}
 					</ul>
 					<div className="tabs-content">
-						{faqTabs[activeTab].faqs.map((faq, index) => (
+						{data[activeTab]?.faqs.map((faq, index) => (
 							<div className="faq-block" key={index}>
 								<div className="inner">
 									<div className="title">

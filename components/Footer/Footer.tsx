@@ -4,7 +4,23 @@ import React from "react";
 import Link from "next/link";
 import { footerData } from "@/app/Dados/footerData"; // Importando o arquivo de dados
 
-const Footer: React.FC = () => {
+interface FooterProps {
+	content?: {
+		companyInfo: {
+			text: string;
+		};
+		copyright: string;
+	};
+}
+
+const Footer: React.FC<FooterProps> = ({ content }) => {
+	const data = {
+		companyInfo: {
+			text: content?.companyInfo?.text || footerData.companyInfo.text,
+		},
+		copyright: content?.copyright || footerData.copyright.text
+	};
+
 	return (
 		<footer className="footer-two">
 			{/* Camada de fundo */}
@@ -28,7 +44,7 @@ const Footer: React.FC = () => {
 									</Link>
 								</div>
 							</div>
-							<div className="footer-text">{footerData.companyInfo.text}</div>
+							<div className="footer-text">{data.companyInfo.text}</div>
 							{/* Links de redes sociais */}
 							<div className="social-links">
 								<ul className="clearfix">
@@ -101,7 +117,7 @@ const Footer: React.FC = () => {
 				<div className="auto-container">
 					<div className="inner clearfix">
 						<div className="copyright">
-							{footerData.copyright.text}
+							{data.copyright}
 							Desenvolvido por{" "}
 							<a href={footerData.copyright.developedBy.url} target="_blank">
 								{footerData.copyright.developedBy.name}

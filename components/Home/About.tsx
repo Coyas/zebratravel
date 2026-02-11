@@ -3,7 +3,29 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const AboutSection = () => {
+interface AboutProps {
+	content?: {
+		subtitle: string;
+		title: string;
+		text: string;
+		items: string[];
+	};
+}
+
+const AboutSection = ({ content }: AboutProps) => {
+	const defaultContent = {
+		subtitle: "Sobre a ZebraTravel",
+		title: "Agência de Turismo e Viagens",
+		text: "A ZebraTravel - Turismo e Viagens, localizada na Ilha do Fogo, oferece experiências únicas para quem deseja explorar as belezas naturais e culturais da região. Desde 2014, nossa missão é proporcionar aos nossos clientes momentos inesquecíveis através de passeios, excursões e atividades como pesca desportiva e mergulho.",
+		items: [
+			"Acomodações na charmosa Colonial House e Casa Konig.",
+			"Atividades de Excurções a volta da Ilha.",
+			"Transferes e excursões personalizadas."
+		]
+	};
+
+	const data = content || defaultContent;
+
 	return (
 		<section className="about-us">
 			<div className="floated-icon right">
@@ -25,29 +47,22 @@ const AboutSection = () => {
 							data-wow-delay="0ms"
 						>
 							<div className="title-box">
-								<div className="subtitle">Sobre a ZebraTravel</div>
+								<div className="subtitle">{data.subtitle}</div>
 								<h2>
 									<i className="bg-vector"></i>
-									<span>Agência de Turismo e Viagens</span>
+									<span>{data.title}</span>
 								</h2>
 								<div className="text">
-									A ZebraTravel - Turismo e Viagens, localizada na Ilha do Fogo,
-									oferece experiências únicas para quem deseja explorar as
-									belezas naturais e culturais da região. Desde 2014, nossa
-									missão é proporcionar aos nossos clientes momentos
-									inesquecíveis através de passeios, excursões e atividades como
-									pesca desportiva e mergulho.
+									{data.text}
 								</div>
 							</div>
 							<div className="lower-box">
 								<div className="lower-inner clearfix">
 									<div className="text-content">
 										<ul>
-											<li>
-												Acomodações na charmosa Colonial House e Casa Konig.
-											</li>
-											<li>Atividades de Excurções a volta da Ilha.</li>
-											<li>Transferes e excursões personalizadas.</li>
+											{data.items.map((item, index) => (
+												<li key={index}>{item}</li>
+											))}
 										</ul>
 									</div>
 									<div className="image-box">

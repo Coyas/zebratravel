@@ -16,9 +16,10 @@ type SectionType = 0 | 1; // Tipando como número para os valores possíveis (0 
 
 interface QualSectionProps {
 	sectionType: SectionType;
+	footerContent?: any;
 }
 
-const QualSection: React.FC<QualSectionProps> = ({ sectionType }) => {
+const QualSection: React.FC<QualSectionProps> = ({ sectionType, footerContent }) => {
 	const pathname = usePathname();
 
 	// Verifica se a rota atual é a página inicial
@@ -64,9 +65,9 @@ const QualSection: React.FC<QualSectionProps> = ({ sectionType }) => {
 			return (
 				<>
 					{/* HFooter é renderizado apenas na página inicial */}
-					{isHomePage && <HFooter />}
+					{isHomePage && <HFooter content={footerContent} />}
 					{/* Footer é renderizado em todas as páginas, exceto na home */}
-					{!isHomePage && <Footer />}
+					{!isHomePage && <Footer content={footerContent} />}
 				</>
 			);
 		}

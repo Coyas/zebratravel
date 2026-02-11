@@ -1,17 +1,18 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
-import { termsData, Term } from "@/app/Dados/termos"; // Importa os dados simulados
+import { termsData } from "@/app/Dados/termos";
 import InerBanner from "@/components/InerBanner";
 import bgImage from "@/public/images/background/banner-image-1.jpg";
+import { getAllContent } from "@/app/actions/content";
 
-// Definindo a interface para o componente TermBlock
+interface Term {
+	title: string;
+	text: string;
+}
+
 interface TermBlockProps {
 	title: string;
 	text: string;
 }
 
-// Componente TermBlock
 const TermBlock: React.FC<TermBlockProps> = ({ title, text }) => {
 	return (
 		<div className="term-block">
@@ -25,19 +26,9 @@ const TermBlock: React.FC<TermBlockProps> = ({ title, text }) => {
 	);
 };
 
-// Componente principal de termos e condições
-const TermsSection: React.FC = () => {
-	// Usando o tipo correto para o estado
-	const [terms, setTerms] = useState<Term[]>([]);
-
-	// Simula a chamada da API
-	useEffect(() => {
-		// Aqui você pode substituir pela sua chamada de API
-		// Exemplo: fetch('sua-api-endpoint').then(response => response.json()).then(data => setTerms(data));
-
-		// Para este exemplo, vamos apenas usar os dados simulados
-		setTerms(termsData);
-	}, []); // O array vazio garante que isso aconteça apenas uma vez quando o componente for montado
+const TermsSection = async () => {
+	const content = await getAllContent();
+	const terms = content?.terms || termsData;
 
 	return (
 		<>
@@ -47,13 +38,13 @@ const TermsSection: React.FC = () => {
 					<div className="content-box">
 						<div className="row clearfix">
 							<div className="text-col col-lg-6 col-md-12 col-sm-12">
-								{terms.slice(0, 4).map((term, index) => (
+								{terms.slice(0, 4).map((term: Term, index: number) => (
 									<TermBlock key={index} title={term.title} text={term.text} />
 								))}
 							</div>
 
 							<div className="text-col col-lg-6 col-md-12 col-sm-12">
-								{terms.slice(4).map((term, index) => (
+								{terms.slice(4).map((term: Term, index: number) => (
 									<TermBlock key={index} title={term.title} text={term.text} />
 								))}
 							</div>

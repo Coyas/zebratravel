@@ -24,6 +24,31 @@ export default function DashboardLayout({
 						Visão Geral
 					</Link>
 					<Link
+						href="/dashboard/destinos"
+						className="block px-6 py-2 text-gray-600 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+					>
+						Destinos
+					</Link>
+					<Link
+						href="/dashboard/excursoes"
+						className="block px-6 py-2 text-gray-600 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+					>
+						Excursões
+					</Link>
+					<Link
+						href="/dashboard/posts"
+						className="block px-6 py-2 text-gray-600 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+					>
+						Blog (Posts)
+					</Link>
+					<Link
+						href="/dashboard/loja"
+						className="block px-6 py-2 text-gray-600 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+					>
+						Loja
+					</Link>
+					<div className="my-4 border-t border-gray-200 dark:border-gray-700"></div>
+					<Link
 						href="/dashboard/bookings"
 						className="block px-6 py-2 text-gray-600 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
 					>
@@ -40,6 +65,12 @@ export default function DashboardLayout({
 						className="block px-6 py-2 text-gray-600 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
 					>
 						Configurações
+					</Link>
+					<Link
+						href="/dashboard/content"
+						className="block px-6 py-2 text-gray-600 hover:bg-gray-200 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+					>
+						Editor de Conteúdo
 					</Link>
 				</nav>
 			</aside>

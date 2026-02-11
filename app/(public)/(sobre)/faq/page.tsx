@@ -1,12 +1,14 @@
-"use client";
-
 import FAQTwo from "@/components/Faq/Faqtwo";
 import FAQOne from "@/components/Faq/FaqOne";
+import { getAllContent } from "@/app/actions/content";
 
-const FAQ = () => {
+const FAQ = async () => {
+	const content = await getAllContent();
+	const faqData = content?.faq;
+
 	return (
 		<>
-			<FAQTwo />
+			<FAQTwo content={faqData} />
 			<FAQOne />
 		</>
 	);

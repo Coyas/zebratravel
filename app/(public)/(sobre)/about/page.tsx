@@ -1,12 +1,14 @@
-"use client";
-
 import InerBanner from "@/components/InerBanner";
 import bgImage from "@/public/images/background/banner-image-1.jpg";
 import AboutSection from "@/components/Home/About";
 import WhyChoose from "@/components/Home/Wwedo";
 import TeamSection from "@/components/Team/TeamSection";
+import { getAllContent } from "@/app/actions/content";
 
-const About = () => {
+const About = async () => {
+	const content = await getAllContent();
+	const homeContent = content?.home || {};
+
 	return (
 		<>
 			{/* <Header {...HeaderProps}/> */}
@@ -15,7 +17,7 @@ const About = () => {
 			<InerBanner backgroundImage={bgImage.src} />
 
 			{/* <!-- About Us Section--> */}
-			<AboutSection />
+			<AboutSection content={homeContent.about} />
 			{/* <!--End About Us Section--> */}
 
 			{/* <!-- Why Section--> */}

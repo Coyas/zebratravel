@@ -11,16 +11,20 @@ import Testimonials from "@/components/Home/Testimonials";
 import Sponsors from "@/components/Home/Sponsors";
 import NewsSection from "@/components/Home/NewsSection";
 import SubscribeSection from "@/components/Home/SubscribeSection";
+import { getAllContent } from "../actions/content";
 
-export default function Home() {
+export default async function Home() {
+	const content = await getAllContent();
+	const homeContent = content?.home || {};
+
 	return (
 		<>
 			{/* <!-- Banner Section --> */}
-			<Banner />
+			<Banner content={homeContent.banner} />
 			{/* <!-- End Banner Section --> */}
 
 			{/* <!-- About Us Section--> */}
-			<AboutSection />
+			<AboutSection content={homeContent.about} />
 			{/* <!--End About Us Section--> */}
 
 			{/* <!-- Popular Section--> */}

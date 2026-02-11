@@ -4,13 +4,17 @@ import Script from "next/script";
 import QualSection from "@/components/Footer/qualSection";
 import HiddenNav from "@/components/Navbar/HiddenNav";
 import Maintenance from "@/components/Maintenance";
+import { getMaintenanceMode } from "@/app/actions/settings";
+import { getAllContent } from "@/app/actions/content";
 
-export default function PublicLayout({
+export default async function PublicLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	const MANUT: number = 1; // 0 = site online, 1 = site em manutenção (site offline)
+	const MANUT = await getMaintenanceMode(); // 0 = site online, 1 = site em manutenção (site offline)
+	const content = await getAllContent();
+	const footerContent = content?.footer;
 
 	if (MANUT === 1) {
 		return (
@@ -68,7 +72,7 @@ export default function PublicLayout({
 					<div className="search-backdrop"></div>
 
 					{/* <!-- Main Header--> */}
-					<QualSection sectionType={1} />
+					<QualSection sectionType={1} footerContent={footerContent} />
 					{/* <!--End Main Header --> */}
 
 					{/* <!--Search Backdrop--> */}
@@ -84,7 +88,7 @@ export default function PublicLayout({
 					{children}
 
 					{/* footer */}
-					<QualSection sectionType={0} />
+					<QualSection sectionType={0} footerContent={footerContent} />
 					{/* end footer */}
 				</div>
 				{/* <!--End pagewrapper-->  */}

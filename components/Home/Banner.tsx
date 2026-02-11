@@ -3,7 +3,25 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const Banner = () => {
+interface BannerProps {
+	content?: {
+		subtitle: string;
+		title: string;
+		text: string;
+		buttonText: string;
+	};
+}
+
+const Banner = ({ content }: BannerProps) => {
+	const defaultContent = {
+		subtitle: "Nunca Para de",
+		title: "Explorar",
+		text: "A ZebraTravel oferece uma experiência única em turismo e viagens na Ilha do Fogo. Explore nossa agência de turismo, a pousada Colonial House, excurções e muito mais. Conecte-se com a beleza e a cultura local!",
+		buttonText: "Ver todos os passeios"
+	};
+
+	const data = content || defaultContent;
+
 	return (
 		<section className="banner-section">
 			<div className="banner-container">
@@ -23,15 +41,12 @@ const Banner = () => {
 													height={800}
 												/>
 											</div>
-											<h2>Nunca Para de</h2>
+											<h2>{data.subtitle}</h2>
 											<h1>
-												<span>Explorar</span>
+												<span>{data.title}</span>
 											</h1>
 											<div className="text">
-												A ZebraTravel oferece uma experiência única em turismo e
-												viagens na Ilha do Fogo. Explore nossa agência de
-												turismo, a pousada Colonial House, excurções e muito
-												mais. Conecte-se com a beleza e a cultura local!
+												{data.text}
 											</div>
 											<div className="links-box clearfix">
 												<div className="link">
@@ -40,7 +55,7 @@ const Banner = () => {
 														className="theme-btn btn-style-one"
 													>
 														<span>
-															Ver todos os passeios
+															{data.buttonText}
 															<i className="icon">
 																<Image
 																	src="/images/icons/logo-icon.svg"
