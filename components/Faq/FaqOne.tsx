@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { faqs } from "@/app/Dados/faqDataMost"; // Importando os dados de FAQ
 
@@ -21,9 +23,8 @@ const FAQOne: React.FC = () => {
 						<div className="accordion-box clearfix">
 							{faqs.map((faq, index) => (
 								<div
-									className={`accordion block ${
-										activeFaq === index ? "active-block" : ""
-									}`}
+									className={`accordion block ${activeFaq === index ? "active-block" : ""
+										}`}
 									key={index}
 								>
 									<div
@@ -32,15 +33,13 @@ const FAQOne: React.FC = () => {
 									>
 										{faq.question}{" "}
 										<i
-											className={`fa-regular fa-angle-${
-												activeFaq === index ? "up" : "down"
-											}`}
+											className={`fa-regular fa-angle-${activeFaq === index ? "up" : "down"
+												}`}
 										></i>
 									</div>
 									<div
-										className={`acc-content ${
-											activeFaq === index ? "active" : ""
-										}`}
+										className={`acc-content ${activeFaq === index ? "active" : ""
+											}`}
 									>
 										<div className="content">
 											<div className="text">{faq.answer}</div>
@@ -54,9 +53,8 @@ const FAQOne: React.FC = () => {
 						<div className="accordion-box clearfix">
 							{faqs.map((faq, index) => (
 								<div
-									className={`accordion block ${
-										activeFaq === index ? "active-block" : ""
-									}`}
+									className={`accordion block ${activeFaq === index ? "active-block" : ""
+										}`}
 									key={index}
 								>
 									<div
@@ -65,15 +63,13 @@ const FAQOne: React.FC = () => {
 									>
 										{faq.question}{" "}
 										<i
-											className={`fa-regular fa-angle-${
-												activeFaq === index ? "up" : "down"
-											}`}
+											className={`fa-regular fa-angle-${activeFaq === index ? "up" : "down"
+												}`}
 										></i>
 									</div>
 									<div
-										className={`acc-content ${
-											activeFaq === index ? "active" : ""
-										}`}
+										className={`acc-content ${activeFaq === index ? "active" : ""
+											}`}
 									>
 										<div className="content">
 											<div className="text">{faq.answer}</div>

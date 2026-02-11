@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { faqTabs } from "@/app/Dados/faqDataAll"; // Importando os dados de FAQ
 
@@ -40,7 +42,7 @@ const FAQTwo: React.FC<FAQTwoProps> = ({ content }) => {
 						))}
 					</ul>
 					<div className="tabs-content">
-						{data[activeTab]?.faqs.map((faq, index) => (
+						{data[activeTab]?.faqs.map((faq: { question: string; answer: string }, index: number) => (
 							<div className="faq-block" key={index}>
 								<div className="inner">
 									<div className="title">
