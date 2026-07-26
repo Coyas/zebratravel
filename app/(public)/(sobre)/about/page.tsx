@@ -21,11 +21,11 @@ const About = async () => {
 			{/* <!--End About Us Section--> */}
 
 			{/* <!-- Why Section--> */}
-			<WhyChoose />
+			<WhyChoose content={homeContent.wwedo} />
 			{/* <!-- End Why Section--> */}
 
 			{/* TeamSection */}
-			<TeamSection />
+			<TeamSection content={content?.team} />
 			{/* END TeamSection */}
 		</>
 	);

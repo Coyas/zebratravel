@@ -24,7 +24,7 @@ const PostDetails = ({ posts }: { posts: Post }) => {
 						<div className="inner-box">
 							<div className="image-box">
 								<div className="image">
-									<img src="/images/resource/news-4.jpg" alt="" title="" />
+									<img src={posts.image || "/images/resource/news-4.jpg"} alt={posts.title} title={posts.title} />
 								</div>
 							</div>
 							<div className="lower-content">
@@ -35,7 +35,7 @@ const PostDetails = ({ posts }: { posts: Post }) => {
 									</div>
 									<article className="post-details-data">
 										<h4>{posts.title}</h4>
-										{posts.description}
+										{posts.content || posts.description}
 									</article>
 								</div>
 								{/* <!-- Post Share Options--> */}

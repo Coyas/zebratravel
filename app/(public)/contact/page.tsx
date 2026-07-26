@@ -1,13 +1,12 @@
-"use client";
-
 // import CartSidebar from "@/components/CartSidebar";
 import InerBanner from "@/components/InerBanner";
 import bgImage from "@/public/images/background/banner-image-1.jpg";
 import FindUs from "@/components/contacto/Findus";
 import ContactForm from "@/components/contacto/ContactForm";
+import { getAllContent } from "@/app/actions/content";
 
-const Contact = () => {
-	// Exemplo de CartItem
+const Contact = async () => {
+	const content = await getAllContent();
 
 	return (
 		<>
@@ -17,11 +16,11 @@ const Contact = () => {
 			<InerBanner backgroundImage={bgImage.src} />
 
 			{/* ContactForm */}
-			<ContactForm />
+			<ContactForm content={content?.contact} />
 			{/* End ContactForm */}
 
 			{/* Find us */}
-			<FindUs />
+			<FindUs content={content?.contact} />
 			{/* End Find us */}
 
 			<section className="map-section">

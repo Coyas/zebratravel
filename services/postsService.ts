@@ -1,16 +1,33 @@
+import { api } from "@/lib/api";
 
-import { posts } from "@/app/Dados/postsData";
-
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+export interface Post {
+	id: number;
+	title: string;
+	author: string;
+	date: string;
+	image: string;
+	content: string;
+	category: string;
+	description: string;
+	slug: string;
+}
 
 export const postsService = {
-	getAll: async () => {
-		await delay(500);
-		return [...posts];
+	getAll: async (): Promise<Post[]> => {
+		try {
+			return await api.get<Post[]>("/api/posts");
+		} catch (error) {
+			console.error("Error fetching posts:", error);
+			return [];
+		}
 	},
 
-    delete: async (id: number) => {
-        await delay(500);
-        console.log(`Deleted post with id ${id}`);
-    }
+	getBySlug: async (slug: string): Promise<Post | undefined> => {
+		try {
+			return await api.get<Post>(`/api/posts/${slug}`);
+		} catch (error) {
+			console.error("Error fetching post:", error);
+			return undefined;
+		}
+	},
 };

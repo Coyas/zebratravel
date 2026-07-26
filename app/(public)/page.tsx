@@ -12,10 +12,14 @@ import Sponsors from "@/components/Home/Sponsors";
 import NewsSection from "@/components/Home/NewsSection";
 import SubscribeSection from "@/components/Home/SubscribeSection";
 import { getAllContent } from "../actions/content";
+import { productsService } from "@/services/productsService";
+import { destinosService } from "@/services/destinosService";
 
 export default async function Home() {
 	const content = await getAllContent();
 	const homeContent = content?.home || {};
+	const produtos = await productsService.getAll();
+	const tours = await destinosService.getAll();
 
 	return (
 		<>
@@ -28,27 +32,27 @@ export default async function Home() {
 			{/* <!--End About Us Section--> */}
 
 			{/* <!-- Popular Section--> */}
-			<PopularTrekking />
+			<PopularTrekking content={homeContent.tourspop} />
 			{/* <!-- End Popular Section--> */}
 
 			{/* <!-- Why Section--> */}
-			<WhyChoose />
+			<WhyChoose content={homeContent.wwedo} />
 			{/* <!-- End Why Section--> */}
 
 			{/* <!-- Trending Destinations Section--> */}
-			<Topdestinos />
+			<Topdestinos content={homeContent.topdestinos} tours={tours} />
 			{/* <!-- End Trending Destinations Section--> */}
 
 			{/*<!-- Products Section--> */}
-			<ProductSection />
+			<ProductSection produtos={produtos} content={homeContent.products} />
 			{/*<!-- End Products Section--> */}
 
 			{/* <!--Group Travel Section--> */}
-			<GroupTravel />
+			<GroupTravel content={homeContent.groupTravel} />
 			{/* <!--Group Travel Section--> */}
 
 			{/* <!-- Testimonials Section--> */}
-			<Testimonials />
+			<Testimonials content={homeContent.testimonials} />
 			{/* <!-- End Testimonials Section--> */}
 
 			{/* <!--Sponsors Section--> */}
@@ -56,11 +60,11 @@ export default async function Home() {
 			{/* <!-- End Sponsors Section--> */}
 
 			{/* <!--News Section--> */}
-			<NewsSection />
+			<NewsSection content={homeContent.newsSection} />
 			{/* <!-- End News Section--> */}
 
 			{/* <!--Subscribe Section--> */}
-			<SubscribeSection />
+			<SubscribeSection content={homeContent.subscribe} />
 			{/* <!-- End Subscribe Section--> */}
 		</>
 	);

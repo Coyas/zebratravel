@@ -1,7 +1,8 @@
-import { posts } from "@/app/Dados/postsData";
+import { postsService } from "@/services/postsService";
 import Link from "next/link";
 
-const RecentPosts = () => {
+const RecentPosts = async () => {
+	const posts = await postsService.getAll();
 	return (
 		<>
 			<div className="sidebar-widget popular-posts">
@@ -9,16 +10,16 @@ const RecentPosts = () => {
 					<h5>Posts Recentes</h5>
 				</div>
 
-				{posts.map((value, index) => (
-					<article className="post" key={index}>
+				{posts.slice(0, 3).map((value) => (
+					<article className="post" key={value.id}>
 						<figure className="post-thumb">
 							<img src={value.image} alt="" />
-							<Link href={value.slug} className="overlay-box">
+							<Link href={`/posts/${value.slug}`} className="overlay-box">
 								<span className="icon fa fa-link"></span>
 							</Link>
 						</figure>
 						<div className="text">
-							<Link href={value.slug}>{value.title}</Link>
+							<Link href={`/posts/${value.slug}`}>{value.title}</Link>
 						</div>
 						<div className="post-info">{value.date}</div>
 					</article>

@@ -1,6 +1,7 @@
 // Definindo os tipos dos itens de menu
 export interface MenuItem {
 	label: string;
+	i18nKey: string;
 	href: string;
 	subMenu?: MenuItem[];
 }
@@ -9,61 +10,34 @@ export interface MenuItem {
 export const menuData: MenuItem[] = [
 	{
 		label: "Home",
+		i18nKey: "nav.home",
 		href: "/",
-		// subMenu: [
-		// { label: "Home 01", href: "html/index.html" },
-		// { label: "Home 02", href: "html/index-2.html" },
-		// ],
-	},
-	{
-		label: "Sobre Nós",
-		href: "/about",
-		subMenu: [
-			// { label: "Our Team", href: "team.html" },
-			// { label: "Team Member", href: "team-member.html" },
-
-			{ label: "Galeria", href: "/galeria" },
-			{ label: "FAQs", href: "/faq" },
-		],
 	},
 	{
 		label: "Loja",
+		i18nKey: "nav.loja",
 		href: "/loja",
-		// subMenu: [
-		// 	{ label: "Our Shop", href: "shop.html" },
-		// 	{ label: "Product Details", href: "product-single.html" },
-		// 	{ label: "My Wishlist", href: "wishlist.html" },
-		// 	{ label: "Shopping Cart", href: "shopping-cart.html" },
-		// 	{ label: "Checkout", href: "checkout.html" },
-		// 	{ label: "Signup", href: "signup.html" },
-		// 	{ label: "Login", href: "login.html" },
-		// 	{ label: "Forgot Password", href: "reset-password.html" },
-		// ],
 	},
-	// { label: "Destinations", href: "destinations.html" },
-	{ label: "Excursões", href: "/excurcoes" },
+	{ label: "Excursões", i18nKey: "nav.excursoes", href: "/excurcoes" },
+	{ label: "Hotel", i18nKey: "nav.hotel", href: "/hotel" },
 	{
 		label: "Destinos",
+		i18nKey: "nav.destinos",
 		href: "/destinos",
-		// subMenu: [
-		// 	{ label: "Activities", href: "activities.html" },
-		// 	{ label: "Destinations 02", href: "destinations-2.html" },
-		// 	{ label: "Tours", href: "tours.html" },
-		// 	{ label: "Packages 01", href: "packages.html" },
-		// 	{ label: "Packages 02", href: "packages-2.html" },
-		// 	{ label: "Booking", href: "booking.html" },
-		// 	{ label: "Terms & Conditions", href: "terms-conditions.html" },
-		// 	{ label: "404 Page", href: "error-page.html" },
-		// ],
 	},
 	{
 		label: "Novidades",
+		i18nKey: "nav.novidades",
 		href: "/posts",
-		// subMenu: [
-		// 	{ label: "Our Blog", href: "blog.html" },
-		// 	{ label: "Blog Classic", href: "blog-2.html" },
-		// 	{ label: "Blog Details", href: "blog-single.html" },
-		// ],
 	},
-	{ label: "Contato", href: "/contact" },
+	{
+		label: "Sobre Nós",
+		i18nKey: "nav.sobre",
+		href: "/about",
+		subMenu: [
+			{ label: "Galeria", i18nKey: "nav.galeria", href: "/galeria" },
+			{ label: "FAQs", i18nKey: "nav.faqs", href: "/faq" },
+		],
+	},
+	{ label: "Contato", i18nKey: "nav.contato", href: "/contact" },
 ];

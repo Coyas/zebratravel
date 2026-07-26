@@ -1,26 +1,13 @@
-import fs from 'fs';
-import path from 'path';
+import { api } from "@/lib/api";
 
-const contentPath = path.join(process.cwd(), 'app', 'data', 'site-content.json');
-
+// Site content is managed by admins in ZebraDash; this app only reads it.
 export const contentService = {
-    getAllContent: async () => {
+    getAllContent: async (): Promise<any> => {
         try {
-            const data = fs.readFileSync(contentPath, 'utf8');
-            return JSON.parse(data);
+            return await api.get<any>("/api/content");
         } catch (error) {
-            console.error('Error reading content file:', error);
+            console.error("Error fetching site content:", error);
             return {};
         }
     },
-
-    updateContent: async (content: any) => {
-        try {
-            fs.writeFileSync(contentPath, JSON.stringify(content, null, 2), 'utf8');
-            return { success: true };
-        } catch (error) {
-            console.error('Error writing content file:', error);
-            return { success: false, error };
-        }
-    }
 };

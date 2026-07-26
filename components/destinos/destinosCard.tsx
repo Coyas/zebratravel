@@ -1,6 +1,6 @@
 // src/components/destinos/DestinosCard.tsx
 
-import { Tour } from "@/app/Dados/tourData";
+import { Tour } from "@/services/destinosService";
 
 interface DestinosCardProps {
 	destino: Tour;

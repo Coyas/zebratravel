@@ -5,8 +5,21 @@
 import { useState } from "react";
 import { locations } from "@/app/Dados/contact/locationData"; // Importando os dados de localização
 import { accordionItems } from "@/app/Dados/contact/accordionData"; // Importando os dados do acordeão
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
+import { Localized, pickLocale } from "@/lib/i18n/resolveContent";
 
-const FindUs = () => {
+interface FindUsProps {
+	content?: { findUsTitle: Localized; findUsText: Localized };
+}
+
+const FindUs = ({ content }: FindUsProps) => {
+	const { locale, t } = useLanguage();
+	const data = content
+		? { findUsTitle: pickLocale(content.findUsTitle, locale), findUsText: pickLocale(content.findUsText, locale) }
+		: {
+				findUsTitle: "Encontre o nosso escritório no mapa",
+				findUsText: "Contacte-nos e prepare-se para uma melhor experiência de aventura em toda a sua vida. Basta procurar uma oportunidade de estar com a natureza.",
+			};
 	const [activeAccordion, setActiveAccordion] = useState<number | null>(null);
 
 	const toggleAccordion = (index: number) => {
@@ -24,13 +37,9 @@ const FindUs = () => {
 			<div className="auto-container">
 				<div className="title-box centered">
 					<h2>
-						<span>Encontre o nosso escritório no mapa</span>
+						<span>{data.findUsTitle}</span>
 					</h2>
-					<div className="text">
-						Contacte-nos e prepare-se para uma melhor experiência de aventura em
-						toda a sua vida. Basta procurar uma oportunidade de estar com a
-						natureza.
-					</div>
+					<div className="text">{data.findUsText}</div>
 				</div>
 				<div className="row clearfix">
 					{/* Map Column */}
@@ -52,7 +61,7 @@ const FindUs = () => {
 										<div className="loc-popup">
 											<div className="text">{loc.address}</div>
 											<div className="link">
-												<a href={loc.link}>Ver no mapa</a>
+												<a href={loc.link}>{t("contact.viewOnMap")}</a>
 											</div>
 										</div>
 									</div>

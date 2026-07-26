@@ -1,23 +1,19 @@
 // src/components/destinos/FilterTabs.tsx
 
 import React from "react";
-import { tourData } from "@/app/Dados/tourData";
 
 interface FilterTabsProps {
-	onFilter: (filter: string) => void; // Função para lidar com a filtragem
+	categories: string[];
+	active: string;
+	onFilter: (filter: string) => void;
 }
 
-const FilterTabs: React.FC<FilterTabsProps> = ({ onFilter }) => {
-	// Extrai as categorias únicas dos dados de tours
-	const categories = Array.from(
-		new Set(tourData.flatMap((tour) => tour.category))
-	);
-
+const FilterTabs: React.FC<FilterTabsProps> = ({ categories, active, onFilter }) => {
 	return (
 		<div className="gallery-filters centered clearfix">
 			<ul className="filter-tabs filter-btns clearfix">
 				<li
-					className="active filter"
+					className={active === "all" ? "active filter" : "filter"}
 					data-role="button"
 					data-filter="all"
 					onClick={() => onFilter("all")}
@@ -27,7 +23,7 @@ const FilterTabs: React.FC<FilterTabsProps> = ({ onFilter }) => {
 				{categories.map((category) => (
 					<li
 						key={category}
-						className="filter"
+						className={active === category ? "active filter" : "filter"}
 						data-role="button"
 						data-filter={`.${category}`}
 						onClick={() => onFilter(category)}

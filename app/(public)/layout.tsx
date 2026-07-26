@@ -6,6 +6,8 @@ import HiddenNav from "@/components/Navbar/HiddenNav";
 import Maintenance from "@/components/Maintenance";
 import { getMaintenanceMode } from "@/app/actions/settings";
 import { getAllContent } from "@/app/actions/content";
+import { LanguageProvider } from "@/lib/i18n/LanguageProvider";
+import { CartProvider } from "@/lib/CartContext";
 
 export default async function PublicLayout({
 	children,
@@ -65,6 +67,8 @@ export default async function PublicLayout({
 			</head>
 
 			<body>
+				<LanguageProvider>
+				<CartProvider>
 				<div className="page-wrapper">
 					{/* <!-- Preloader --> */}
 					{/* <div className="preloader"></div> */}
@@ -92,6 +96,8 @@ export default async function PublicLayout({
 					{/* end footer */}
 				</div>
 				{/* <!--End pagewrapper-->  */}
+				</CartProvider>
+				</LanguageProvider>
 
 				{/* <!--Scroll to top--> */}
 				<div className="scroll-to-top scroll-to-target" data-target="html">

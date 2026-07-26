@@ -1,11 +1,22 @@
 // src/app/components/ProductSection.tsx
-
 "use client";
 
 import React from "react";
-import { productsData } from "@/app/Dados/productsData"; // Importando os dados
+import { Produto } from "@/services/productsService";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
+import { Localized, pickLocale } from "@/lib/i18n/resolveContent";
 
-const ProductSection: React.FC = () => {
+interface ProductSectionProps {
+	produtos: Produto[];
+	content?: { subtitle: Localized; title: Localized; seeMore: Localized };
+}
+
+const ProductSection: React.FC<ProductSectionProps> = ({ produtos: productsData, content }) => {
+	const { locale } = useLanguage();
+	const data = content
+		? { subtitle: pickLocale(content.subtitle, locale), title: pickLocale(content.title, locale), seeMore: pickLocale(content.seeMore, locale) }
+		: { subtitle: "Comprar agora", title: "Produtos em destaques", seeMore: "Ver todos os produtos" };
+
 	return (
 		<section className="products-section">
 			<div className="floated-icon left">
@@ -16,17 +27,17 @@ const ProductSection: React.FC = () => {
 			</div>
 			<div className="auto-container">
 				<div className="title-box centered">
-					<div className="subtitle">Comprar agora</div>
+					<div className="subtitle">{data.subtitle}</div>
 					<h2>
 						<i className="bg-vector"></i>
-						<span>Produtos em destaques</span>
+						<span>{data.title}</span>
 					</h2>
 				</div>
 
 				<div className="row clearfix">
-					{productsData.map((product, index) => (
+					{productsData.slice(0, 8).map((product) => (
 						<div
-							key={index}
+							key={product.id}
 							className="prod-block col-xl-3 col-lg-4 col-md-6 col-sm-12"
 						>
 							<div className="inner-box">
@@ -75,9 +86,9 @@ const ProductSection: React.FC = () => {
 				</div>
 
 				<div className="see-more-link">
-					<a href="shop.html" className="theme-btn btn-style-one">
+					<a href="/loja" className="theme-btn btn-style-one">
 						<span>
-							Ver todos os produtos{" "}
+							{data.seeMore}{" "}
 							<i className="icon">
 								<img src="/images/icons/logo-icon.svg" alt="Logo Icon" />
 							</i>

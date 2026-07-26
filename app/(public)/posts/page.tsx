@@ -2,9 +2,10 @@ import PostGrid from "@/components/posts/PostGrid";
 import Sidebar from "@/components/posts/sidebar";
 import bgImage from "@/public/images/background/banner-image-1.jpg";
 import InerBanner from "@/components/InerBanner";
-import { posts } from "@/app/Dados/postsData";
+import { postsService } from "@/services/postsService";
 
-const Posts = () => {
+const Posts = async () => {
+	const posts = await postsService.getAll();
 	return (
 		<>
 			<InerBanner backgroundImage={bgImage.src} />

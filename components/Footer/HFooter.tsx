@@ -1,6 +1,10 @@
+"use client";
+
 import { footerData } from "@/app/Dados/footerData";
 import Image from "next/image";
 import Link from "next/link";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
+import { Localized, pickLocale } from "@/lib/i18n/resolveContent";
 
 interface Contact {
 	location: string;
@@ -43,18 +47,19 @@ type FooterLinkKeys = keyof FooterLinks;
 interface HFooterProps {
 	content?: {
 		companyInfo: {
-			text: string;
+			text: Localized;
 		};
-		copyright: string;
+		copyright: Localized;
 	};
 }
 
 const HFooter = ({ content }: HFooterProps) => {
+	const { locale, t } = useLanguage();
 	const data = {
 		companyInfo: {
-			text: content?.companyInfo?.text || footerData.companyInfo.text,
+			text: content?.companyInfo?.text ? pickLocale(content.companyInfo.text, locale) : footerData.companyInfo.text,
 		},
-		copyright: content?.copyright || footerData.copyright.text
+		copyright: content?.copyright ? pickLocale(content.copyright, locale) : footerData.copyright.text
 	};
 
 	return (
@@ -140,10 +145,10 @@ const HFooter = ({ content }: HFooterProps) => {
 									>
 										<h6>
 											{section === "aboutUs"
-												? "Sobre nós"
+												? t("footer.aboutUs")
 												: section === "usefulLinks"
-													? "Links Úteis"
-													: "Acesso Rápidos"}
+													? t("footer.usefulLinks")
+													: t("footer.quickAccess")}
 										</h6>
 										<div className="links">
 											<ul>

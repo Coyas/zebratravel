@@ -2,14 +2,12 @@ import InerBanner from "@/components/InerBanner";
 import bgImage from "@/public/images/background/banner-image-1.jpg";
 import PostDetails from "@/components/posts/single/PostDetails";
 import Sidebar from "@/components/posts/single/Sidebar";
-import { posts } from "@/app/Dados/postsData";
-// import { Post } from "@/components/posts/single/PostDetails";
+import { postsService } from "@/services/postsService";
 
 const PostPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
 	const { slug } = await params;
 
-	// Encontrar o primeiro post que corresponde ao slug
-	const post = posts.find((post) => post.slug === slug);
+	const post = await postsService.getBySlug(slug);
 
 	return (
 		<>

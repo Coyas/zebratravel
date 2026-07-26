@@ -1,12 +1,13 @@
 // PackageDetail.tsx
 import React from "react";
-import { excursoesData } from "@/app/Dados/excurcoesData"; // Adjust the path as necessary
+import { excursoesService } from "@/services/excursoesService";
+import BookingWidget from "./BookingWidget";
 type ExcurcoesDetailsProps = {
 	slug: string;
 };
 
 const ExcurcoesDetails = async ({ slug }: ExcurcoesDetailsProps) => {
-	const excursion = excursoesData.find((item) => item.slug === slug);
+	const excursion = await excursoesService.getBySlug(slug);
 
 	if (!excursion) {
 		return <div>Excursion not found!</div>; // Handle case when excursion is not found
@@ -156,87 +157,7 @@ const ExcurcoesDetails = async ({ slug }: ExcurcoesDetailsProps) => {
 					<div className="sidebar-column col-xl-4 col-lg-5 col-md-12 col-sm-12">
 						<div className="inner-column">
 							{/* Booking Widget */}
-							<div
-								className="sidebar-widget booking-widget"
-								style={{
-									backgroundImage: `url(/images/background/booking-bg.jpg)`,
-								}}
-							>
-								<h5>Book this Trek</h5>
-								<div className="booking-form">
-									<form method="post" action="sendemail.php" id="contact-form">
-										<div className="form-group">
-											<input
-												type="text"
-												name="username"
-												placeholder="Full Name"
-												required
-											/>
-											<span className="icon fal fa-user fa-fw"></span>
-										</div>
-										<div className="form-group">
-											<input
-												type="email"
-												name="email"
-												placeholder="Email"
-												required
-											/>
-											<span className="icon fal fa-envelope fa-fw"></span>
-										</div>
-										<div className="form-group">
-											<input
-												type="text"
-												name="phone"
-												placeholder="Phone *"
-												required
-											/>
-											<span className="icon fal fa-phone fa-fw"></span>
-										</div>
-										<div className="form-group">
-											<input
-												type="text"
-												className="datepicker"
-												name="time"
-												placeholder="DD - MM - YYYY"
-												required
-											/>
-											<span className="icon fal fa-calendar fa-fw"></span>
-										</div>
-										<div className="form-group">
-											<input
-												type="text"
-												name="time"
-												placeholder="Guest"
-												required
-											/>
-											<div className="item-quantity">
-												<div className="quantity-spinner">
-													<button type="button" className="minus">
-														<span className="fa fa-minus"></span>
-													</button>
-													<input
-														type="text"
-														name="product"
-														value="2"
-														className="prod_qty"
-														readOnly
-													/>
-													<button type="button" className="plus">
-														<span className="fa fa-plus"></span>
-													</button>
-												</div>
-											</div>
-										</div>
-										<div className="form-group">
-											<button className="theme-btn send-btn">
-												<span className="txt">
-													Send Now <i className="fa fa-angle-right"></i>
-												</span>
-											</button>
-										</div>
-									</form>
-								</div>
-							</div>
+							<BookingWidget slug={excursion.slug} title={excursion.title} price={excursion.price} />
 							{/* Follow Widget */}
 							<div className="sidebar-widget follow-widget">
 								<div className="sidebar-title">

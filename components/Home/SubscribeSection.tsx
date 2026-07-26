@@ -1,8 +1,44 @@
 "use client";
 
 import React, { useState } from "react";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
+import { Localized, pickLocale } from "@/lib/i18n/resolveContent";
 
-const SubscribeSection = () => {
+interface SubscribeSectionProps {
+	content?: {
+		subtitle: Localized;
+		title: Localized;
+		text: Localized;
+		placeholder: Localized;
+		button: Localized;
+		successMessage: Localized;
+		errorMessage: Localized;
+	};
+}
+
+const defaultContent = {
+	subtitle: "Newsletter",
+	title: "SUBSCREVA AGORA",
+	text: "Fique por dentro das novidades! Inscreva-se na nossa newsletter e receba as últimas atualizações sobre nossas promoções, eventos e muito mais diretamente no seu e-mail!",
+	placeholder: "Endereço de E-mail",
+	button: "inscrever",
+	successMessage: "Obrigado Por Subscrever!",
+	errorMessage: "Por Favor, entre com um email valido.",
+};
+
+const SubscribeSection = ({ content }: SubscribeSectionProps) => {
+	const { locale } = useLanguage();
+	const data = content
+		? {
+				subtitle: pickLocale(content.subtitle, locale),
+				title: pickLocale(content.title, locale),
+				text: pickLocale(content.text, locale),
+				placeholder: pickLocale(content.placeholder, locale),
+				button: pickLocale(content.button, locale),
+				successMessage: pickLocale(content.successMessage, locale),
+				errorMessage: pickLocale(content.errorMessage, locale),
+			}
+		: defaultContent;
 	const [email, setEmail] = useState<string>("");
 	const [message, setMessage] = useState<string>("");
 
@@ -11,9 +47,9 @@ const SubscribeSection = () => {
 
 		// Simulando a ação de enviar o formulário
 		if (email) {
-			setMessage("Obrigado Por Subscrever!");
+			setMessage(data.successMessage);
 		} else {
-			setMessage("Por Favor, entre com um email valido.");
+			setMessage(data.errorMessage);
 		}
 
 		// Aqui você pode fazer a chamada para sua API ou lógica para enviar o email
@@ -47,13 +83,9 @@ const SubscribeSection = () => {
 						<div className="text-col col-xl-7 col-lg-6 col-md-12 col-sm-12">
 							<div className="inner">
 								<div className="title">
-									<div className="subtitle">Newsletter</div>
-									<h2>SUBSCREVA AGORA</h2>
-									<div className="text ">
-										Fique por dentro das novidades! Inscreva-se na nossa
-										newsletter e receba as últimas atualizações sobre nossas
-										promoções, eventos e muito mais diretamente no seu e-mail!
-									</div>
+									<div className="subtitle">{data.subtitle}</div>
+									<h2>{data.title}</h2>
+									<div className="text ">{data.text}</div>
 								</div>
 
 								{/* Formulário de inscrição */}
@@ -67,12 +99,12 @@ const SubscribeSection = () => {
 													name="email"
 													value={email}
 													onChange={(e) => setEmail(e.target.value)}
-													placeholder="Endereço de E-mail"
+													placeholder={data.placeholder}
 												/>
 											</div>
 											<button type="submit" className="theme-btn btn-style-one">
 												<span>
-													inscrever <i className="icon fa fa-paper-plane"></i>
+													{data.button} <i className="icon fa fa-paper-plane"></i>
 												</span>
 											</button>
 										</div>

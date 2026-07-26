@@ -2,17 +2,20 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
+import { Localized, pickLocale } from "@/lib/i18n/resolveContent";
 
 interface BannerProps {
 	content?: {
-		subtitle: string;
-		title: string;
-		text: string;
-		buttonText: string;
+		subtitle: Localized;
+		title: Localized;
+		text: Localized;
+		buttonText: Localized;
 	};
 }
 
 const Banner = ({ content }: BannerProps) => {
+	const { locale } = useLanguage();
 	const defaultContent = {
 		subtitle: "Nunca Para de",
 		title: "Explorar",
@@ -20,7 +23,14 @@ const Banner = ({ content }: BannerProps) => {
 		buttonText: "Ver todos os passeios"
 	};
 
-	const data = content || defaultContent;
+	const data = content
+		? {
+				subtitle: pickLocale(content.subtitle, locale),
+				title: pickLocale(content.title, locale),
+				text: pickLocale(content.text, locale),
+				buttonText: pickLocale(content.buttonText, locale),
+			}
+		: defaultContent;
 
 	return (
 		<section className="banner-section">

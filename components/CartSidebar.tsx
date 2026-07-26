@@ -1,40 +1,15 @@
 // components/CartSidebar.tsx
 "use client";
 import React from "react";
-
-type CartItem = {
-	id: number;
-	name: string;
-	price: number;
-	quantity: number;
-	imageUrl: string;
-};
+import Link from "next/link";
+import { useCart } from "@/lib/CartContext";
 
 type CartSidebarProps = {
-	items: CartItem[];
-	subtotal: number;
 	onClose: () => void;
 };
 
-const CartSidebar: React.FC<CartSidebarProps> = ({
-	items,
-	subtotal,
-	onClose,
-}) => {
-	const handleRemoveItem = (id: number) => {
-		console.log(`Remove item with id: ${id}`);
-		// Implement remove item logic here
-	};
-
-	const handleQuantityChange = (
-		e: React.ChangeEvent<HTMLInputElement>,
-		id: number
-	) => {
-		console.log(
-			`Change quantity for item with id: ${id}, new value: ${e.target.value}`
-		);
-		// Implement quantity change logic here
-	};
+const CartSidebar: React.FC<CartSidebarProps> = ({ onClose }) => {
+	const { items, subtotal, removeItem, setQuantity } = useCart();
 
 	return (
 		<div className="cart-sidebar">
@@ -43,18 +18,18 @@ const CartSidebar: React.FC<CartSidebarProps> = ({
 					<div className="closer-btn" onClick={onClose}>
 						<span>Close</span>
 					</div>
-					<h5>Shopping Cart</h5>
+					<h5>Carrinho de Compras</h5>
 				</div>
 
 				{/* If no items in the cart, display a message */}
 				{items.length === 0 ? (
 					<div className="empty-cart-message">
-						<p>Your cart is empty</p>
+						<p>O seu carrinho está vazio</p>
 					</div>
 				) : (
 					<div className="prod-box">
 						{items.map((item) => (
-							<div key={item.id} className="prod-block">
+							<div key={item.productId} className="prod-block">
 								<div className="prod-inner">
 									<div className="prod-thumb">
 										<a href="#">
@@ -63,7 +38,7 @@ const CartSidebar: React.FC<CartSidebarProps> = ({
 									</div>
 									<div
 										className="remove-item"
-										onClick={() => handleRemoveItem(item.id)}
+										onClick={() => removeItem(item.productId)}
 									>
 										<a href="#">
 											<i className="far fa-times"></i>
@@ -77,8 +52,9 @@ const CartSidebar: React.FC<CartSidebarProps> = ({
 											<input
 												className="qty-spinner"
 												type="number"
+												min={1}
 												value={item.quantity}
-												onChange={(e) => handleQuantityChange(e, item.id)}
+												onChange={(e) => setQuantity(item.productId, Number(e.target.value))}
 											/>
 										</div>
 									</div>
@@ -98,14 +74,14 @@ const CartSidebar: React.FC<CartSidebarProps> = ({
 				</div>
 				<div className="links clearfix">
 					<div className="left">
-						<a href="#" className="theme-btn btn-style-one">
-							<span>View Cart</span>
-						</a>
+						<Link href="/loja" className="theme-btn btn-style-one" onClick={onClose}>
+							<span>Ver Loja</span>
+						</Link>
 					</div>
 					<div className="right">
-						<a href="#" className="theme-btn btn-style-two">
+						<Link href="/checkout" className="theme-btn btn-style-two" onClick={onClose}>
 							<span>Checkout</span>
-						</a>
+						</Link>
 					</div>
 				</div>
 			</div>

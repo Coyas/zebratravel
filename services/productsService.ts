@@ -1,17 +1,42 @@
+import { api } from "@/lib/api";
 
-import { Produto, productsData } from "@/app/Dados/productsData";
+export interface Produto {
+	id: number;
+	imagemUrl: string;
+	titulo: string;
+	preco: string;
+	link: string;
+	categoria: string;
+}
 
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+interface ProductDto {
+	id: number;
+	title: string;
+	price: number;
+	imageUrl: string;
+	link: string;
+	category: string | null;
+}
+
+function fromDto(dto: ProductDto): Produto {
+	return {
+		id: dto.id,
+		imagemUrl: dto.imageUrl,
+		titulo: dto.title,
+		preco: `${dto.price.toFixed(2)}€`,
+		link: dto.link,
+		categoria: dto.category ?? "",
+	};
+}
 
 export const productsService = {
 	getAll: async (): Promise<Produto[]> => {
-		await delay(500);
-		return [...productsData];
+		try {
+			const data = await api.get<ProductDto[]>("/api/products");
+			return data.map(fromDto);
+		} catch (error) {
+			console.error("Error fetching products:", error);
+			return [];
+		}
 	},
-
-    // Using title as simulate ID since interface doesn't have one
-    delete: async (titulo: string) => {
-        await delay(500);
-        console.log(`Deleted product with title ${titulo}`);
-    }
 };

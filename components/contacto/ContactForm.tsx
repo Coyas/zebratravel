@@ -3,6 +3,8 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Swal from "sweetalert2";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
+import { Localized, pickLocale } from "@/lib/i18n/resolveContent";
 
 type FormValues = {
 	name: string;
@@ -12,7 +14,18 @@ type FormValues = {
 	message: string;
 };
 
-const ContactForm: React.FC = () => {
+interface ContactFormProps {
+	content?: { formTitle: Localized; formText: Localized };
+}
+
+const ContactForm: React.FC<ContactFormProps> = ({ content }) => {
+	const { locale, t } = useLanguage();
+	const data = content
+		? { formTitle: pickLocale(content.formTitle, locale), formText: pickLocale(content.formText, locale) }
+		: {
+				formTitle: "Como posso ajudar?",
+				formText: "Entre em contato conosco e prepare-se para uma melhor experiência de aventura em sua vida. Basta procurar oportunidades de estar com a natureza.",
+			};
 	const {
 		register,
 		handleSubmit,
@@ -25,7 +38,7 @@ const ContactForm: React.FC = () => {
 			Swal.fire({
 				position: "center",
 				icon: "success",
-				title: "Sua mensagem foi enviada",
+				title: t("contact.successTitle"),
 				showConfirmButton: false,
 				timer: 1500,
 			});
@@ -33,7 +46,7 @@ const ContactForm: React.FC = () => {
 			Swal.fire({
 				position: "center",
 				icon: "error",
-				title: "não foi possivel enviar a mensagem",
+				title: t("contact.errorTitle"),
 				showConfirmButton: false,
 				timer: 1500,
 			});
@@ -111,13 +124,9 @@ const ContactForm: React.FC = () => {
 
 				<div className="title-box centered">
 					<h2>
-						<span>Como posso ajudar?</span>
+						<span>{data.formTitle}</span>
 					</h2>
-					<div className="text">
-						Entre em contato conosco e prepare-se para uma melhor experiência de
-						aventura em sua vida. Basta procurar oportunidades de estar com a
-						natureza.
-					</div>
+					<div className="text">{data.formText}</div>
 				</div>
 
 				<div className="form-box site-form">
@@ -126,13 +135,13 @@ const ContactForm: React.FC = () => {
 							<div className="row clearfix">
 								<div className="form-group col-lg-6 col-md-6 col-sm-12">
 									<div className="f-label">
-										Seu Nome <i>*</i>
+										{t("contact.yourName")} <i>*</i>
 									</div>
 									<div className="field-inner">
 										<input
 											type="text"
-											placeholder="Seu Nome"
-											{...register("name", { required: "Nome é obrigatorio" })}
+											placeholder={t("contact.yourName")}
+											{...register("name", { required: t("contact.nameRequired") })}
 										/>
 										{errors.name && <span>{errors.name.message}</span>}
 									</div>
@@ -140,14 +149,14 @@ const ContactForm: React.FC = () => {
 
 								<div className="form-group col-lg-6 col-md-6 col-sm-12">
 									<div className="f-label">
-										Seu Email <i>*</i>
+										{t("contact.yourEmail")} <i>*</i>
 									</div>
 									<div className="field-inner">
 										<input
 											type="email"
-											placeholder="Seu Email"
+											placeholder={t("contact.yourEmail")}
 											{...register("email", {
-												required: "Email é obrigatorio",
+												required: t("contact.emailRequired"),
 											})}
 										/>
 										{errors.email && <span>{errors.email.message}</span>}
@@ -156,14 +165,14 @@ const ContactForm: React.FC = () => {
 
 								<div className="form-group col-lg-6 col-md-6 col-sm-12">
 									<div className="f-label">
-										Seu Contato <i>*</i>
+										{t("contact.yourPhone")} <i>*</i>
 									</div>
 									<div className="field-inner">
 										<input
 											type="text"
-											placeholder="Seu telefone"
+											placeholder={t("contact.yourPhone")}
 											{...register("phone", {
-												required: "numero de contato é obrigatorio",
+												required: t("contact.phoneRequired"),
 											})}
 										/>
 										{errors.phone && <span>{errors.phone.message}</span>}
@@ -172,14 +181,14 @@ const ContactForm: React.FC = () => {
 
 								<div className="form-group col-lg-6 col-md-6 col-sm-12">
 									<div className="f-label">
-										Assunto <i>*</i>
+										{t("contact.subject")} <i>*</i>
 									</div>
 									<div className="field-inner">
 										<input
 											type="text"
-											placeholder="Seu Assunto"
+											placeholder={t("contact.subject")}
 											{...register("subject", {
-												required: "Assunto é obrigatorio",
+												required: t("contact.subjectRequired"),
 											})}
 										/>
 										{errors.subject && <span>{errors.subject.message}</span>}
@@ -187,12 +196,12 @@ const ContactForm: React.FC = () => {
 								</div>
 
 								<div className="form-group col-lg-12 col-md-12 col-sm-12">
-									<div className="f-label">Escreva a Mensagem</div>
+									<div className="f-label">{t("contact.writeMessage")}</div>
 									<div className="field-inner">
 										<textarea
-											placeholder="Sua Mensagem"
+											placeholder={t("contact.writeMessage")}
 											{...register("message", {
-												required: "Mensagem é Obrigatorio",
+												required: t("contact.messageRequired"),
 											})}
 										></textarea>
 										{errors.message && <span>{errors.message.message}</span>}
@@ -202,7 +211,7 @@ const ContactForm: React.FC = () => {
 								<div className="form-group col-lg-12 col-md-12 col-sm-12">
 									<button type="submit" className="theme-btn btn-style-two">
 										<span>
-											Enviar <i className="icon far fa-angle-right"></i>
+											{t("contact.send")} <i className="icon far fa-angle-right"></i>
 										</span>
 									</button>
 								</div>

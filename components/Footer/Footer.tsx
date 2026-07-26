@@ -3,22 +3,25 @@
 import React from "react";
 import Link from "next/link";
 import { footerData } from "@/app/Dados/footerData"; // Importando o arquivo de dados
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
+import { Localized, pickLocale } from "@/lib/i18n/resolveContent";
 
 interface FooterProps {
 	content?: {
 		companyInfo: {
-			text: string;
+			text: Localized;
 		};
-		copyright: string;
+		copyright: Localized;
 	};
 }
 
 const Footer: React.FC<FooterProps> = ({ content }) => {
+	const { locale, t } = useLanguage();
 	const data = {
 		companyInfo: {
-			text: content?.companyInfo?.text || footerData.companyInfo.text,
+			text: content?.companyInfo?.text ? pickLocale(content.companyInfo.text, locale) : footerData.companyInfo.text,
 		},
-		copyright: content?.copyright || footerData.copyright.text
+		copyright: content?.copyright ? pickLocale(content.copyright, locale) : footerData.copyright.text
 	};
 
 	return (
@@ -64,7 +67,7 @@ const Footer: React.FC<FooterProps> = ({ content }) => {
 							<div className="row clearfix">
 								{/* Links Úteis */}
 								<div className="footer-column col-lg-3 col-md-4 col-sm-12">
-									<h6>Úteis</h6>
+									<h6>{t("footer.useful")}</h6>
 									<div className="links">
 										<ul>
 											{footerData.footerLinks.usefulLinks.map((link, index) => (
@@ -78,7 +81,7 @@ const Footer: React.FC<FooterProps> = ({ content }) => {
 
 								{/* Menu */}
 								<div className="footer-column col-lg-3 col-md-4 col-sm-12">
-									<h6>Menu</h6>
+									<h6>{t("footer.menu")}</h6>
 									<div className="links">
 										<ul>
 											{footerData.footerLinks.aboutUs.map((link, index) => (
@@ -92,7 +95,7 @@ const Footer: React.FC<FooterProps> = ({ content }) => {
 
 								{/* Endereço */}
 								<div className="info-block col-lg-6 col-md-4 col-sm-12">
-									<h6>Address</h6>
+									<h6>{t("footer.address")}</h6>
 									<div className="info">
 										<ul>
 											{footerData.contacts.map((contact, index) => (

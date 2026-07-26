@@ -1154,13 +1154,13 @@ form label.error{
   position: relative;
   float: left;
   padding-top: 41px;
-  margin-left: 60px;
+  margin-left: 30px;
 }
 
 .main-header .header-upper .links-box .link{
   position: relative;
   float: left;
-  margin-left: 40px;
+  margin-left: 24px;
 }
 
 .main-header .search-btn{
@@ -1323,7 +1323,7 @@ form label.error{
   display: block;
   float: left;
   padding:30px 0px;
-  margin-left: 40px;
+  margin-left: 26px;
   -webkit-transition:all 300ms ease;
   -moz-transition:all 300ms ease;
   -ms-transition:all 300ms ease;

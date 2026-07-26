@@ -1,15 +1,14 @@
+import { api } from "@/lib/api";
 
-// This is a singleton service to hold the state in memory.
-// In a real app, this would query a database.
-
-let maintenanceMode = 1; // 1 = maintenance
-
+// Maintenance mode is managed by admins in ZebraDash; this app only reads it.
 export const settingsService = {
     getMaintenanceMode: async (): Promise<number> => {
-        return 1; // Always active
+        try {
+            const data = await api.get<{ mode: number }>("/api/settings/maintenance");
+            return data.mode;
+        } catch (error) {
+            console.error("Error fetching maintenance mode:", error);
+            return 0;
+        }
     },
-
-    setMaintenanceMode: async (mode: number): Promise<void> => {
-        maintenanceMode = mode;
-    }
 };

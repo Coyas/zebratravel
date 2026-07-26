@@ -4,8 +4,30 @@
 
 import React from "react";
 import { testimonials } from "@/app/Dados/testimonialsData"; // Importando os dados
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
+import { Localized, pickLocale } from "@/lib/i18n/resolveContent";
 
-const Testimonials: React.FC = () => {
+interface TestimonialItem {
+	image?: string;
+	backgroundImage?: string;
+	link?: string;
+	rating: number;
+	name: Localized | string;
+	designation: Localized | string;
+	text: Localized | string;
+}
+
+interface TestimonialsProps {
+	content?: { subtitle: Localized; title: Localized; items?: TestimonialItem[] };
+}
+
+const Testimonials: React.FC<TestimonialsProps> = ({ content }) => {
+	const { locale } = useLanguage();
+	const data = content
+		? { subtitle: pickLocale(content.subtitle, locale), title: pickLocale(content.title, locale) }
+		: { subtitle: "Revisão e Depoimento", title: "Principais avaliações sobre ZebraTravel" };
+	const items = content?.items ?? testimonials;
+
 	return (
 		<section className="testimonials-one">
 			<div
@@ -17,15 +39,15 @@ const Testimonials: React.FC = () => {
 			></div>
 			<div className="auto-container">
 				<div className="title-box centered">
-					<div className="subtitle">Revisão e Depoimento</div>
+					<div className="subtitle">{data.subtitle}</div>
 					<h2>
 						<i className="bg-vector"></i>
-						<span>Principais avaliações sobre ZebraTravel</span>
+						<span>{data.title}</span>
 					</h2>
 				</div>
 				<div className="carousel-box">
 					<div className="testi-carousel owl-theme owl-carousel">
-						{testimonials.map((testimonial, index) => (
+						{items.map((testimonial, index) => (
 							<div
 								key={index}
 								className={`testi-block ${
@@ -44,14 +66,14 @@ const Testimonials: React.FC = () => {
 										</div>
 									)}
 									{testimonial.text && (
-										<div className="text">{testimonial.text}</div>
+										<div className="text">{pickLocale(testimonial.text, locale)}</div>
 									)}
 									{testimonial.name && (
 										<div className="info">
-											<div className="name">{testimonial.name}</div>
+											<div className="name">{pickLocale(testimonial.name, locale)}</div>
 											<div className="clearfix">
 												<div className="designation">
-													{testimonial.designation}
+													{pickLocale(testimonial.designation, locale)}
 												</div>
 												<div className="rating">
 													<div className="stars">

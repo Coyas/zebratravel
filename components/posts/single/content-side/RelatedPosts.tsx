@@ -1,6 +1,7 @@
-import { posts } from "@/app/Dados/postsData";
+import { postsService } from "@/services/postsService";
 
-const RelatedPosts = () => {
+const RelatedPosts = async () => {
+	const posts = await postsService.getAll();
 	return (
 		<>
 			<div className="carousel-box">
@@ -25,7 +26,7 @@ const RelatedPosts = () => {
 											<span className="i-block">{value.date}</span>
 										</div>
 										<h4>
-											<a href="blog-single.html">{value.title}</a>
+											<a href={`/posts/${value.slug}`}>{value.title}</a>
 										</h4>
 										<div className="text">{value.description}</div>
 									</div>

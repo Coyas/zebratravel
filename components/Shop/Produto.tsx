@@ -1,12 +1,30 @@
 // src/components/Produto.tsx
+"use client";
+
 import React from "react";
-import { Produto } from "@/app/Dados/productsData"; // Caminho correto
+import Swal from "sweetalert2";
+import { Produto } from "@/services/productsService";
+import { useCart } from "@/lib/CartContext";
 
 interface ProdutoProps {
 	produto: Produto;
 }
 
 const ProdutoComponente: React.FC<ProdutoProps> = ({ produto }) => {
+	const { addItem } = useCart();
+
+	const handleAddToCart = (e: React.MouseEvent) => {
+		e.preventDefault();
+		const numericPrice = Number(produto.preco.replace(",", ".").replace(/[^0-9.]/g, "")) || 0;
+		addItem({
+			productId: produto.id,
+			name: produto.titulo,
+			price: numericPrice,
+			imageUrl: produto.imagemUrl,
+		});
+		Swal.fire({ toast: true, position: "top-end", icon: "success", title: "Adicionado ao carrinho", showConfirmButton: false, timer: 1200 });
+	};
+
 	return (
 		<div className="prod-block col-xl-3 col-lg-4 col-md-6 col-sm-12">
 			<div className="inner-box">
@@ -21,7 +39,7 @@ const ProdutoComponente: React.FC<ProdutoProps> = ({ produto }) => {
 							<div className="hvr-inner">
 								<div className="hvr-content">
 									<div className="link">
-										<a href="#" className="theme-btn">
+										<a href="#" className="theme-btn" onClick={handleAddToCart}>
 											<i className="far fa-shopping-cart"></i> Adicionar ao
 											Carrinho
 										</a>

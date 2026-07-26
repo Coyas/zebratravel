@@ -2,14 +2,31 @@
 
 import React, { useState } from "react";
 import { faqTabs } from "@/app/Dados/faqDataAll"; // Importando os dados de FAQ
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
+import { Localized, pickLocale } from "@/lib/i18n/resolveContent";
 
 interface FAQTwoProps {
-	content?: any[];
+	content?: { label: Localized; faqs: { question: Localized; answer: Localized }[] }[];
+	header?: { title: Localized; text: Localized };
 }
 
-const FAQTwo: React.FC<FAQTwoProps> = ({ content }) => {
+const defaultHeader = {
+	title: "Perguntas Frequentes",
+	text: "Desde 2014, ajudámos mais de 500.000 pessoas de todas as idades a desfrutar da melhor experiência ao ar livre das suas vidas. Seja para um dia ou para umas férias de duas semanas, perto de casa ou num país estrangeiro.",
+};
+
+const FAQTwo: React.FC<FAQTwoProps> = ({ content, header }) => {
+	const { locale } = useLanguage();
 	const [activeTab, setActiveTab] = useState<number>(0);
-	const data = content || faqTabs;
+	const data = content
+		? content.map((tab) => ({
+				label: pickLocale(tab.label, locale),
+				faqs: tab.faqs.map((f) => ({ question: pickLocale(f.question, locale), answer: pickLocale(f.answer, locale) })),
+			}))
+		: faqTabs;
+	const headerData = header
+		? { title: pickLocale(header.title, locale), text: pickLocale(header.text, locale) }
+		: defaultHeader;
 
 	const handleTabClick = (index: number) => {
 		setActiveTab(index);
@@ -20,14 +37,9 @@ const FAQTwo: React.FC<FAQTwoProps> = ({ content }) => {
 			<div className="auto-container">
 				<div className="title-box centered">
 					<h2>
-						<span>Perguntas Frequentes</span>
+						<span>{headerData.title}</span>
 					</h2>
-					<div className="text">
-						Desde 2014, ajudámos mais de 500.000 pessoas de todas as idades a
-						desfrutar da melhor experiência ao ar livre das suas vidas. Seja
-						para um dia ou para umas férias de duas semanas, perto de casa ou
-						num país estrangeiro.
-					</div>
+					<div className="text">{headerData.text}</div>
 				</div>
 				<div className="tabs-box">
 					<ul className="tab-buttons clearfix">

@@ -4,8 +4,37 @@
 
 import React from "react";
 import { excursionData } from "@/app/Dados/excursionsData"; // Importando os dados
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
+import { Localized, pickLocale } from "@/lib/i18n/resolveContent";
 
-const PopularExcursions: React.FC = () => {
+interface TourspopProps {
+	content?: {
+		subtitle: Localized;
+		title: Localized;
+		daysLabel: Localized;
+		reviewsLabel: Localized;
+		seeDetails: Localized;
+	};
+}
+
+const PopularExcursions: React.FC<TourspopProps> = ({ content }) => {
+	const { locale } = useLanguage();
+	const data = content
+		? {
+				subtitle: pickLocale(content.subtitle, locale),
+				title: pickLocale(content.title, locale),
+				daysLabel: pickLocale(content.daysLabel, locale),
+				reviewsLabel: pickLocale(content.reviewsLabel, locale),
+				seeDetails: pickLocale(content.seeDetails, locale),
+			}
+		: {
+				subtitle: "Explore as belezas da Ilha do Fogo",
+				title: "Excursões Mais Populares",
+				daysLabel: "dias",
+				reviewsLabel: "Avaliações",
+				seeDetails: "Ver Detalhes",
+			};
+
 	return (
 		<section className="popular-section">
 			<div
@@ -17,10 +46,10 @@ const PopularExcursions: React.FC = () => {
 			></div>
 			<div className="auto-container">
 				<div className="title-box centered">
-					<div className="subtitle">Explore as belezas da Ilha do Fogo</div>
+					<div className="subtitle">{data.subtitle}</div>
 					<h2>
 						<i className="bg-vector"></i>
-						<span>Excursões Mais Populares</span>
+						<span>{data.title}</span>
 					</h2>
 				</div>
 				<div className="carousel-box">
@@ -45,7 +74,7 @@ const PopularExcursions: React.FC = () => {
 										<div className="info">
 											<span className="i-block">
 												<i className="icon far fa-clock"></i> {excursion.days}{" "}
-												dias
+												{data.daysLabel}
 											</span>{" "}
 											&ensp; | &ensp;{" "}
 											<span className="i-block">{excursion.location}</span>
@@ -72,7 +101,7 @@ const PopularExcursions: React.FC = () => {
 											</div>
 											<div className="rev">
 												<a href={`packages/${excursion.slug}`}>
-													{excursion.reviews} Avaliações
+													{excursion.reviews} {data.reviewsLabel}
 												</a>
 											</div>
 										</div>
@@ -85,7 +114,7 @@ const PopularExcursions: React.FC = () => {
 												className="theme-btn"
 											>
 												<span>
-													Ver Detalhes{" "}
+													{data.seeDetails}{" "}
 													<i className="icon">
 														<img src="images/icons/logo-icon.svg" alt="" />
 													</i>

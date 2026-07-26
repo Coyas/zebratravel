@@ -3,10 +3,15 @@
 import React, { useState } from "react";
 import Link from "next/link"; // Importando Link do Next.js
 import Image from "next/image"; // Importando Image do Next.js
+import { usePathname } from "next/navigation";
 import { menuData } from "@/app/Dados/menu"; // Importa o menuData
+import { isNavItemActive, isPathActive } from "@/lib/isActive";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 const HiddenNav: React.FC = () => {
 	const [isOpen, setIsOpen] = useState(false);
+	const pathname = usePathname();
+	const { t } = useLanguage();
 
 	const toggleNav = () => {
 		setIsOpen(!isOpen);
@@ -50,17 +55,20 @@ const HiddenNav: React.FC = () => {
 						{menuData.map((link, index) => (
 							<li
 								key={index}
-								className={
-									link.subMenu && link.subMenu.length > 0 ? "dropdown" : ""
-								}
+								className={[
+									link.subMenu && link.subMenu.length > 0 ? "dropdown" : "",
+									isNavItemActive(link, pathname) ? "current" : "",
+								]
+									.filter(Boolean)
+									.join(" ")}
 							>
-								<Link href={link.href}>{link.label}</Link>{" "}
+								<Link href={link.href}>{link.i18nKey ? t(link.i18nKey) : link.label}</Link>{" "}
 								{/* Usando o componente Link do Next.js */}
 								{link.subMenu && link.subMenu.length > 0 && (
 									<ul>
 										{link.subMenu.map((subLink, subIndex) => (
-											<li key={subIndex}>
-												<Link href={subLink.href}>{subLink.label}</Link>{" "}
+											<li key={subIndex} className={isPathActive(subLink.href, pathname) ? "current" : ""}>
+												<Link href={subLink.href}>{subLink.i18nKey ? t(subLink.i18nKey) : subLink.label}</Link>{" "}
 												{/* Usando o componente Link */}
 											</li>
 										))}
@@ -75,16 +83,16 @@ const HiddenNav: React.FC = () => {
 				<div className="links-box clearfix">
 					<div className="clearfix">
 						<div className="link">
-							<Link href="#" className="theme-btn btn-style-one">
+							<Link href="/conta/login" className="theme-btn btn-style-one">
 								<span>
-									Login<i className="icon far fa-angle-right"></i>
+									{t("common.entrar")}<i className="icon far fa-angle-right"></i>
 								</span>
 							</Link>
 						</div>
 						<div className="link">
-							<Link href="#" className="theme-btn btn-style-two">
+							<Link href="/conta/registo" className="theme-btn btn-style-two">
 								<span>
-									Sign Up<i className="icon far fa-angle-right"></i>
+									{t("common.criarConta")}<i className="icon far fa-angle-right"></i>
 								</span>
 							</Link>
 						</div>

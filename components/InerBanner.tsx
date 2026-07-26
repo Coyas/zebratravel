@@ -1,14 +1,14 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 
 interface BannerProps {
-	backgroundImage: string; // Imagem fornecida manualmente
+	backgroundImage: string; // Imagem fornecida manualmente (local ou de qualquer host — usada como CSS background, sem passar pelo next/image)
+	title?: string; // Título a mostrar; por defeito deriva-se do último segmento do URL
 }
 
-const InnerBanner: React.FC<BannerProps> = ({ backgroundImage }) => {
+const InnerBanner: React.FC<BannerProps> = ({ backgroundImage, title: titleProp }) => {
 	const pathname = usePathname(); // Usando o hook usePathname() para acessar o pathname atual
 
 	// Obter o pathname atual da URL
@@ -27,21 +27,13 @@ const InnerBanner: React.FC<BannerProps> = ({ backgroundImage }) => {
 		}),
 	];
 
-	// Título baseado no último segmento ou fallback
-	const title = pathSegments[pathSegments.length - 1] || "Page Title"; // Fallback para "Page Title" caso não exista título
+	// Título: usa o que foi passado explicitamente, ou deriva do último segmento do URL
+	const title = titleProp || pathSegments[pathSegments.length - 1] || "Page Title";
 
 	return (
 		<section className="inner-banner">
-			{/* Imagem de fundo usando o componente Image do Next.js para otimização */}
-			<div className="image-layer">
-				<Image
-					src={backgroundImage}
-					alt="Banner Background"
-					layout="fill"
-					objectFit="cover"
-					priority
-				/>
-			</div>
+			{/* Imagem de fundo em CSS puro — a classe .image-layer já traz background-size:cover no tema */}
+			<div className="image-layer" style={{ backgroundImage: `url(${backgroundImage})` }} />
 			<div className="auto-container">
 				<div className="content-box">
 					<h2>{title}</h2>

@@ -8,15 +8,15 @@ import { usePathname } from "next/navigation";
 import CartSidebar from "../CartSidebar";
 import { useState } from "react";
 
-// Importando os dados do menu e do carrinho
+// Importando os dados do menu
 import { menuData } from "@/app/Dados/menu"; // Ajuste o caminho conforme sua estrutura de pastas
-import { cartItems } from "@/app/Dados/cartItems"; // Novo caminho para o arquivo cartItems.ts
+import { Localized } from "@/lib/i18n/resolveContent";
 
 type SectionType = 0 | 1; // Tipando como número para os valores possíveis (0 ou 1)
 
 interface QualSectionProps {
 	sectionType: SectionType;
-	footerContent?: any;
+	footerContent?: { companyInfo: { text: Localized }; copyright: Localized };
 }
 
 const QualSection: React.FC<QualSectionProps> = ({ sectionType, footerContent }) => {
@@ -24,12 +24,6 @@ const QualSection: React.FC<QualSectionProps> = ({ sectionType, footerContent })
 
 	// Verifica se a rota atual é a página inicial
 	const isHomePage = pathname === "/";
-
-	// Calculando o subtotal
-	const subtotal = cartItems.reduce(
-		(total, item) => total + item.price * item.quantity,
-		0
-	);
 
 	const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -41,11 +35,7 @@ const QualSection: React.FC<QualSectionProps> = ({ sectionType, footerContent })
 		if (type === 1) {
 			return (
 				<>
-					<CartSidebar
-						items={cartItems}
-						subtotal={subtotal}
-						onClose={handleCartToggle}
-					/>
+					<CartSidebar onClose={handleCartToggle} />
 					{/* Navbar é renderizado apenas na página inicial */}
 					{isHomePage && (
 						<Navbar

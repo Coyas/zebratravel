@@ -2,17 +2,20 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
+import { Localized, pickLocale } from "@/lib/i18n/resolveContent";
 
 interface AboutProps {
 	content?: {
-		subtitle: string;
-		title: string;
-		text: string;
-		items: string[];
+		subtitle: Localized;
+		title: Localized;
+		text: Localized;
+		items: Localized[];
 	};
 }
 
 const AboutSection = ({ content }: AboutProps) => {
+	const { locale } = useLanguage();
 	const defaultContent = {
 		subtitle: "Sobre a ZebraTravel",
 		title: "Agência de Turismo e Viagens",
@@ -24,7 +27,14 @@ const AboutSection = ({ content }: AboutProps) => {
 		]
 	};
 
-	const data = content || defaultContent;
+	const data = content
+		? {
+				subtitle: pickLocale(content.subtitle, locale),
+				title: pickLocale(content.title, locale),
+				text: pickLocale(content.text, locale),
+				items: content.items.map((item) => pickLocale(item, locale)),
+			}
+		: defaultContent;
 
 	return (
 		<section className="about-us">

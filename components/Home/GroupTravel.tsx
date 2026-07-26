@@ -4,8 +4,28 @@
 
 import React from "react";
 import { travelPackages } from "@/app/Dados/travelPackagesData"; // Importando os dados
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
+import { Localized, pickLocale } from "@/lib/i18n/resolveContent";
 
-const GroupTravel: React.FC = () => {
+interface TravelPackageContent {
+	duration: string;
+	location: string;
+	price: string;
+	link: string;
+	imageUrl: string;
+	title: Localized | string;
+	description: Localized | string;
+}
+
+interface GroupTravelProps {
+	content?: { seeDetails: Localized; items?: TravelPackageContent[] };
+}
+
+const GroupTravel: React.FC<GroupTravelProps> = ({ content }) => {
+	const { locale } = useLanguage();
+	const seeDetails = content ? pickLocale(content.seeDetails, locale) : "Ver Detalhes";
+	const items = content?.items ?? travelPackages;
+
 	return (
 		<section className="group-travel">
 			<div
@@ -17,7 +37,7 @@ const GroupTravel: React.FC = () => {
 			<div className="auto-container">
 				<div className="content-box">
 					<div className="row clearfix">
-						{travelPackages.map((pkg, index) => (
+						{items.map((pkg, index) => (
 							<div
 								key={index}
 								className={`travel-block-one col-lg-6 col-md-12 col-sm-12 ${
@@ -26,7 +46,7 @@ const GroupTravel: React.FC = () => {
 							>
 								<div className="inner-box">
 									<div className="title">
-										<h4>{pkg.title}</h4>
+										<h4>{pickLocale(pkg.title, locale)}</h4>
 									</div>
 									<div className="content">
 										<div className="info">
@@ -39,11 +59,11 @@ const GroupTravel: React.FC = () => {
 										<div className="price">
 											<span>{pkg.price}</span>
 										</div>
-										<div className="text">{pkg.description}</div>
+										<div className="text">{pickLocale(pkg.description, locale)}</div>
 										<div className="link-box">
 											<a href={pkg.link} className="theme-btn btn-style-one">
 												<span>
-													Ver Detalhes{" "}
+													{seeDetails}{" "}
 													<i className="icon">
 														<img
 															src="/images/icons/logo-icon.svg"

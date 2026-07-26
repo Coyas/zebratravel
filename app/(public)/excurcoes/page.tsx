@@ -1,10 +1,14 @@
 import bgImage from "@/public/images/background/banner-image-1.jpg";
 import InerBanner from "@/components/InerBanner";
 
-import ExcursoesCard from "@/components/excursoes/ExcurcoesCard";
-import excursoesData from "@/app/Dados/excurcoesData";
+import ExcursoesGrid from "@/components/excursoes/ExcursoesGrid";
+import ExcursoesHeader from "@/components/excursoes/ExcursoesHeader";
+import { excursoesService } from "@/services/excursoesService";
+import { getAllContent } from "@/app/actions/content";
 
-const Excurcoes = () => {
+const Excurcoes = async () => {
+	const excursoes = await excursoesService.getAll();
+	const content = await getAllContent();
 	return (
 		<>
 			<InerBanner backgroundImage={bgImage.src} />
@@ -25,67 +29,10 @@ const Excurcoes = () => {
 					/>
 				</div>
 				<div className="auto-container">
-					<div className="title-box centered">
-						<h2>
-							<span>Melhores trilhas para você com a ZebraTravel</span>
-						</h2>
-						<div className="text">
-							Descubra as trilhas mais incríveis com a ZebraTravel! Conecte-se
-							com a natureza, explore paisagens deslumbrantes e viva aventuras
-							inesquecíveis, seja em uma caminhada de um dia ou em uma expedição
-							prolongada.
-						</div>
-					</div>
+					<ExcursoesHeader content={content?.excursoes} />
 					{/* <!--MixitUp Galery--> */}
 					<div className="mixitup-gallery">
-						{/* <!--Filter--> */}
-						<div className="gallery-filters centered clearfix">
-							<ul className="filter-tabs filter-btns clearfix">
-								<li
-									className="active filter"
-									data-role="button"
-									data-filter="all"
-								>
-									Todos
-								</li>
-								<li className="filter" data-role="button" data-filter=".easy-m">
-									Fácil Moderado
-								</li>
-								<li
-									className="filter"
-									data-role="button"
-									data-filter=".moderate"
-								>
-									Moderado
-								</li>
-								<li
-									className="filter"
-									data-role="button"
-									data-filter=".m-difficult"
-								>
-									Moderado dificel
-								</li>
-								<li
-									className="filter"
-									data-role="button"
-									data-filter=".difficult"
-								>
-									Dificel
-								</li>
-							</ul>
-						</div>
-						<div className="filter-list row clearfix">
-							{/* <!--Block--> */}
-							{excursoesData.map((excursao) => (
-								<ExcursoesCard key={excursao.title} {...excursao} />
-							))}
-						</div>
-
-						<div className="load-more">
-							<a href="#" className="theme-btn btn-style-one">
-								<span>Carregar mais......</span>
-							</a>
-						</div>
+						<ExcursoesGrid excursoes={excursoes} />
 					</div>
 				</div>
 			</section>
