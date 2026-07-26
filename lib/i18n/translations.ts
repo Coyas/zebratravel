@@ -46,6 +46,9 @@ const pt: Dict = {
 	"booking.total": "Total",
 	"booking.now": "Reservar Agora",
 	"booking.submitting": "A reservar...",
+	"booking.tourTitle": "Desejas reservar uma viagem?",
+	"booking.tourNeedLogin": "Precisa de iniciar sessão para reservar esta viagem.",
+	"excursion.noReviews": "Ainda não há comentários para esta excursão.",
 
 	"login.title": "Entrar na Minha Conta",
 	"login.subtitle": "Aceda à sua conta para ver as suas reservas e favoritos.",
@@ -203,6 +206,9 @@ const en: Dict = {
 	"booking.total": "Total",
 	"booking.now": "Book Now",
 	"booking.submitting": "Booking...",
+	"booking.tourTitle": "Would you like to book a trip?",
+	"booking.tourNeedLogin": "You need to be logged in to book this trip.",
+	"excursion.noReviews": "No comments yet for this excursion.",
 
 	"login.title": "Log Into My Account",
 	"login.subtitle": "Access your account to see your bookings and favorites.",
@@ -360,6 +366,9 @@ const fr: Dict = {
 	"booking.total": "Total",
 	"booking.now": "Réserver Maintenant",
 	"booking.submitting": "Réservation...",
+	"booking.tourTitle": "Souhaitez-vous réserver un voyage ?",
+	"booking.tourNeedLogin": "Vous devez vous connecter pour réserver ce voyage.",
+	"excursion.noReviews": "Pas encore de commentaires pour cette excursion.",
 
 	"login.title": "Connexion à Mon Compte",
 	"login.subtitle": "Accédez à votre compte pour voir vos réservations et favoris.",

@@ -21,10 +21,10 @@ export interface Favorite {
 export const profileService = {
 	getMyBookings: (): Promise<Booking[]> => authedFetch<Booking[]>("/api/bookings"),
 
-	createBooking: (excursionSlug: string, date: string, guests: number): Promise<Booking> =>
+	createBooking: (params: { excursionSlug?: string; tourId?: number; date: string; guests: number }): Promise<Booking> =>
 		authedFetch<Booking>("/api/bookings", {
 			method: "POST",
-			body: JSON.stringify({ excursionSlug, date, guests }),
+			body: JSON.stringify(params),
 		}),
 
 	getMyFavorites: (): Promise<Favorite[]> => authedFetch<Favorite[]>("/api/favorites"),

@@ -1,5 +1,6 @@
 // src/components/destinos/DestinosCard.tsx
 
+import Link from "next/link";
 import { Tour } from "@/services/destinosService";
 
 interface DestinosCardProps {
@@ -16,13 +17,13 @@ const DestinosCard: React.FC<DestinosCardProps> = ({ destino }) => {
 			<div className="inner-box">
 				<div className="image-box">
 					<div className="image">
-						<a href="#">
+						<Link href={`/destinos/${destino.id}`}>
 							<img
 								src={destino.image}
 								alt={destino.title}
 								title={destino.title}
 							/>
-						</a>
+						</Link>
 					</div>
 				</div>
 				<div className="count">
@@ -30,12 +31,12 @@ const DestinosCard: React.FC<DestinosCardProps> = ({ destino }) => {
 				</div>
 				<div className="title clearfix">
 					<h4>
-						<a href="#">{destino.title}</a>
+						<Link href={`/destinos/${destino.id}`}>{destino.title}</Link>
 					</h4>
 					<div className="more-link">
-						<a href="#" className="theme-btn">
+						<Link href={`/destinos/${destino.id}`} className="theme-btn">
 							<span className="far fa-long-arrow-right"></span>
-						</a>
+						</Link>
 					</div>
 				</div>
 			</div>

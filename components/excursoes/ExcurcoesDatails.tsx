@@ -2,6 +2,7 @@
 import React from "react";
 import { excursoesService } from "@/services/excursoesService";
 import BookingWidget from "./BookingWidget";
+import ExcursionReviews from "./ExcursionReviews";
 type ExcurcoesDetailsProps = {
 	slug: string;
 };
@@ -73,19 +74,9 @@ const ExcurcoesDetails = async ({ slug }: ExcurcoesDetailsProps) => {
 					</div>
 				</div> */}
 
-				{/* Rating Box */}
+				{/* Post Info Box */}
 				<div className="rating-box">
 					<div className="clearfix">
-						<div className="pull-left">
-							<div className="rating">
-								(5 reviews) &nbsp;
-								<span className="fa fa-star"></span>
-								<span className="fa fa-star"></span>
-								<span className="fa fa-star"></span>
-								<span className="fa fa-star"></span>
-								<span className="fa fa-star"></span>
-							</div>
-						</div>
 						<div className="pull-right">
 							<ul className="post-info">
 								<li>
@@ -93,12 +84,6 @@ const ExcurcoesDetails = async ({ slug }: ExcurcoesDetailsProps) => {
 										<img src="images/icons/share-icon.svg" alt="" />
 									</span>
 									Share
-								</li>
-								<li>
-									<span className="icon">
-										<img src="images/icons/review-icon.svg" alt="" />
-									</span>
-									Review
 								</li>
 								<li>
 									<span className="icon">
@@ -150,7 +135,7 @@ const ExcurcoesDetails = async ({ slug }: ExcurcoesDetailsProps) => {
 							</div>
 						</div> */}
 
-						{/* Add additional content here as needed */}
+						<ExcursionReviews slug={excursion.slug} />
 					</div>
 
 					{/* Sidebar Column */}

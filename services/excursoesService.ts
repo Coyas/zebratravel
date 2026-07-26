@@ -1,4 +1,5 @@
 import { api } from "@/lib/api";
+import { authedFetch } from "@/lib/clientAuth";
 
 export interface Excursao {
 	slug: string;
@@ -11,6 +12,15 @@ export interface Excursao {
 	reviews: number;
 	description: string;
 	categories: string[];
+}
+
+export interface ExcursaoReview {
+	id: number;
+	excursionSlug: string;
+	userName: string;
+	rating: number;
+	comment: string | null;
+	createdAt: string;
 }
 
 export const excursoesService = {
@@ -31,4 +41,9 @@ export const excursoesService = {
 			return undefined;
 		}
 	},
+
+	getReviews: (slug: string): Promise<ExcursaoReview[]> => api.get<ExcursaoReview[]>(`/api/excursions/${slug}/reviews`),
+
+	createReview: (slug: string, data: { rating: number; comment: string }): Promise<ExcursaoReview> =>
+		authedFetch<ExcursaoReview>(`/api/excursions/${slug}/reviews`, { method: "POST", body: JSON.stringify(data) }),
 };

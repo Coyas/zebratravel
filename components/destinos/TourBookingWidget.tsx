@@ -11,15 +11,7 @@ function todayIso(): string {
 	return new Date().toISOString().slice(0, 10);
 }
 
-export default function BookingWidget({
-	slug,
-	title,
-	price,
-}: {
-	slug: string;
-	title: string;
-	price: number;
-}) {
+export default function TourBookingWidget({ tourId, title, price }: { tourId: number; title: string; price: number }) {
 	const { t } = useLanguage();
 	const [authed, setAuthed] = useState<boolean | null>(null);
 	const [date, setDate] = useState("");
@@ -38,7 +30,7 @@ export default function BookingWidget({
 		}
 		setSubmitting(true);
 		try {
-			await profileService.createBooking({ excursionSlug: slug, date, guests });
+			await profileService.createBooking({ tourId, date, guests });
 			Swal.fire("Reserva efectuada!", `A sua reserva para "${title}" foi registada e está pendente de confirmação.`, "success");
 			setDate("");
 			setGuests(1);
@@ -58,11 +50,11 @@ export default function BookingWidget({
 			className="sidebar-widget booking-widget"
 			style={{ backgroundImage: `url(/images/background/booking-bg.jpg)` }}
 		>
-			<h5>{t("booking.title")}</h5>
+			<h5>{t("booking.tourTitle")}</h5>
 			<div className="booking-form">
 				{!authed ? (
 					<div style={{ padding: "10px 0", color: "#fff" }}>
-						<p>{t("booking.needLogin")}</p>
+						<p>{t("booking.tourNeedLogin")}</p>
 						<div className="form-group">
 							<Link href="/conta/login" className="theme-btn send-btn">
 								<span className="txt">
