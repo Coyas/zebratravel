@@ -14,12 +14,17 @@ import SubscribeSection from "@/components/Home/SubscribeSection";
 import { getAllContent } from "../actions/content";
 import { productsService } from "@/services/productsService";
 import { destinosService } from "@/services/destinosService";
+import { excursoesService } from "@/services/excursoesService";
 
 export default async function Home() {
 	const content = await getAllContent();
 	const homeContent = content?.home || {};
 	const produtos = await productsService.getAll();
 	const tours = await destinosService.getAll();
+	const excursoes = await excursoesService.getAll();
+	const popularExcursoes = [...excursoes]
+		.sort((a, b) => b.rating - a.rating || b.reviews - a.reviews)
+		.slice(0, 6);
 
 	return (
 		<>
@@ -32,7 +37,7 @@ export default async function Home() {
 			{/* <!--End About Us Section--> */}
 
 			{/* <!-- Popular Section--> */}
-			<PopularTrekking content={homeContent.tourspop} />
+			<PopularTrekking content={homeContent.tourspop} excursoes={popularExcursoes} />
 			{/* <!-- End Popular Section--> */}
 
 			{/* <!-- Why Section--> */}

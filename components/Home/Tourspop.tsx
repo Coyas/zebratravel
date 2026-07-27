@@ -3,7 +3,7 @@
 "use client";
 
 import React from "react";
-import { excursionData } from "@/app/Dados/excursionsData"; // Importando os dados
+import { Excursao } from "@/services/excursoesService";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { Localized, pickLocale } from "@/lib/i18n/resolveContent";
 
@@ -11,29 +11,31 @@ interface TourspopProps {
 	content?: {
 		subtitle: Localized;
 		title: Localized;
-		daysLabel: Localized;
 		reviewsLabel: Localized;
 		seeDetails: Localized;
 	};
+	excursoes: Excursao[];
 }
 
-const PopularExcursions: React.FC<TourspopProps> = ({ content }) => {
+const PopularExcursions: React.FC<TourspopProps> = ({ content, excursoes }) => {
 	const { locale } = useLanguage();
 	const data = content
 		? {
 				subtitle: pickLocale(content.subtitle, locale),
 				title: pickLocale(content.title, locale),
-				daysLabel: pickLocale(content.daysLabel, locale),
 				reviewsLabel: pickLocale(content.reviewsLabel, locale),
 				seeDetails: pickLocale(content.seeDetails, locale),
 			}
 		: {
 				subtitle: "Explore as belezas da Ilha do Fogo",
 				title: "Excursões Mais Populares",
-				daysLabel: "dias",
 				reviewsLabel: "Avaliações",
 				seeDetails: "Ver Detalhes",
 			};
+
+	if (excursoes.length === 0) {
+		return null;
+	}
 
 	return (
 		<section className="popular-section">
@@ -54,76 +56,68 @@ const PopularExcursions: React.FC<TourspopProps> = ({ content }) => {
 				</div>
 				<div className="carousel-box">
 					<div className="popular-carousel owl-theme owl-carousel">
-						{/* Bloco Dinâmico */}
-						{excursionData.map((excursion) => (
-							<div className="trek-block-one" key={excursion.id}>
+						{excursoes.map((excursao) => (
+							<div className="trek-block-one" key={excursao.slug}>
 								<div className="inner-box">
 									<div className="image-box">
 										<div className="image">
-											<a href={`packages/${excursion.slug}`}>
+											<a href={`/excurcoes/${excursao.slug}`}>
 												<img
-													src={excursion.image.url}
-													alt={excursion.title}
-													title={excursion.title}
+													src={excursao.image}
+													alt={excursao.title}
+													title={excursao.title}
 												/>
 											</a>
 										</div>
 										<div className="price">
-											<span>${excursion.price}</span>
+											<span>${excursao.price}</span>
 										</div>
 										<div className="info">
 											<span className="i-block">
-												<i className="icon far fa-clock"></i> {excursion.days}{" "}
-												{data.daysLabel}
+												<i className="icon far fa-clock"></i> {excursao.duration}
 											</span>{" "}
 											&ensp; | &ensp;{" "}
-											<span className="i-block">{excursion.location}</span>
+											<span className="i-block">{excursao.location}</span>
 										</div>
 									</div>
 									<div className="lower-content">
 										<h4>
-											<a href={`packages/${excursion.slug}`}>
-												{excursion.title}
-											</a>
+											<a href={`/excurcoes/${excursao.slug}`}>{excursao.title}</a>
 										</h4>
 										<div className="ratings clearfix">
 											<div className="stars">
-												{Array.from({ length: excursion.rating }).map(
-													(_, i) => (
-														<i key={i} className="fa fa-star"></i>
-													)
-												)}
-												{Array.from({ length: 5 - excursion.rating }).map(
-													(_, i) => (
-														<i key={i} className="fa fa-star empty"></i>
-													)
-												)}
+												{[...Array(5)].map((_, i) => (
+													<i
+														key={i}
+														className={`fa fa-star ${i < excursao.rating ? "" : "empty"}`}
+													></i>
+												))}
 											</div>
 											<div className="rev">
-												<a href={`packages/${excursion.slug}`}>
-													{excursion.reviews} {data.reviewsLabel}
+												<a href={`/excurcoes/${excursao.slug}`}>
+													{excursao.reviews} {data.reviewsLabel}
 												</a>
 											</div>
 										</div>
-										<div className="text">{excursion.description}</div>
+										<div className="text">{excursao.description}</div>
 									</div>
 									<div className="bottom-box clearfix">
 										<div className="more-link">
 											<a
-												href={`packages/${excursion.slug}`}
+												href={`/excurcoes/${excursao.slug}`}
 												className="theme-btn"
 											>
 												<span>
 													{data.seeDetails}{" "}
 													<i className="icon">
-														<img src="images/icons/logo-icon.svg" alt="" />
+														<img src="/images/icons/logo-icon.svg" alt="" />
 													</i>
 												</span>
 											</a>
 										</div>
 										<div className="video-link">
 											<a
-												href={`packages/${excursion.slug}`}
+												href={`/excurcoes/${excursao.slug}`}
 												className="theme-btn"
 											>
 												<i className="icon far fa-video-camera"></i>
