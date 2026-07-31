@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import { galleryItems } from "@/app/Dados/gallery";
+import { GalleryItem } from "@/services/galleryService";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { Localized, pickLocale } from "@/lib/i18n/resolveContent";
 
@@ -9,9 +9,10 @@ const PAGE_SIZE = 9;
 
 interface GaleriaProps {
 	content?: { title: Localized; text: Localized };
+	items: GalleryItem[];
 }
 
-const Galeria = ({ content }: GaleriaProps) => {
+const Galeria = ({ content, items }: GaleriaProps) => {
 	const { locale, t } = useLanguage();
 	const data = content
 		? { title: pickLocale(content.title, locale), text: pickLocale(content.text, locale) }
@@ -20,8 +21,8 @@ const Galeria = ({ content }: GaleriaProps) => {
 	const [visible, setVisible] = useState(PAGE_SIZE);
 
 	const filtered = useMemo(
-		() => (filter === "all" ? galleryItems : galleryItems.filter((item) => item.filter === filter)),
-		[filter]
+		() => (filter === "all" ? items : items.filter((item) => item.categories.includes(filter))),
+		[filter, items]
 	);
 	const visibleItems = filtered.slice(0, visible);
 	const hasMore = visible < filtered.length;
@@ -89,10 +90,10 @@ const Galeria = ({ content }: GaleriaProps) => {
 
 				<div className="outer-container">
 					<div className="filter-list row clearfix">
-						{visibleItems.map((item, index) => (
+						{visibleItems.map((item) => (
 							<div
-								key={index}
-								className={`gallery-block mix ${item.filter} col-xl-4 col-lg-4 col-md-6 col-sm-12`}
+								key={item.id}
+								className={`gallery-block mix ${item.categories.join(" ")} col-xl-4 col-lg-4 col-md-6 col-sm-12`}
 							>
 								<div className="inner-box">
 									<div className="image-box">

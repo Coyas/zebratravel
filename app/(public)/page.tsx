@@ -15,6 +15,7 @@ import { getAllContent } from "../actions/content";
 import { productsService } from "@/services/productsService";
 import { destinosService } from "@/services/destinosService";
 import { excursoesService } from "@/services/excursoesService";
+import { postsService } from "@/services/postsService";
 
 export default async function Home() {
 	const content = await getAllContent();
@@ -25,6 +26,10 @@ export default async function Home() {
 	const popularExcursoes = [...excursoes]
 		.sort((a, b) => b.rating - a.rating || b.reviews - a.reviews)
 		.slice(0, 6);
+	const posts = await postsService.getAll();
+	const latestPosts = [...posts]
+		.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+		.slice(0, 3);
 
 	return (
 		<>
@@ -65,7 +70,7 @@ export default async function Home() {
 			{/* <!-- End Sponsors Section--> */}
 
 			{/* <!--News Section--> */}
-			<NewsSection content={homeContent.newsSection} />
+			<NewsSection content={homeContent.newsSection} posts={latestPosts} />
 			{/* <!-- End News Section--> */}
 
 			{/* <!--Subscribe Section--> */}
