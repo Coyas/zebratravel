@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { HotelRoomPublic } from "@/services/hotelService";
 import AmenityList from "@/components/hotel/AmenityList";
+import { roomLabel } from "@/lib/roomLabel";
 
 interface RoomRowProps {
 	room: HotelRoomPublic;
@@ -50,14 +51,9 @@ export default function RoomRow({ room, hotelId, available, checkIn, checkOut, g
 			/>
 
 			<div style={{ flex: 1, minWidth: 200 }}>
-				<h4 style={{ marginBottom: 2 }}>
-					<Link href={href}>
-						{t("hotel.roomNumber")} {room.roomNumber}
-					</Link>
+				<h4 style={{ marginBottom: 8 }}>
+					<Link href={href}>{roomLabel(room.roomNumber, room.roomTypeName)}</Link>
 				</h4>
-				<div style={{ fontSize: 13, color: "#888", marginBottom: 8 }}>
-					{t("hotel.roomType")}: {room.roomTypeName}
-				</div>
 				<div style={{ fontSize: 13, color: "#888", marginBottom: 10 }}>
 					<i className="far fa-user"></i> {t("hotel.maxGuests")}: {room.capacity}
 				</div>

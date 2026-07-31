@@ -9,6 +9,7 @@ import { getUser, isAuthenticated, logout, ClientUser } from "@/lib/clientAuth";
 import { profileService, Booking, Favorite } from "@/services/profileService";
 import { hotelService, HotelReservation } from "@/services/hotelService";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
+import { roomLabel } from "@/lib/roomLabel";
 
 export default function PerfilPage() {
 	const router = useRouter();
@@ -143,7 +144,7 @@ export default function PerfilPage() {
 									>
 										<div>
 											<strong>{reservation.hotelName}</strong>
-											{reservation.roomTypeName && <div>{reservation.roomTypeName} — Nº {reservation.roomNumber}</div>}
+											{reservation.roomTypeName && <div>{roomLabel(reservation.roomNumber, reservation.roomTypeName)}</div>}
 											<div>
 												{reservation.checkIn} → {reservation.checkOut} &middot; {reservation.guests} {t("profile.guestsSuffix")}
 											</div>

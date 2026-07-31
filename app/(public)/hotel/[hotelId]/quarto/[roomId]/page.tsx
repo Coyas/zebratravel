@@ -6,6 +6,7 @@ import RoomGallery from "@/components/hotel/RoomGallery";
 import AmenityList from "@/components/hotel/AmenityList";
 import RoomBookingWidget from "@/components/hotel/RoomBookingWidget";
 import RoomReviews from "@/components/hotel/RoomReviews";
+import { roomLabel } from "@/lib/roomLabel";
 
 export default async function RoomDetailPage({
 	params,
@@ -29,7 +30,7 @@ export default async function RoomDetailPage({
 	if (room.hotelId !== hId) notFound();
 
 	const images = room.images.length > 0 ? room.images : room.roomTypeImage ? [room.roomTypeImage] : [];
-	const title = `Quarto Nº ${room.roomNumber}`;
+	const title = roomLabel(room.roomNumber, room.roomTypeName);
 
 	return (
 		<>
@@ -44,8 +45,6 @@ export default async function RoomDetailPage({
 
 					<div className="row clearfix">
 						<div className="col-lg-7 col-md-12 col-sm-12">
-							<div style={{ color: "#888", marginBottom: 10 }}>Tipo: {room.roomTypeName}</div>
-
 							<RoomGallery images={images} name={title} />
 
 							<div style={{ color: "#888", marginBottom: 20 }}>{room.hotelName}</div>
