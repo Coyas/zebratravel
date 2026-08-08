@@ -12,8 +12,22 @@ export interface Excursao {
 	reviews: number;
 	description: string;
 	categories: string[];
-	groupTravelStatus?: "NONE" | "OPEN" | "CONFIRMED";
 	groupTravelConfirmedDate?: string | null;
+}
+
+// Uma excursão pode ter vários grupos de viagem ao longo do tempo — isto é o
+// que GET /api/excursions/group-travel devolve (só os grupos CONFIRMED),
+// nunca a própria Excursion (ver ExcursionGroupController no backend).
+interface GroupTravelDto {
+	id: number;
+	excursionSlug: string;
+	excursionTitle: string;
+	image: string;
+	price: number;
+	duration: string;
+	location: string;
+	description: string;
+	confirmedDate: string | null;
 }
 
 export interface ExcursaoReview {
@@ -48,7 +62,20 @@ export const excursoesService = {
 
 	getGroupTravel: async (): Promise<Excursao[]> => {
 		try {
-			return await api.get<Excursao[]>("/api/excursions/group-travel");
+			const groups = await api.get<GroupTravelDto[]>("/api/excursions/group-travel");
+			return groups.map((g) => ({
+				slug: g.excursionSlug,
+				title: g.excursionTitle,
+				image: g.image,
+				price: g.price,
+				duration: g.duration,
+				location: g.location,
+				rating: 0,
+				reviews: 0,
+				description: g.description,
+				categories: [],
+				groupTravelConfirmedDate: g.confirmedDate,
+			}));
 		} catch (error) {
 			console.error("Error fetching group travel excursions:", error);
 			return [];
