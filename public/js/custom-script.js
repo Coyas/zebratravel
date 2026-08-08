@@ -190,6 +190,30 @@
 		});    		
 	}
 
+	//Group Travel Carousel
+	if ($('.group-travel-carousel').length) {
+		$('.group-travel-carousel').owlCarousel({
+			loop:false,
+			margin:30,
+			nav:false,
+			dots:true,
+			smartSpeed: 700,
+			autoplay: true,
+			autoplayTimeout:7000,
+			responsive:{
+				0:{
+					items:1
+				},
+				768:{
+					items:2
+				},
+				992:{
+					items:2
+				}
+			}
+		});
+	}
+
 	//Testimonials Carousel
 	if ($('.testi-carousel').length) {
 		$('.testi-carousel').owlCarousel({

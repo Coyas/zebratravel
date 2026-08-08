@@ -12,6 +12,8 @@ export interface Excursao {
 	reviews: number;
 	description: string;
 	categories: string[];
+	groupTravelStatus?: "NONE" | "OPEN" | "CONFIRMED";
+	groupTravelConfirmedDate?: string | null;
 }
 
 export interface ExcursaoReview {

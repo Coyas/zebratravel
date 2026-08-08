@@ -3602,6 +3602,56 @@ body.visible-sidebar{
   padding-right: 5px;
 }
 
+.travel-block-one .countdown-badge{
+  position: relative;
+  display: inline-block;
+  margin-top: 12px;
+  padding: 5px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #10221B;
+  background: rgba(255, 201, 51, 0.25);
+  border-radius: 20px;
+}
+
+.travel-block-one .countdown-badge .icon{
+  padding-right: 5px;
+  color: #ffc933;
+}
+
+.group-travel-carousel .travel-block-one{
+  margin-bottom: 0;
+}
+
+.group-travel-carousel .owl-dots{
+  position: relative;
+  text-align: center;
+  padding-top: 40px;
+}
+
+.group-travel-carousel .owl-dots .owl-dot{
+  position: relative;
+  display: inline-block;
+  margin: 0 3px;
+}
+
+.group-travel-carousel .owl-dots .owl-dot span{
+  position: relative;
+  display: block;
+  width: 28px;
+  height: 7px;
+  background: none;
+  border: 1px solid #ffc933;
+  margin: 0 2.5px;
+  border-radius: 5px;
+}
+
+.group-travel-carousel .owl-dots .owl-dot.active span{
+  width: 42px;
+  border-color: #ffc933;
+  background: #ffc933;
+}
+
 .travel-block-one h4{
   position: relative;
   font-weight: 700;
