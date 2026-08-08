@@ -3,30 +3,36 @@
 "use client";
 
 import React from "react";
-import { testimonials } from "@/app/Dados/testimonialsData"; // Importando os dados
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { Localized, pickLocale } from "@/lib/i18n/resolveContent";
-
-interface TestimonialItem {
-	image?: string;
-	backgroundImage?: string;
-	link?: string;
-	rating: number;
-	name: Localized | string;
-	designation: Localized | string;
-	text: Localized | string;
-}
+import { Testimonial } from "@/services/testimonialsService";
 
 interface TestimonialsProps {
-	content?: { subtitle: Localized; title: Localized; items?: TestimonialItem[] };
+	content?: { subtitle: Localized; title: Localized };
+	items: Testimonial[];
 }
 
-const Testimonials: React.FC<TestimonialsProps> = ({ content }) => {
+const SOURCE_LABEL: Record<string, string> = {
+	EXCURSION: "Excursão",
+	HOTEL_ROOM: "Estadia",
+};
+
+function initials(name: string): string {
+	return name
+		.trim()
+		.split(/\s+/)
+		.slice(0, 2)
+		.map((part) => part[0]?.toUpperCase())
+		.join("");
+}
+
+const Testimonials: React.FC<TestimonialsProps> = ({ content, items }) => {
 	const { locale } = useLanguage();
 	const data = content
 		? { subtitle: pickLocale(content.subtitle, locale), title: pickLocale(content.title, locale) }
 		: { subtitle: "Revisão e Depoimento", title: "Principais avaliações sobre ZebraTravel" };
-	const items = content?.items ?? testimonials;
+
+	if (items.length === 0) return null;
 
 	return (
 		<section className="testimonials-one">
@@ -47,46 +53,73 @@ const Testimonials: React.FC<TestimonialsProps> = ({ content }) => {
 				</div>
 				<div className="carousel-box">
 					<div className="testi-carousel owl-theme owl-carousel">
-						{items.map((testimonial, index) => (
+						{items.map((testimonial) => (
 							<div
-								key={index}
+								key={testimonial.id}
 								className={`testi-block ${
 									testimonial.backgroundImage ? "alternate" : ""
 								}`}
 							>
 								<div className="inner-box">
-									{testimonial.image && (
-										<div className="icon">
-											<img src="images/icons/quotes-1.svg" alt="quote icon" />
-										</div>
-									)}
-									{testimonial.image && (
-										<div className="image">
+									<div className="icon">
+										<img src="images/icons/quotes-1.svg" alt="quote icon" />
+									</div>
+									<div className="image">
+										{testimonial.image ? (
 											<img src={testimonial.image} alt="testimonial" />
-										</div>
-									)}
-									{testimonial.text && (
-										<div className="text">{pickLocale(testimonial.text, locale)}</div>
-									)}
-									{testimonial.name && (
-										<div className="info">
-											<div className="name">{pickLocale(testimonial.name, locale)}</div>
-											<div className="clearfix">
-												<div className="designation">
-													{pickLocale(testimonial.designation, locale)}
-												</div>
-												<div className="rating">
-													<div className="stars">
-														{Array.from({ length: testimonial.rating }).map(
-															(_, i) => (
-																<i key={i} className="fa fa-star"></i>
-															)
-														)}
-													</div>
+										) : (
+											<div
+												style={{
+													width: 60,
+													height: 60,
+													borderRadius: "50%",
+													background: "#ffc933",
+													color: "#fff",
+													display: "flex",
+													alignItems: "center",
+													justifyContent: "center",
+													fontWeight: 700,
+													fontSize: 18,
+												}}
+											>
+												{initials(testimonial.name)}
+											</div>
+										)}
+									</div>
+									<div className="text">{testimonial.text}</div>
+									<div className="info">
+										<div className="name">{testimonial.name}</div>
+										<div className="clearfix">
+											<div className="designation">
+												{testimonial.designation}
+												{testimonial.sourceReviewType && (
+													<span
+														style={{
+															marginLeft: 8,
+															display: "inline-block",
+															background: "rgba(255,201,51,0.15)",
+															color: "#b8860b",
+															fontSize: 11,
+															fontWeight: 700,
+															padding: "2px 8px",
+															borderRadius: 999,
+														}}
+													>
+														{SOURCE_LABEL[testimonial.sourceReviewType] ?? ""}
+													</span>
+												)}
+											</div>
+											<div className="rating">
+												<div className="stars">
+													{Array.from({ length: testimonial.rating }).map(
+														(_, i) => (
+															<i key={i} className="fa fa-star"></i>
+														)
+													)}
 												</div>
 											</div>
 										</div>
-									)}
+									</div>
 									{testimonial.backgroundImage && (
 										<div
 											className="image-layer"

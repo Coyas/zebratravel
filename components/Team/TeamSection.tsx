@@ -2,17 +2,20 @@
 
 import React from "react";
 import TeamMember from "./TeamMember";
-import { teamMembers } from "@/app/Dados/teamsMember";
+import { teamMembers as staticTeamMembers } from "@/app/Dados/teamsMember";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { Localized, pickLocale } from "@/lib/i18n/resolveContent";
+import { TeamMember as TeamMemberData } from "@/services/teamMembersService";
 
 interface TeamSectionProps {
 	content?: { title: Localized };
+	members?: TeamMemberData[];
 }
 
-const TeamSection = ({ content }: TeamSectionProps) => {
+const TeamSection = ({ content, members }: TeamSectionProps) => {
 	const { locale } = useLanguage();
 	const title = content ? pickLocale(content.title, locale) : "Conheça os Nossos Guias Turísticos";
+	const teamMembers = members && members.length > 0 ? members : staticTeamMembers;
 
 	return (
 		<section className="team-section">

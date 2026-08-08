@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { Localized, pickLocale } from "@/lib/i18n/resolveContent";
+import { subscribersService } from "@/services/subscribersService";
 
 interface SubscribeSectionProps {
 	content?: {
@@ -41,18 +42,29 @@ const SubscribeSection = ({ content }: SubscribeSectionProps) => {
 		: defaultContent;
 	const [email, setEmail] = useState<string>("");
 	const [message, setMessage] = useState<string>("");
+	const [submitting, setSubmitting] = useState(false);
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
+		if (submitting) return;
 
-		// Simulando a ação de enviar o formulário
-		if (email) {
-			setMessage(data.successMessage);
-		} else {
+		const emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+		if (!email || !emailPattern.test(email)) {
 			setMessage(data.errorMessage);
+			return;
 		}
 
-		// Aqui você pode fazer a chamada para sua API ou lógica para enviar o email
+		setSubmitting(true);
+		try {
+			await subscribersService.subscribe(email);
+			setMessage(data.successMessage);
+			setEmail("");
+		} catch (error) {
+			console.error("Error subscribing:", error);
+			setMessage(data.errorMessage);
+		} finally {
+			setSubmitting(false);
+		}
 	};
 
 	return (

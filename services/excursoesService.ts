@@ -17,10 +17,12 @@ export interface Excursao {
 export interface ExcursaoReview {
 	id: number;
 	excursionSlug: string;
+	userId: number;
 	userName: string;
 	rating: number;
 	comment: string | null;
 	createdAt: string;
+	isTestimonial: boolean;
 }
 
 export const excursoesService = {
@@ -39,6 +41,15 @@ export const excursoesService = {
 		} catch (error) {
 			console.error("Error fetching excursion:", error);
 			return undefined;
+		}
+	},
+
+	getGroupTravel: async (): Promise<Excursao[]> => {
+		try {
+			return await api.get<Excursao[]>("/api/excursions/group-travel");
+		} catch (error) {
+			console.error("Error fetching group travel excursions:", error);
+			return [];
 		}
 	},
 

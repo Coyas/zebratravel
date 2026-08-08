@@ -16,6 +16,8 @@ import { productsService } from "@/services/productsService";
 import { destinosService } from "@/services/destinosService";
 import { excursoesService } from "@/services/excursoesService";
 import { postsService } from "@/services/postsService";
+import { sponsorsService } from "@/services/sponsorsService";
+import { testimonialsService } from "@/services/testimonialsService";
 
 export default async function Home() {
 	const content = await getAllContent();
@@ -23,6 +25,9 @@ export default async function Home() {
 	const produtos = await productsService.getAll();
 	const tours = await destinosService.getAll();
 	const excursoes = await excursoesService.getAll();
+	const groupTravelExcursoes = await excursoesService.getGroupTravel();
+	const sponsors = await sponsorsService.getAll();
+	const testimonials = await testimonialsService.getAll();
 	const popularExcursoes = [...excursoes]
 		.sort((a, b) => b.rating - a.rating || b.reviews - a.reviews)
 		.slice(0, 6);
@@ -58,15 +63,15 @@ export default async function Home() {
 			{/*<!-- End Products Section--> */}
 
 			{/* <!--Group Travel Section--> */}
-			<GroupTravel content={homeContent.groupTravel} />
+			<GroupTravel content={homeContent.groupTravel} excursoes={groupTravelExcursoes} />
 			{/* <!--Group Travel Section--> */}
 
 			{/* <!-- Testimonials Section--> */}
-			<Testimonials content={homeContent.testimonials} />
+			<Testimonials content={homeContent.testimonials} items={testimonials} />
 			{/* <!-- End Testimonials Section--> */}
 
 			{/* <!--Sponsors Section--> */}
-			<Sponsors />
+			<Sponsors sponsors={sponsors} />
 			{/* <!-- End Sponsors Section--> */}
 
 			{/* <!--News Section--> */}

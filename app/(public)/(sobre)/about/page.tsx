@@ -4,10 +4,12 @@ import AboutSection from "@/components/Home/About";
 import WhyChoose from "@/components/Home/Wwedo";
 import TeamSection from "@/components/Team/TeamSection";
 import { getAllContent } from "@/app/actions/content";
+import { teamMembersService } from "@/services/teamMembersService";
 
 const About = async () => {
 	const content = await getAllContent();
 	const homeContent = content?.home || {};
+	const teamMembers = await teamMembersService.getAll();
 
 	return (
 		<>
@@ -25,7 +27,7 @@ const About = async () => {
 			{/* <!-- End Why Section--> */}
 
 			{/* TeamSection */}
-			<TeamSection content={content?.team} />
+			<TeamSection content={content?.team} members={teamMembers} />
 			{/* END TeamSection */}
 		</>
 	);

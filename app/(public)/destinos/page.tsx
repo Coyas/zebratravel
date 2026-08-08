@@ -5,10 +5,12 @@ import DestinosGrid from "@/components/destinos/DestinosGrid";
 import DestinosHeader from "@/components/destinos/DestinosHeader";
 import Testimonials from "@/components/Home/Testimonials";
 import { getAllContent } from "@/app/actions/content";
+import { testimonialsService } from "@/services/testimonialsService";
 
 const Destinos = async () => {
 	const tours = await destinosService.getAll();
 	const content = await getAllContent();
+	const testimonials = await testimonialsService.getAll();
 
 	return (
 		<>
@@ -30,7 +32,7 @@ const Destinos = async () => {
 				</div>
 			</section>
 
-			<Testimonials />
+			<Testimonials content={content?.home?.testimonials} items={testimonials} />
 		</>
 	);
 };

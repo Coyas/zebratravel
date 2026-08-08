@@ -3,28 +3,37 @@
 "use client";
 
 import React from "react";
-import { travelPackages } from "@/app/Dados/travelPackagesData"; // Importando os dados
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { Localized, pickLocale } from "@/lib/i18n/resolveContent";
+import { Excursao } from "@/services/excursoesService";
 
 interface TravelPackageContent {
 	duration: string;
 	location: string;
 	price: string;
 	link: string;
-	imageUrl: string;
-	title: Localized | string;
-	description: Localized | string;
+	title: string;
+	description: string;
 }
 
 interface GroupTravelProps {
-	content?: { seeDetails: Localized; items?: TravelPackageContent[] };
+	content?: { seeDetails: Localized };
+	excursoes: Excursao[];
 }
 
-const GroupTravel: React.FC<GroupTravelProps> = ({ content }) => {
+const GroupTravel: React.FC<GroupTravelProps> = ({ content, excursoes }) => {
 	const { locale } = useLanguage();
 	const seeDetails = content ? pickLocale(content.seeDetails, locale) : "Ver Detalhes";
-	const items = content?.items ?? travelPackages;
+	const items: TravelPackageContent[] = excursoes.map((excursao) => ({
+		duration: excursao.duration,
+		location: excursao.location,
+		price: `$${excursao.price}`,
+		link: `/excurcoes/${excursao.slug}`,
+		title: excursao.title,
+		description: excursao.description,
+	}));
+
+	if (items.length === 0) return null;
 
 	return (
 		<section className="group-travel">
@@ -46,7 +55,7 @@ const GroupTravel: React.FC<GroupTravelProps> = ({ content }) => {
 							>
 								<div className="inner-box">
 									<div className="title">
-										<h4>{pickLocale(pkg.title, locale)}</h4>
+										<h4>{pkg.title}</h4>
 									</div>
 									<div className="content">
 										<div className="info">
@@ -59,7 +68,7 @@ const GroupTravel: React.FC<GroupTravelProps> = ({ content }) => {
 										<div className="price">
 											<span>{pkg.price}</span>
 										</div>
-										<div className="text">{pickLocale(pkg.description, locale)}</div>
+										<div className="text">{pkg.description}</div>
 										<div className="link-box">
 											<a href={pkg.link} className="theme-btn btn-style-one">
 												<span>

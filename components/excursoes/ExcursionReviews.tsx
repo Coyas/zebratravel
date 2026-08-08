@@ -2,9 +2,30 @@
 
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { isAuthenticated } from "@/lib/clientAuth";
+import { getUser, isAuthenticated } from "@/lib/clientAuth";
 import { excursoesService, ExcursaoReview } from "@/services/excursoesService";
+import { testimonialsService } from "@/services/testimonialsService";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
+
+function GoldTestimonialTag() {
+	return (
+		<span
+			style={{
+				display: "inline-flex",
+				alignItems: "center",
+				gap: 4,
+				background: "rgba(255,201,51,0.15)",
+				color: "#b8860b",
+				fontSize: 11,
+				fontWeight: 700,
+				padding: "3px 8px",
+				borderRadius: 999,
+			}}
+		>
+			<i className="fa fa-star" style={{ color: "#ffc933" }}></i> Testemunho
+		</span>
+	);
+}
 
 function Stars({ rating, size = 14 }: { rating: number; size?: number }) {
 	return (
@@ -51,6 +72,7 @@ export default function ExcursionReviews({ slug }: { slug: string }) {
 	const [rating, setRating] = useState(5);
 	const [comment, setComment] = useState("");
 	const [submitting, setSubmitting] = useState(false);
+	const currentUserId = getUser()?.id;
 
 	const load = async () => {
 		setLoading(true);
@@ -84,6 +106,26 @@ export default function ExcursionReviews({ slug }: { slug: string }) {
 	};
 
 	const averageRating = reviews.length > 0 ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length : 0;
+
+	const handleCreateTestimonial = async (review: ExcursaoReview) => {
+		const { value: designation, isDismissed } = await Swal.fire({
+			title: "Criar o teu testemunho",
+			input: "text",
+			inputLabel: "Cargo ou frase curta (opcional)",
+			inputPlaceholder: "ex: Cliente ZebraTravel",
+			showCancelButton: true,
+			confirmButtonText: "Criar testemunho",
+			cancelButtonText: "Cancelar",
+		});
+		if (isDismissed) return;
+		try {
+			await testimonialsService.createFromReview("EXCURSION", review.id, designation || undefined);
+			await load();
+			Swal.fire("Sucesso", "O teu testemunho já aparece na home!", "success");
+		} catch (error) {
+			Swal.fire("Erro", error instanceof Error ? error.message : "Não foi possível criar o testemunho", "error");
+		}
+	};
 
 	return (
 		<div style={{ marginTop: 35 }}>
@@ -142,7 +184,23 @@ export default function ExcursionReviews({ slug }: { slug: string }) {
 									<Stars rating={review.rating} />
 								</div>
 								{review.comment && <p style={{ margin: 0, color: "#555", lineHeight: 1.6 }}>{review.comment}</p>}
-								<div style={{ fontSize: 12, color: "#aaa", marginTop: 8 }}>{new Date(review.createdAt).toLocaleDateString()}</div>
+								<div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 8, flexWrap: "wrap" }}>
+									<span style={{ fontSize: 12, color: "#aaa" }}>{new Date(review.createdAt).toLocaleDateString()}</span>
+									{review.isTestimonial ? (
+										<GoldTestimonialTag />
+									) : (
+										currentUserId === review.userId && (
+											<button
+												type="button"
+												onClick={() => handleCreateTestimonial(review)}
+												className="theme-btn btn-style-one"
+												style={{ padding: "4px 14px", fontSize: 12 }}
+											>
+												<span>Criar seu testemunho</span>
+											</button>
+										)
+									)}
+								</div>
 							</div>
 						</div>
 					))}

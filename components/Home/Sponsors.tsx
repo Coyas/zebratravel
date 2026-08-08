@@ -3,9 +3,15 @@
 "use client";
 
 import React from "react";
-import { sponsors } from "@/app/Dados/sponsorsData"; // Importando os dados
+import { sponsors as staticSponsors } from "@/app/Dados/sponsorsData"; // fallback
+import { Sponsor } from "@/services/sponsorsService";
 
-const Sponsors: React.FC = () => {
+interface SponsorsProps {
+	sponsors?: Sponsor[];
+}
+
+const Sponsors: React.FC<SponsorsProps> = ({ sponsors: sponsorsProp }) => {
+	const sponsors = sponsorsProp && sponsorsProp.length > 0 ? sponsorsProp : staticSponsors;
 	return (
 		<section className="sponsors-one">
 			<div className="auto-container">

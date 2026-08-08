@@ -6,7 +6,7 @@ const API_URL = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || "http:
 async function fetchWithRetry(url: string, init: RequestInit): Promise<Response> {
 	try {
 		return await fetch(url, init);
-	} catch (error) {
+	} catch {
 		await new Promise((resolve) => setTimeout(resolve, 400));
 		return fetch(url, init);
 	}

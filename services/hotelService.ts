@@ -51,10 +51,12 @@ export interface HotelRoomPublic {
 export interface RoomReview {
 	id: number;
 	roomId: number;
+	userId: number;
 	userName: string;
 	rating: number;
 	comment: string | null;
 	createdAt: string;
+	isTestimonial: boolean;
 }
 
 export interface HotelReservation {
