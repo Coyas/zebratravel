@@ -4,6 +4,7 @@ import InerBanner from "@/components/InerBanner";
 import { destinosService } from "@/services/destinosService";
 import RoomGallery from "@/components/hotel/RoomGallery";
 import TourBookingWidget from "@/components/destinos/TourBookingWidget";
+import FavoriteButton from "@/components/FavoriteButton";
 
 export default async function DestinoDetailPage({ params }: { params: Promise<{ id: string }> }) {
 	const { id } = await params;
@@ -20,10 +21,11 @@ export default async function DestinoDetailPage({ params }: { params: Promise<{ 
 			<InerBanner backgroundImage={images[0] || "/images/resource/stones-right.svg"} title={tour.title} />
 			<section className="dest-section">
 				<div className="auto-container">
-					<div style={{ marginBottom: 15 }}>
+					<div style={{ marginBottom: 15, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 						<Link href="/destinos" style={{ color: "#888" }}>
 							&larr; Destinos
 						</Link>
+						<FavoriteButton itemType="TOUR" itemId={tour.id} title={tour.title} image={images[0]} price={tour.price} link={`/destinos/${tour.id}`} />
 					</div>
 
 					<div className="row clearfix">

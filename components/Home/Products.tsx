@@ -5,6 +5,7 @@ import React from "react";
 import { Produto } from "@/services/productsService";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { Localized, pickLocale } from "@/lib/i18n/resolveContent";
+import FavoriteButton from "@/components/FavoriteButton";
 
 interface ProductSectionProps {
 	produtos: Produto[];
@@ -66,9 +67,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({ produtos: productsData,
 											</div>
 										</div>
 										<div className="add-fav">
-											<a href={product.link} className="theme-btn">
-												<i className="far fa-heart"></i>
-											</a>
+											<FavoriteButton itemType="PRODUCT" itemId={product.id} title={product.titulo} image={product.imagemUrl} link={product.link} />
 										</div>
 									</div>
 									<div className="lower-box">
@@ -76,7 +75,15 @@ const ProductSection: React.FC<ProductSectionProps> = ({ produtos: productsData,
 											<a href={product.link}>{product.titulo}</a>
 										</h5>
 										<div className="price">
+											{product.precoOriginal && (
+												<span style={{ textDecoration: "line-through", color: "#999", fontSize: "0.85em", marginRight: 6 }}>
+													{product.precoOriginal}
+												</span>
+											)}
 											<span>{product.preco}</span>
+											{product.discountPercent != null && (
+												<span style={{ marginLeft: 6, color: "#c0392b", fontSize: "0.8em", fontWeight: 700 }}>-{product.discountPercent}%</span>
+											)}
 										</div>
 									</div>
 								</div>

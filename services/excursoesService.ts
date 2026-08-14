@@ -2,6 +2,7 @@ import { api } from "@/lib/api";
 import { authedFetch } from "@/lib/clientAuth";
 
 export interface Excursao {
+	id?: number;
 	slug: string;
 	title: string;
 	image: string;

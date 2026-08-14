@@ -5,6 +5,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import Swal from "sweetalert2";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { Localized, pickLocale } from "@/lib/i18n/resolveContent";
+import { api } from "@/lib/api";
 
 type FormValues = {
 	name: string;
@@ -29,12 +30,13 @@ const ContactForm: React.FC<ContactFormProps> = ({ content }) => {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		reset,
+		formState: { errors, isSubmitting },
 	} = useForm<FormValues>();
 
-	const onSubmit: SubmitHandler<FormValues> = (data) => {
-		console.log(data);
-		if (data) {
+	const onSubmit: SubmitHandler<FormValues> = async (data) => {
+		try {
+			await api.post("/api/contact-messages", data);
 			Swal.fire({
 				position: "center",
 				icon: "success",
@@ -42,7 +44,8 @@ const ContactForm: React.FC<ContactFormProps> = ({ content }) => {
 				showConfirmButton: false,
 				timer: 1500,
 			});
-		} else {
+			reset();
+		} catch {
 			Swal.fire({
 				position: "center",
 				icon: "error",
@@ -51,8 +54,6 @@ const ContactForm: React.FC<ContactFormProps> = ({ content }) => {
 				timer: 1500,
 			});
 		}
-
-		// Handle form submission logic here (e.g., send to an API)
 	};
 
 	return (
@@ -209,7 +210,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ content }) => {
 								</div>
 
 								<div className="form-group col-lg-12 col-md-12 col-sm-12">
-									<button type="submit" className="theme-btn btn-style-two">
+									<button type="submit" className="theme-btn btn-style-two" disabled={isSubmitting}>
 										<span>
 											{t("contact.send")} <i className="icon far fa-angle-right"></i>
 										</span>

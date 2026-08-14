@@ -7,6 +7,7 @@ import AmenityList from "@/components/hotel/AmenityList";
 import RoomBookingWidget from "@/components/hotel/RoomBookingWidget";
 import RoomReviews from "@/components/hotel/RoomReviews";
 import { roomLabel } from "@/lib/roomLabel";
+import FavoriteButton from "@/components/FavoriteButton";
 
 export default async function RoomDetailPage({
 	params,
@@ -37,10 +38,19 @@ export default async function RoomDetailPage({
 			<InerBanner backgroundImage={images[0] || room.hotelImage || "/images/resource/stones-right.svg"} title={title} />
 			<section className="dest-section">
 				<div className="auto-container">
-					<div style={{ marginBottom: 15 }}>
+					<div style={{ marginBottom: 15, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 						<Link href={`/hotel/${hId}`} style={{ color: "#888" }}>
 							&larr; {room.hotelName}
 						</Link>
+						<FavoriteButton
+							itemType="ROOM"
+							itemId={room.id}
+							title={title}
+							image={images[0]}
+							price={room.basePrice}
+							subtitle={room.hotelName}
+							link={`/hotel/${hId}/quarto/${room.id}`}
+						/>
 					</div>
 
 					<div className="row clearfix">

@@ -9,6 +9,7 @@ import bgImage from "@/public/images/background/banner-image-1.jpg";
 import { isAuthenticated } from "@/lib/clientAuth";
 import { useCart } from "@/lib/CartContext";
 import { orderService } from "@/services/orderService";
+import { voucherService } from "@/services/voucherService";
 
 type PaymentMethod = "ONLINE" | "TRANSFER" | "CASH";
 
@@ -33,10 +34,29 @@ export default function CheckoutPage() {
 	const [authed, setAuthed] = useState<boolean | null>(null);
 	const [method, setMethod] = useState<PaymentMethod>("ONLINE");
 	const [submitting, setSubmitting] = useState(false);
+	const [voucherCode, setVoucherCode] = useState("");
+	const [voucherChecking, setVoucherChecking] = useState(false);
+	const [voucherDiscount, setVoucherDiscount] = useState<number | null>(null);
+	const [voucherError, setVoucherError] = useState<string | null>(null);
 
 	useEffect(() => {
 		setAuthed(isAuthenticated());
 	}, []);
+
+	const applyVoucher = async () => {
+		if (!voucherCode.trim()) return;
+		setVoucherChecking(true);
+		setVoucherError(null);
+		setVoucherDiscount(null);
+		try {
+			const result = await voucherService.validate(voucherCode.trim(), "PRODUCT", null);
+			setVoucherDiscount(result.discountPercent);
+		} catch (error) {
+			setVoucherError(error instanceof Error ? error.message : "Código inválido");
+		} finally {
+			setVoucherChecking(false);
+		}
+	};
 
 	const handleCheckout = async () => {
 		if (items.length === 0) {
@@ -47,7 +67,8 @@ export default function CheckoutPage() {
 		try {
 			const order = await orderService.create(
 				items.map((i) => ({ productId: i.productId, name: i.name, price: i.price, quantity: i.quantity })),
-				method
+				method,
+				voucherDiscount != null ? voucherCode.trim() : undefined
 			);
 
 			if (method === "ONLINE") {
@@ -105,11 +126,49 @@ export default function CheckoutPage() {
 									))
 								)}
 								<div style={{ textAlign: "right", marginTop: 15, fontSize: 18 }}>
-									<strong>Subtotal: ${subtotal.toFixed(2)}</strong>
+									{voucherDiscount != null ? (
+										<>
+											<div style={{ textDecoration: "line-through", color: "#999", fontSize: 14 }}>${subtotal.toFixed(2)}</div>
+											<strong>Subtotal: ${(subtotal * (1 - voucherDiscount / 100)).toFixed(2)}</strong>
+										</>
+									) : (
+										<strong>Subtotal: ${subtotal.toFixed(2)}</strong>
+									)}
 								</div>
 							</div>
 
 							<div className="col-lg-5 col-md-12 col-sm-12">
+								<h4 style={{ marginBottom: 20 }}>Código de Desconto</h4>
+								<div className="form-box site-form" style={{ padding: 15, marginBottom: 20 }}>
+									<div style={{ display: "flex", gap: 8 }}>
+										<input
+											type="text"
+											value={voucherCode}
+											onChange={(e) => {
+												setVoucherCode(e.target.value.toUpperCase());
+												setVoucherDiscount(null);
+												setVoucherError(null);
+											}}
+											placeholder="CÓDIGO"
+											style={{ flex: 1, padding: 10 }}
+										/>
+										<button
+											type="button"
+											className="theme-btn btn-style-two"
+											onClick={applyVoucher}
+											disabled={voucherChecking || !voucherCode.trim()}
+										>
+											<span>{voucherChecking ? "..." : "Aplicar"}</span>
+										</button>
+									</div>
+									{voucherDiscount != null && (
+										<p style={{ color: "#2e7d32", fontSize: 13, marginTop: 8 }}>
+											Voucher aplicado: -{voucherDiscount}% (não acumula com produtos já em promoção)
+										</p>
+									)}
+									{voucherError && <p style={{ color: "#c0392b", fontSize: 13, marginTop: 8 }}>{voucherError}</p>}
+								</div>
+
 								<h4 style={{ marginBottom: 20 }}>Método de Pagamento</h4>
 								<div className="form-box site-form" style={{ padding: 15 }}>
 									<label style={{ display: "block", marginBottom: 10 }}>

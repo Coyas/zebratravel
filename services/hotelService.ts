@@ -1,5 +1,5 @@
 import { api } from "@/lib/api";
-import { authedFetch } from "@/lib/clientAuth";
+import { authedFetch, authedUpload } from "@/lib/clientAuth";
 
 export interface Hotel {
 	id: number;
@@ -80,6 +80,24 @@ export interface Vinti4Fields {
 	fields: Record<string, string>;
 }
 
+export interface ReservationGuestDocument {
+	id: number;
+	originalFilename: string;
+	contentType: string;
+	sizeBytes: number;
+	uploadedAt: string;
+}
+
+export interface ReservationGuest {
+	id: number;
+	fullName: string;
+	dateOfBirth: string | null;
+	nationality: string | null;
+	passportNumber: string | null;
+	isPrimary: boolean;
+	documents: ReservationGuestDocument[];
+}
+
 export const hotelService = {
 	getHotels: async (): Promise<Hotel[]> => {
 		try {
@@ -128,6 +146,7 @@ export const hotelService = {
 		checkOut: string;
 		guests: number;
 		paymentMethod: "ONLINE" | "TRANSFER" | "CASH";
+		voucherCode?: string;
 	}): Promise<HotelReservation> =>
 		authedFetch<HotelReservation>("/api/hotel/reservations", {
 			method: "POST",
@@ -135,6 +154,30 @@ export const hotelService = {
 		}),
 
 	getMyReservations: (): Promise<HotelReservation[]> => authedFetch<HotelReservation[]>("/api/hotel/reservations/mine"),
+
+	getReservationGuests: (reservationId: number): Promise<ReservationGuest[]> =>
+		authedFetch<ReservationGuest[]>(`/api/hotel/reservations/${reservationId}/guests`),
+
+	addReservationGuest: (
+		reservationId: number,
+		data: { fullName: string; dateOfBirth?: string; nationality?: string; passportNumber?: string; isPrimary?: boolean }
+	): Promise<ReservationGuest> =>
+		authedFetch<ReservationGuest>(`/api/hotel/reservations/${reservationId}/guests`, {
+			method: "POST",
+			body: JSON.stringify(data),
+		}),
+
+	deleteReservationGuest: (reservationId: number, guestId: number): Promise<void> =>
+		authedFetch<void>(`/api/hotel/reservations/${reservationId}/guests/${guestId}`, { method: "DELETE" }),
+
+	uploadGuestDocument: (reservationId: number, guestId: number, file: File): Promise<ReservationGuestDocument> => {
+		const formData = new FormData();
+		formData.append("file", file);
+		return authedUpload<ReservationGuestDocument>(`/api/hotel/reservations/${reservationId}/guests/${guestId}/documents`, formData);
+	},
+
+	deleteGuestDocument: (reservationId: number, guestId: number, docId: number): Promise<void> =>
+		authedFetch<void>(`/api/hotel/reservations/${reservationId}/guests/${guestId}/documents/${docId}`, { method: "DELETE" }),
 
 	getVinti4Fields: (reservationId: number): Promise<Vinti4Fields> =>
 		authedFetch<Vinti4Fields>(`/api/payments/vinti4/hotel-fields/${reservationId}`, { method: "POST" }),

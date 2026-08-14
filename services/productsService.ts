@@ -5,6 +5,8 @@ export interface Produto {
 	imagemUrl: string;
 	titulo: string;
 	preco: string;
+	precoOriginal: string | null;
+	discountPercent: number | null;
 	link: string;
 	categoria: string;
 }
@@ -16,14 +18,19 @@ interface ProductDto {
 	imageUrl: string;
 	link: string;
 	category: string | null;
+	discountPercent: number | null;
+	promoPrice: number | null;
 }
 
 function fromDto(dto: ProductDto): Produto {
+	const hasPromo = dto.promoPrice != null && dto.discountPercent != null;
 	return {
 		id: dto.id,
 		imagemUrl: dto.imageUrl,
 		titulo: dto.title,
-		preco: `${dto.price.toFixed(2)}€`,
+		preco: `${(hasPromo ? dto.promoPrice! : dto.price).toFixed(2)}€`,
+		precoOriginal: hasPromo ? `${dto.price.toFixed(2)}€` : null,
+		discountPercent: hasPromo ? dto.discountPercent : null,
 		link: dto.link,
 		categoria: dto.category ?? "",
 	};

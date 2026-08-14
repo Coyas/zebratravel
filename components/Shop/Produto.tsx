@@ -5,6 +5,7 @@ import React from "react";
 import Swal from "sweetalert2";
 import { Produto } from "@/services/productsService";
 import { useCart } from "@/lib/CartContext";
+import FavoriteButton from "@/components/FavoriteButton";
 
 interface ProdutoProps {
 	produto: Produto;
@@ -53,9 +54,7 @@ const ProdutoComponente: React.FC<ProdutoProps> = ({ produto }) => {
 							</div>
 						</div>
 						<div className="add-fav">
-							<a href="#" className="theme-btn">
-								<i className="far fa-heart"></i>
-							</a>
+							<FavoriteButton itemType="PRODUCT" itemId={produto.id} title={produto.titulo} image={produto.imagemUrl} link={produto.link} />
 						</div>
 					</div>
 					<div className="lower-box">
@@ -63,7 +62,15 @@ const ProdutoComponente: React.FC<ProdutoProps> = ({ produto }) => {
 							<a href={produto.link}>{produto.titulo}</a>
 						</h5>
 						<div className="price">
+							{produto.precoOriginal && (
+								<span style={{ textDecoration: "line-through", color: "#999", fontSize: "0.85em", marginRight: 6 }}>
+									{produto.precoOriginal}
+								</span>
+							)}
 							<span>{produto.preco}</span>
+							{produto.discountPercent != null && (
+								<span style={{ marginLeft: 6, color: "#c0392b", fontSize: "0.8em", fontWeight: 700 }}>-{produto.discountPercent}%</span>
+							)}
 						</div>
 					</div>
 				</div>

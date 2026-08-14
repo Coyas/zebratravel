@@ -3,6 +3,7 @@ import React from "react";
 import { excursoesService } from "@/services/excursoesService";
 import BookingWidget from "./BookingWidget";
 import ExcursionReviews from "./ExcursionReviews";
+import FavoriteButton from "@/components/FavoriteButton";
 type ExcurcoesDetailsProps = {
 	slug: string;
 };
@@ -85,12 +86,21 @@ const ExcurcoesDetails = async ({ slug }: ExcurcoesDetailsProps) => {
 									</span>
 									Share
 								</li>
-								<li>
-									<span className="icon">
-										<img src="images/icons/heart-icon-1.svg" alt="" />
-									</span>
-									Wishlist
-								</li>
+								{excursion.id != null && (
+									<li>
+										<FavoriteButton
+											itemType="EXCURSION"
+											itemId={excursion.id}
+											title={excursion.title}
+											image={excursion.image}
+											price={excursion.price}
+											subtitle={excursion.location}
+											link={`/excurcoes/${excursion.slug}`}
+											className="theme-btn"
+										/>
+										{" "}Wishlist
+									</li>
+								)}
 							</ul>
 						</div>
 					</div>
@@ -142,7 +152,7 @@ const ExcurcoesDetails = async ({ slug }: ExcurcoesDetailsProps) => {
 					<div className="sidebar-column col-xl-4 col-lg-5 col-md-12 col-sm-12">
 						<div className="inner-column">
 							{/* Booking Widget */}
-							<BookingWidget slug={excursion.slug} title={excursion.title} price={excursion.price} />
+							<BookingWidget excursionId={excursion.id} slug={excursion.slug} title={excursion.title} price={excursion.price} />
 							{/* Follow Widget */}
 							<div className="sidebar-widget follow-widget">
 								<div className="sidebar-title">

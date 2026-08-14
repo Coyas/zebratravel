@@ -1,81 +1,44 @@
 "use client";
 
 // src/components/WishlistSection.tsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { isAuthenticated } from "@/lib/clientAuth";
-import { profileService, Favorite } from "@/services/profileService";
+import { FavoriteItemType } from "@/services/profileService";
+import { useFavorites } from "@/lib/useFavorites";
 
-const WishlistItem: React.FC<{ item: Favorite; onRemove: (id: number) => void }> = ({ item, onRemove }) => {
-	return (
-		<tr>
-			<td className="prod-column image-column">
-				<div className="image-box">
-					<figure className="prod-thumb">
-						<a href="#">
-							<img src={item.imageUrl} alt={item.title} />
-						</a>
-					</figure>
-				</div>
-			</td>
-			<td className="prod-column info-column">
-				<div className="info-box">
-					<h4 className="prod-title">{item.title}</h4>
-					<div className="price">
-						Preço : <span>{item.price} €</span>
-					</div>
-				</div>
-			</td>
-			<td className="avail">
-				<div className="yes">Em estoque</div>
-				<div className="add-btn">
-					<a
-						href="#"
-						className="theme-btn add-cart-btn"
-						onClick={(e) => {
-							e.preventDefault();
-							onRemove(item.id);
-						}}
-					>
-						<span>
-							<i className="far fa-heart-broken"></i> Remover dos Favoritos
-						</span>
-					</a>
-				</div>
-			</td>
-		</tr>
-	);
+const TYPE_LABELS: Record<FavoriteItemType, string> = {
+	ROOM: "Quartos",
+	PRODUCT: "Produtos",
+	EXCURSION: "Excursões",
+	TOUR: "Destinos",
 };
 
 const FavoritosSection: React.FC = () => {
-	const [authed, setAuthed] = useState<boolean | null>(null);
-	const [favorites, setFavorites] = useState<Favorite[]>([]);
-	const [loading, setLoading] = useState(true);
+	const [authed] = useState(isAuthenticated());
+	const { favorites, loading, toggle } = useFavorites();
+	const [filter, setFilter] = useState<FavoriteItemType | "all">("all");
 
+	const availableTypes = useMemo(
+		() => Array.from(new Set(favorites.map((f) => f.itemType))),
+		[favorites]
+	);
+
+	const filtered = filter === "all" ? favorites : favorites.filter((f) => f.itemType === filter);
+
+	// Se o único favorito da aba selecionada for removido, a aba desaparece da lista mas o
+	// filtro ficava preso nesse tipo — a lista parecia vazia mesmo havendo outros favoritos.
 	useEffect(() => {
-		const ok = isAuthenticated();
-		setAuthed(ok);
-		if (ok) {
-			profileService
-				.getMyFavorites()
-				.then(setFavorites)
-				.catch((err) => console.error("Error loading favorites:", err))
-				.finally(() => setLoading(false));
-		} else {
-			setLoading(false);
+		if (filter !== "all" && !availableTypes.includes(filter)) {
+			setFilter("all");
 		}
-	}, []);
+	}, [filter, availableTypes]);
 
-	const handleRemove = async (productId: number) => {
-		try {
-			await profileService.removeFavorite(productId);
-			setFavorites((prev) => prev.filter((f) => f.id !== productId));
-		} catch (error) {
-			console.error("Error removing favorite:", error);
-		}
+	const handleRemove = (itemType: FavoriteItemType, itemId: number) => {
+		toggle(itemType, itemId);
 	};
 
-	if (authed === false) {
+	if (!authed) {
 		return (
 			<section className="wishlist-section">
 				<div className="auto-container" style={{ textAlign: "center", padding: "60px 0" }}>
@@ -101,22 +64,83 @@ const FavoritosSection: React.FC = () => {
 	return (
 		<section className="wishlist-section">
 			<div className="auto-container">
-				{/* Wishlist Outer */}
-				<div className="wishlist-outer">
-					<div className="table-outer">
-						{favorites.length === 0 ? (
-							<p style={{ padding: "20px 0" }}>Ainda não tem produtos favoritos.</p>
-						) : (
-							<table className="wishlist-table">
-								<tbody>
-									{favorites.map((item) => (
-										<WishlistItem key={item.id} item={item} onRemove={handleRemove} />
+				{favorites.length === 0 ? (
+					<p style={{ padding: "20px 0", textAlign: "center" }}>Ainda não tem favoritos. Explore o site e clique no coração de um quarto, produto, excursão ou destino para o guardar aqui.</p>
+				) : (
+					<>
+						{availableTypes.length > 1 && (
+							<div className="gallery-filters centered clearfix" style={{ marginBottom: 20 }}>
+								<ul className="filter-tabs filter-btns clearfix">
+									<li className={filter === "all" ? "active filter" : "filter"} onClick={() => setFilter("all")}>
+										Todos ({favorites.length})
+									</li>
+									{availableTypes.map((type) => (
+										<li key={type} className={filter === type ? "active filter" : "filter"} onClick={() => setFilter(type)}>
+											{TYPE_LABELS[type]} ({favorites.filter((f) => f.itemType === type).length})
+										</li>
 									))}
-								</tbody>
-							</table>
+								</ul>
+							</div>
 						)}
-					</div>
-				</div>
+
+						<div className="wishlist-outer">
+							<div className="table-outer">
+								<table className="wishlist-table">
+									<tbody>
+										{filtered.map((item) => (
+											<tr key={`${item.itemType}-${item.itemId}`}>
+												<td className="prod-column image-column">
+													<div className="image-box">
+														<figure className="prod-thumb">
+															<Link href={item.link || "#"}>
+																<img src={item.image} alt={item.title} />
+															</Link>
+														</figure>
+													</div>
+												</td>
+												<td className="prod-column info-column">
+													<div className="info-box">
+														<span style={{ fontSize: 11, textTransform: "uppercase", color: "#999", letterSpacing: 0.5 }}>
+															{TYPE_LABELS[item.itemType]}
+														</span>
+														<h4 className="prod-title">
+															<Link href={item.link || "#"}>{item.title}</Link>
+														</h4>
+														{item.subtitle && <div style={{ color: "#888", fontSize: 13 }}>{item.subtitle}</div>}
+														{item.price > 0 && (
+															<div className="price">
+																Preço : <span>{item.price.toFixed(2)} €</span>
+															</div>
+														)}
+													</div>
+												</td>
+												<td className="avail">
+													<div className="add-btn">
+														<Link href={item.link || "#"} className="theme-btn" style={{ marginRight: 8 }}>
+															<span>Ver</span>
+														</Link>
+														<a
+															href="#"
+															className="theme-btn add-cart-btn"
+															onClick={(e) => {
+																e.preventDefault();
+																handleRemove(item.itemType, item.itemId);
+															}}
+														>
+															<span>
+																<i className="far fa-heart-broken"></i> Remover
+															</span>
+														</a>
+													</div>
+												</td>
+											</tr>
+										))}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</>
+				)}
 			</div>
 		</section>
 	);

@@ -22,10 +22,10 @@ export interface Vinti4Fields {
 }
 
 export const orderService = {
-	create: (items: OrderItemInput[], paymentMethod: "ONLINE" | "TRANSFER" | "CASH"): Promise<Order> =>
+	create: (items: OrderItemInput[], paymentMethod: "ONLINE" | "TRANSFER" | "CASH", voucherCode?: string): Promise<Order> =>
 		authedFetch<Order>("/api/orders", {
 			method: "POST",
-			body: JSON.stringify({ items, paymentMethod }),
+			body: JSON.stringify({ items, paymentMethod, voucherCode: voucherCode || undefined }),
 		}),
 
 	getOne: (id: number): Promise<Order> => authedFetch<Order>(`/api/orders/${id}`),

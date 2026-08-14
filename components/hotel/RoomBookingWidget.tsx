@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { isAuthenticated } from "@/lib/clientAuth";
 import { hotelService, HotelRoomPublic } from "@/services/hotelService";
+import { voucherService } from "@/services/voucherService";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 type PaymentMethod = "ONLINE" | "TRANSFER" | "CASH";
@@ -55,6 +56,10 @@ export default function RoomBookingWidget({ hotelId, room, initialCheckIn, initi
 	const [available, setAvailable] = useState(false);
 	const [method, setMethod] = useState<PaymentMethod>("ONLINE");
 	const [submitting, setSubmitting] = useState(false);
+	const [voucherCode, setVoucherCode] = useState("");
+	const [voucherChecking, setVoucherChecking] = useState(false);
+	const [voucherDiscount, setVoucherDiscount] = useState<number | null>(null);
+	const [voucherError, setVoucherError] = useState<string | null>(null);
 
 	useEffect(() => {
 		setAuthed(isAuthenticated());
@@ -62,6 +67,22 @@ export default function RoomBookingWidget({ hotelId, room, initialCheckIn, initi
 
 	const nights = Math.max(1, Math.round((new Date(checkOut).getTime() - new Date(checkIn).getTime()) / 86400000));
 	const total = room.basePrice * nights;
+	const discountedTotal = voucherDiscount != null ? total * (1 - voucherDiscount / 100) : total;
+
+	const applyVoucher = async () => {
+		if (!voucherCode.trim()) return;
+		setVoucherChecking(true);
+		setVoucherError(null);
+		setVoucherDiscount(null);
+		try {
+			const result = await voucherService.validate(voucherCode.trim(), "ROOM", room.roomTypeId);
+			setVoucherDiscount(result.discountPercent);
+		} catch (error) {
+			setVoucherError(error instanceof Error ? error.message : "Código inválido");
+		} finally {
+			setVoucherChecking(false);
+		}
+	};
 
 	const checkAvailability = async () => {
 		if (!checkIn || !checkOut || checkOut <= checkIn) {
@@ -99,6 +120,7 @@ export default function RoomBookingWidget({ hotelId, room, initialCheckIn, initi
 				checkOut,
 				guests,
 				paymentMethod: method,
+				voucherCode: voucherDiscount != null ? voucherCode.trim() : undefined,
 			});
 
 			if (method === "ONLINE") {
@@ -165,9 +187,45 @@ export default function RoomBookingWidget({ hotelId, room, initialCheckIn, initi
 						</div>
 						<div style={{ display: "flex", justifyContent: "space-between", fontWeight: 700 }}>
 							<span>{t("hotel.total")}</span>
-							<span>${total.toFixed(2)}</span>
+							{voucherDiscount != null ? (
+								<span>
+									<span style={{ textDecoration: "line-through", color: "#999", fontWeight: 400, marginRight: 6 }}>${total.toFixed(2)}</span>
+									${discountedTotal.toFixed(2)}
+								</span>
+							) : (
+								<span>${total.toFixed(2)}</span>
+							)}
 						</div>
 					</div>
+
+					{authed !== false && (
+						<div style={{ marginBottom: 15 }}>
+							<label style={{ display: "block", marginBottom: 5, fontSize: 13 }}>Código de desconto (opcional)</label>
+							<div style={{ display: "flex", gap: 8 }}>
+								<input
+									type="text"
+									value={voucherCode}
+									onChange={(e) => {
+										setVoucherCode(e.target.value.toUpperCase());
+										setVoucherDiscount(null);
+										setVoucherError(null);
+									}}
+									placeholder="CÓDIGO"
+									style={{ flex: 1, padding: 10 }}
+								/>
+								<button
+									type="button"
+									className="theme-btn btn-style-two"
+									onClick={applyVoucher}
+									disabled={voucherChecking || !voucherCode.trim()}
+								>
+									<span>{voucherChecking ? "..." : "Aplicar"}</span>
+								</button>
+							</div>
+							{voucherDiscount != null && <p style={{ color: "#2e7d32", fontSize: 13, marginTop: 5 }}>Voucher aplicado: -{voucherDiscount}%</p>}
+							{voucherError && <p style={{ color: "#c0392b", fontSize: 13, marginTop: 5 }}>{voucherError}</p>}
+						</div>
+					)}
 
 					{authed === false ? (
 						<div>
@@ -190,7 +248,7 @@ export default function RoomBookingWidget({ hotelId, room, initialCheckIn, initi
 							</label>
 
 							<button className="theme-btn btn-style-one" style={{ width: "100%", marginTop: 15 }} disabled={submitting} onClick={handleBook}>
-								<span>{submitting ? t("hotel.processing") : `${t("hotel.reserve")} — $${total.toFixed(2)}`}</span>
+								<span>{submitting ? t("hotel.processing") : `${t("hotel.reserve")} — $${discountedTotal.toFixed(2)}`}</span>
 							</button>
 						</>
 					)}

@@ -5,14 +5,15 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { menuData } from "@/app/Dados/menu";
-import { produtosFavoritos } from "@/app/Dados/produtosFavoritos";
 import { isNavItemActive, isPathActive } from "@/lib/isActive";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { locales, localeLabels } from "@/lib/i18n/translations";
 import { useCart } from "@/lib/CartContext";
+import { useFavorites } from "@/lib/useFavorites";
 
 const Header: React.FC = () => {
-	const proNumber: number = produtosFavoritos.length;
+	const { favorites } = useFavorites();
+	const proNumber: number = favorites.length;
 	const pathname = usePathname();
 	const { locale, setLocale, t } = useLanguage();
 	const { count: cartCount } = useCart();

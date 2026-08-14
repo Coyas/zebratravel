@@ -3,11 +3,11 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { produtosFavoritos } from "@/app/Dados/produtosFavoritos";
 import { isNavItemActive, isPathActive } from "@/lib/isActive";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { locales, localeLabels } from "@/lib/i18n/translations";
 import { useCart } from "@/lib/CartContext";
+import { useFavorites } from "@/lib/useFavorites";
 
 interface NavItem {
 	label: string;
@@ -42,7 +42,8 @@ const Navbar: React.FC<HeaderProps> = ({
 
 	const contactEmail2 = contactEmail.replace(/\s+/g, "");
 
-	const proNumber: number = produtosFavoritos.length;
+	const { favorites } = useFavorites();
+	const proNumber: number = favorites.length;
 
 	return (
 		<header className="main-header">
@@ -142,7 +143,7 @@ const Navbar: React.FC<HeaderProps> = ({
 									<span className="icon far fa-search"></span>
 								</div>
 								<div className="link fav-btn">
-									<Link href="#">
+									<Link href="/favoritos">
 										<span className="icon far fa-heart"></span>
 										<span className="count">{proNumber}</span>
 									</Link>
