@@ -52,6 +52,7 @@ export default function BookingWidget({
 	const [voucherChecking, setVoucherChecking] = useState(false);
 	const [voucherDiscount, setVoucherDiscount] = useState<number | null>(null);
 	const [voucherError, setVoucherError] = useState<string | null>(null);
+	const [customerNif, setCustomerNif] = useState("");
 
 	useEffect(() => {
 		setAuthed(isAuthenticated());
@@ -89,6 +90,7 @@ export default function BookingWidget({
 				guests,
 				paymentMethod: method,
 				voucherCode: voucherDiscount != null ? voucherCode.trim() : undefined,
+				customerNif: customerNif.trim() || undefined,
 			});
 
 			if (method === "ONLINE") {
@@ -198,6 +200,14 @@ export default function BookingWidget({
 								{voucherError && <p style={{ color: "#ff8a8a", fontSize: 13, marginTop: 5 }}>{voucherError}</p>}
 							</div>
 						)}
+						<div className="form-group">
+							<input
+								type="text"
+								value={customerNif}
+								onChange={(e) => setCustomerNif(e.target.value)}
+								placeholder="NIF (opcional, para faturação)"
+							/>
+						</div>
 						<div className="form-group" style={{ color: "#fff" }}>
 							<label style={{ display: "block", marginBottom: 8 }}>
 								<input type="radio" name="method" checked={method === "ONLINE"} onChange={() => setMethod("ONLINE")} /> {t("booking.paymentOnline")}

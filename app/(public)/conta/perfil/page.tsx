@@ -8,10 +8,25 @@ import bgImage from "@/public/images/background/banner-image-1.jpg";
 import { getUser, isAuthenticated, logout, ClientUser } from "@/lib/clientAuth";
 import { profileService, Booking } from "@/services/profileService";
 import { hotelService, HotelReservation } from "@/services/hotelService";
+import { orderService, Order } from "@/services/orderService";
+import { invoiceService, Invoice } from "@/services/invoiceService";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { roomLabel } from "@/lib/roomLabel";
 import { useFavorites, resetFavoritesCache } from "@/lib/useFavorites";
 import GuestManager from "@/components/hotel/GuestManager";
+
+function InvoiceLink({ invoice }: { invoice: Invoice | undefined }) {
+	if (!invoice) return null;
+	return (
+		<button
+			className="theme-btn btn-style-two"
+			style={{ padding: "5px 15px", fontSize: 13 }}
+			onClick={() => invoiceService.openPdf(invoice.id).catch(() => {})}
+		>
+			<span>Descarregar Fatura</span>
+		</button>
+	);
+}
 
 const card: React.CSSProperties = {
 	background: "#fff",
@@ -67,9 +82,14 @@ export default function PerfilPage() {
 	const [user, setUser] = useState<ClientUser | null>(null);
 	const [bookings, setBookings] = useState<Booking[]>([]);
 	const [hotelReservations, setHotelReservations] = useState<HotelReservation[]>([]);
+	const [orders, setOrders] = useState<Order[]>([]);
+	const [invoices, setInvoices] = useState<Invoice[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [guestManagerReservationId, setGuestManagerReservationId] = useState<number | null>(null);
 	const { favorites } = useFavorites();
+
+	const invoiceFor = (sourceType: Invoice["sourceType"], sourceId: number) =>
+		invoices.find((inv) => inv.sourceType === sourceType && inv.sourceId === sourceId);
 
 	useEffect(() => {
 		if (!isAuthenticated()) {
@@ -83,12 +103,16 @@ export default function PerfilPage() {
 	const loadData = async () => {
 		setLoading(true);
 		try {
-			const [bookingsData, hotelData] = await Promise.all([
+			const [bookingsData, hotelData, ordersData, invoicesData] = await Promise.all([
 				profileService.getMyBookings(),
 				hotelService.getMyReservations(),
+				orderService.getMine(),
+				invoiceService.getMine(),
 			]);
 			setBookings(bookingsData);
 			setHotelReservations(hotelData);
+			setOrders(ordersData);
+			setInvoices(invoicesData);
 		} catch (error) {
 			console.error("Error loading profile data:", error);
 		} finally {
@@ -159,6 +183,7 @@ export default function PerfilPage() {
 							<div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 20 }}>
 								<StatCard icon="fa-suitcase" label={t("profile.myBookings")} value={bookings.length} />
 								<StatCard icon="fa-bed" label={t("profile.myHotelReservations")} value={hotelReservations.length} />
+								<StatCard icon="fa-shopping-bag" label="Minhas Encomendas" value={orders.length} />
 								<StatCard icon="fa-heart" label={t("profile.myFavorites")} value={favorites.length} href="/favoritos" />
 							</div>
 
@@ -173,18 +198,21 @@ export default function PerfilPage() {
 												{t("profile.date")}: {booking.date} &middot; {t("profile.amount")}: ${booking.amount}
 											</div>
 										</div>
-										<span
-											style={{
-												padding: "5px 12px",
-												borderRadius: 20,
-												fontSize: 13,
-												fontWeight: 600,
-												background: booking.status === "CONFIRMED" ? "#d4edda" : booking.status === "CANCELLED" || booking.status === "FAILED" ? "#f8d7da" : "#fff3cd",
-												color: booking.status === "CONFIRMED" ? "#155724" : booking.status === "CANCELLED" || booking.status === "FAILED" ? "#721c24" : "#856404",
-											}}
-										>
-											{booking.status}
-										</span>
+										<div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 8 }}>
+											<span
+												style={{
+													padding: "5px 12px",
+													borderRadius: 20,
+													fontSize: 13,
+													fontWeight: 600,
+													background: booking.status === "CONFIRMED" ? "#d4edda" : booking.status === "CANCELLED" || booking.status === "FAILED" ? "#f8d7da" : "#fff3cd",
+													color: booking.status === "CONFIRMED" ? "#155724" : booking.status === "CANCELLED" || booking.status === "FAILED" ? "#721c24" : "#856404",
+												}}
+											>
+												{booking.status}
+											</span>
+											<InvoiceLink invoice={invoiceFor("EXCURSION_BOOKING", booking.id)} />
+										</div>
 									</div>
 								))}
 							</div>
@@ -222,6 +250,38 @@ export default function PerfilPage() {
 											>
 												<span>{t("profile.guests.manage")}</span>
 											</button>
+											<InvoiceLink invoice={invoiceFor("HOTEL_RESERVATION", reservation.id)} />
+										</div>
+									</div>
+								))}
+							</div>
+
+							<SectionTitle>Minhas Encomendas</SectionTitle>
+							{orders.length === 0 && <p>Ainda não fizeste nenhuma encomenda na loja.</p>}
+							<div style={{ display: "grid", gap: 12 }}>
+								{orders.map((order) => (
+									<div key={order.id} style={{ ...card, padding: 16, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10 }}>
+										<div>
+											<strong>Encomenda #{order.id}</strong>
+											<div style={{ color: "#888", fontSize: 14 }}>
+												{order.items.map((item) => `${item.quantity}× ${item.name}`).join(", ")}
+											</div>
+											<div style={{ color: "#888", fontSize: 14 }}>{t("profile.amount")}: ${order.totalAmount.toFixed(2)}</div>
+										</div>
+										<div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 8 }}>
+											<span
+												style={{
+													padding: "5px 12px",
+													borderRadius: 20,
+													fontSize: 13,
+													fontWeight: 600,
+													background: order.status === "PAID" ? "#d4edda" : order.status === "CANCELLED" || order.status === "FAILED" ? "#f8d7da" : "#fff3cd",
+													color: order.status === "PAID" ? "#155724" : order.status === "CANCELLED" || order.status === "FAILED" ? "#721c24" : "#856404",
+												}}
+											>
+												{order.status}
+											</span>
+											<InvoiceLink invoice={invoiceFor("ORDER", order.id)} />
 										</div>
 									</div>
 								))}

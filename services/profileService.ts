@@ -29,7 +29,7 @@ export interface Vinti4Fields {
 export const profileService = {
 	getMyBookings: (): Promise<Booking[]> => authedFetch<Booking[]>("/api/bookings"),
 
-	createBooking: (params: { excursionSlug?: string; tourId?: number; date: string; guests: number; paymentMethod?: string; voucherCode?: string }): Promise<Booking> =>
+	createBooking: (params: { excursionSlug?: string; tourId?: number; date: string; guests: number; paymentMethod?: string; voucherCode?: string; customerNif?: string }): Promise<Booking> =>
 		authedFetch<Booking>("/api/bookings", {
 			method: "POST",
 			body: JSON.stringify(params),

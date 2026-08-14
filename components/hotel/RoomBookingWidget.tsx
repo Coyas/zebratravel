@@ -60,6 +60,7 @@ export default function RoomBookingWidget({ hotelId, room, initialCheckIn, initi
 	const [voucherChecking, setVoucherChecking] = useState(false);
 	const [voucherDiscount, setVoucherDiscount] = useState<number | null>(null);
 	const [voucherError, setVoucherError] = useState<string | null>(null);
+	const [customerNif, setCustomerNif] = useState("");
 
 	useEffect(() => {
 		setAuthed(isAuthenticated());
@@ -121,6 +122,7 @@ export default function RoomBookingWidget({ hotelId, room, initialCheckIn, initi
 				guests,
 				paymentMethod: method,
 				voucherCode: voucherDiscount != null ? voucherCode.trim() : undefined,
+				customerNif: customerNif.trim() || undefined,
 			});
 
 			if (method === "ONLINE") {
@@ -224,6 +226,19 @@ export default function RoomBookingWidget({ hotelId, room, initialCheckIn, initi
 							</div>
 							{voucherDiscount != null && <p style={{ color: "#2e7d32", fontSize: 13, marginTop: 5 }}>Voucher aplicado: -{voucherDiscount}%</p>}
 							{voucherError && <p style={{ color: "#c0392b", fontSize: 13, marginTop: 5 }}>{voucherError}</p>}
+						</div>
+					)}
+
+					{authed !== false && (
+						<div style={{ marginBottom: 15 }}>
+							<label style={{ display: "block", marginBottom: 5, fontSize: 13 }}>NIF (opcional)</label>
+							<input
+								type="text"
+								value={customerNif}
+								onChange={(e) => setCustomerNif(e.target.value)}
+								placeholder="Para efeitos de faturação"
+								style={{ width: "100%", padding: 10 }}
+							/>
 						</div>
 					)}
 

@@ -147,6 +147,7 @@ export const hotelService = {
 		guests: number;
 		paymentMethod: "ONLINE" | "TRANSFER" | "CASH";
 		voucherCode?: string;
+		customerNif?: string;
 	}): Promise<HotelReservation> =>
 		authedFetch<HotelReservation>("/api/hotel/reservations", {
 			method: "POST",

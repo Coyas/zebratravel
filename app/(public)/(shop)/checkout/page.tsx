@@ -38,6 +38,7 @@ export default function CheckoutPage() {
 	const [voucherChecking, setVoucherChecking] = useState(false);
 	const [voucherDiscount, setVoucherDiscount] = useState<number | null>(null);
 	const [voucherError, setVoucherError] = useState<string | null>(null);
+	const [customerNif, setCustomerNif] = useState("");
 
 	useEffect(() => {
 		setAuthed(isAuthenticated());
@@ -68,7 +69,8 @@ export default function CheckoutPage() {
 			const order = await orderService.create(
 				items.map((i) => ({ productId: i.productId, name: i.name, price: i.price, quantity: i.quantity })),
 				method,
-				voucherDiscount != null ? voucherCode.trim() : undefined
+				voucherDiscount != null ? voucherCode.trim() : undefined,
+				customerNif.trim() || undefined
 			);
 
 			if (method === "ONLINE") {
@@ -167,6 +169,17 @@ export default function CheckoutPage() {
 										</p>
 									)}
 									{voucherError && <p style={{ color: "#c0392b", fontSize: 13, marginTop: 8 }}>{voucherError}</p>}
+								</div>
+
+								<h4 style={{ marginBottom: 20 }}>NIF (opcional)</h4>
+								<div className="form-box site-form" style={{ padding: 15, marginBottom: 20 }}>
+									<input
+										type="text"
+										value={customerNif}
+										onChange={(e) => setCustomerNif(e.target.value)}
+										placeholder="Para efeitos de faturação"
+										style={{ width: "100%", padding: 10 }}
+									/>
 								</div>
 
 								<h4 style={{ marginBottom: 20 }}>Método de Pagamento</h4>
