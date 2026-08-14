@@ -465,7 +465,25 @@
 					items:1
 				}
 			}
-		});    		
+		});
+	}
+
+	//Campaign Banner Carousel
+	if ($('.campaign-carousel').length) {
+		$('.campaign-carousel').owlCarousel({
+			loop:true,
+			margin:0,
+			nav:false,
+			dots:true,
+			smartSpeed: 700,
+			autoplay: true,
+			autoplayTimeout:6000,
+			responsive:{
+				0:{
+					items:1
+				}
+			}
+		});
 	}
 
 	//Testimonial Carousel Two

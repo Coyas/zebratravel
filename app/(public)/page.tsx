@@ -1,6 +1,7 @@
 // import Image from "next/image";
 
 import Banner from "@/components/Home/Banner";
+import CampaignBanner from "@/components/CampaignBanner";
 import AboutSection from "@/components/Home/About";
 import PopularTrekking from "@/components/Home/Tourspop";
 import WhyChoose from "@/components/Home/Wwedo";
@@ -18,6 +19,7 @@ import { excursoesService } from "@/services/excursoesService";
 import { postsService } from "@/services/postsService";
 import { sponsorsService } from "@/services/sponsorsService";
 import { testimonialsService } from "@/services/testimonialsService";
+import { campaignService } from "@/services/campaignService";
 
 export default async function Home() {
 	const content = await getAllContent();
@@ -28,6 +30,8 @@ export default async function Home() {
 	const groupTravelExcursoes = await excursoesService.getGroupTravel();
 	const sponsors = await sponsorsService.getAll();
 	const testimonials = await testimonialsService.getAll();
+	const heroCampaigns = await campaignService.getActive("HOME_HERO");
+	const stripCampaigns = await campaignService.getActive("HOME_STRIP");
 	const popularExcursoes = [...excursoes]
 		.sort((a, b) => b.rating - a.rating || b.reviews - a.reviews)
 		.slice(0, 6);
@@ -41,6 +45,8 @@ export default async function Home() {
 			{/* <!-- Banner Section --> */}
 			<Banner content={homeContent.banner} />
 			{/* <!-- End Banner Section --> */}
+
+			<CampaignBanner campaigns={heroCampaigns} />
 
 			{/* <!-- About Us Section--> */}
 			<AboutSection content={homeContent.about} />
@@ -61,6 +67,8 @@ export default async function Home() {
 			{/*<!-- Products Section--> */}
 			<ProductSection produtos={produtos} content={homeContent.products} />
 			{/*<!-- End Products Section--> */}
+
+			<CampaignBanner campaigns={stripCampaigns} />
 
 			{/* <!--Group Travel Section--> */}
 			<GroupTravel content={homeContent.groupTravel} excursoes={groupTravelExcursoes} />

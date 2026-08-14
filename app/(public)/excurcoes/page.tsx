@@ -1,17 +1,21 @@
 import bgImage from "@/public/images/background/banner-image-1.jpg";
 import InerBanner from "@/components/InerBanner";
+import CampaignBanner from "@/components/CampaignBanner";
 
 import ExcursoesGrid from "@/components/excursoes/ExcursoesGrid";
 import ExcursoesHeader from "@/components/excursoes/ExcursoesHeader";
 import { excursoesService } from "@/services/excursoesService";
 import { getAllContent } from "@/app/actions/content";
+import { campaignService } from "@/services/campaignService";
 
 const Excurcoes = async () => {
 	const excursoes = await excursoesService.getAll();
 	const content = await getAllContent();
+	const campaigns = await campaignService.getActive("EXCURSOES_TOP");
 	return (
 		<>
 			<InerBanner backgroundImage={bgImage.src} />
+			<CampaignBanner campaigns={campaigns} />
 
 			{/* <!--Trekking Section--> */}
 			<section className="trekking-section">
