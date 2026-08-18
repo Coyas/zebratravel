@@ -1,11 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useRef, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Swal from "sweetalert2";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { Localized, pickLocale } from "@/lib/i18n/resolveContent";
 import { api } from "@/lib/api";
+import Turnstile, { TurnstileHandle } from "@/components/Turnstile";
 
 type FormValues = {
 	name: string;
@@ -33,10 +34,12 @@ const ContactForm: React.FC<ContactFormProps> = ({ content }) => {
 		reset,
 		formState: { errors, isSubmitting },
 	} = useForm<FormValues>();
+	const [turnstileToken, setTurnstileToken] = useState("");
+	const turnstileRef = useRef<TurnstileHandle>(null);
 
 	const onSubmit: SubmitHandler<FormValues> = async (data) => {
 		try {
-			await api.post("/api/contact-messages", data);
+			await api.post("/api/contact-messages", { ...data, turnstileToken });
 			Swal.fire({
 				position: "center",
 				icon: "success",
@@ -53,6 +56,9 @@ const ContactForm: React.FC<ContactFormProps> = ({ content }) => {
 				showConfirmButton: false,
 				timer: 1500,
 			});
+		} finally {
+			setTurnstileToken("");
+			turnstileRef.current?.reset();
 		}
 	};
 
@@ -210,7 +216,11 @@ const ContactForm: React.FC<ContactFormProps> = ({ content }) => {
 								</div>
 
 								<div className="form-group col-lg-12 col-md-12 col-sm-12">
-									<button type="submit" className="theme-btn btn-style-two" disabled={isSubmitting}>
+									<Turnstile ref={turnstileRef} onVerify={setTurnstileToken} />
+								</div>
+
+								<div className="form-group col-lg-12 col-md-12 col-sm-12">
+									<button type="submit" className="theme-btn btn-style-two" disabled={isSubmitting || !turnstileToken}>
 										<span>
 											{t("contact.send")} <i className="icon far fa-angle-right"></i>
 										</span>

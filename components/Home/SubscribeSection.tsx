@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { Localized, pickLocale } from "@/lib/i18n/resolveContent";
 import { subscribersService } from "@/services/subscribersService";
+import Turnstile, { TurnstileHandle } from "@/components/Turnstile";
 
 interface SubscribeSectionProps {
 	content?: {
@@ -43,6 +44,8 @@ const SubscribeSection = ({ content }: SubscribeSectionProps) => {
 	const [email, setEmail] = useState<string>("");
 	const [message, setMessage] = useState<string>("");
 	const [submitting, setSubmitting] = useState(false);
+	const [turnstileToken, setTurnstileToken] = useState("");
+	const turnstileRef = useRef<TurnstileHandle>(null);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -53,10 +56,14 @@ const SubscribeSection = ({ content }: SubscribeSectionProps) => {
 			setMessage(data.errorMessage);
 			return;
 		}
+		if (!turnstileToken) {
+			setMessage(data.errorMessage);
+			return;
+		}
 
 		setSubmitting(true);
 		try {
-			await subscribersService.subscribe(email);
+			await subscribersService.subscribe(email, turnstileToken);
 			setMessage(data.successMessage);
 			setEmail("");
 		} catch (error) {
@@ -64,6 +71,8 @@ const SubscribeSection = ({ content }: SubscribeSectionProps) => {
 			setMessage(data.errorMessage);
 		} finally {
 			setSubmitting(false);
+			setTurnstileToken("");
+			turnstileRef.current?.reset();
 		}
 	};
 
@@ -114,11 +123,14 @@ const SubscribeSection = ({ content }: SubscribeSectionProps) => {
 													placeholder={data.placeholder}
 												/>
 											</div>
-											<button type="submit" className="theme-btn btn-style-one">
+											<button type="submit" className="theme-btn btn-style-one" disabled={submitting || !turnstileToken}>
 												<span>
 													{data.button} <i className="icon fa fa-paper-plane"></i>
 												</span>
 											</button>
+										</div>
+										<div className="form-group">
+											<Turnstile ref={turnstileRef} onVerify={setTurnstileToken} />
 										</div>
 									</form>
 									{message && <div className="message">{message}</div>}{" "}

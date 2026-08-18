@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -9,6 +9,7 @@ import InerBanner from "@/components/InerBanner";
 import bgImage from "@/public/images/background/banner-image-1.jpg";
 import { register as registerClient, isAuthenticated } from "@/lib/clientAuth";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
+import Turnstile, { TurnstileHandle } from "@/components/Turnstile";
 
 type FormValues = {
 	fullName: string;
@@ -20,6 +21,8 @@ type FormValues = {
 export default function RegistoPage() {
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
+	const [turnstileToken, setTurnstileToken] = useState("");
+	const turnstileRef = useRef<TurnstileHandle>(null);
 	const { t } = useLanguage();
 	const {
 		register,
@@ -36,12 +39,14 @@ export default function RegistoPage() {
 	const onSubmit: SubmitHandler<FormValues> = async (data) => {
 		setLoading(true);
 		try {
-			await registerClient(data.fullName, data.email, data.password, data.phone);
+			await registerClient(data.fullName, data.email, data.password, data.phone, turnstileToken);
 			router.push("/conta/perfil");
 		} catch (error) {
 			Swal.fire("Erro", error instanceof Error ? error.message : "Não foi possível criar a conta", "error");
 		} finally {
 			setLoading(false);
+			setTurnstileToken("");
+			turnstileRef.current?.reset();
 		}
 	};
 
@@ -114,7 +119,11 @@ export default function RegistoPage() {
 									</div>
 
 									<div className="form-group col-lg-12 col-md-12 col-sm-12">
-										<button type="submit" className="theme-btn btn-style-two" disabled={loading}>
+										<Turnstile ref={turnstileRef} onVerify={setTurnstileToken} />
+									</div>
+
+									<div className="form-group col-lg-12 col-md-12 col-sm-12">
+										<button type="submit" className="theme-btn btn-style-two" disabled={loading || !turnstileToken}>
 											<span>
 												{loading ? t("common.aCarregar") : t("common.criarConta")} <i className="icon far fa-angle-right"></i>
 											</span>

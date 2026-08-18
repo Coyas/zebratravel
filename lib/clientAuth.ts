@@ -55,11 +55,11 @@ function handleUnauthorized(res: Response) {
 	}
 }
 
-export async function login(email: string, password: string): Promise<ClientUser> {
+export async function login(email: string, password: string, turnstileToken: string): Promise<ClientUser> {
 	const res = await fetch(`${API_URL}/api/auth/login`, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({ email, password }),
+		body: JSON.stringify({ email, password, turnstileToken }),
 	});
 	if (!res.ok) throw new Error(await parseError(res));
 	const user = (await res.json()) as ClientUser;
@@ -67,11 +67,11 @@ export async function login(email: string, password: string): Promise<ClientUser
 	return user;
 }
 
-export async function register(fullName: string, email: string, password: string, phone?: string): Promise<ClientUser> {
+export async function register(fullName: string, email: string, password: string, phone: string | undefined, turnstileToken: string): Promise<ClientUser> {
 	const res = await fetch(`${API_URL}/api/auth/register`, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({ fullName, email, password, phone }),
+		body: JSON.stringify({ fullName, email, password, phone, turnstileToken }),
 	});
 	if (!res.ok) throw new Error(await parseError(res));
 	const user = (await res.json()) as ClientUser;

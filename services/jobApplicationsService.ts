@@ -20,6 +20,7 @@ export interface JobApplicationInput {
 	area: string;
 	description: string;
 	cv: File;
+	turnstileToken: string;
 }
 
 export const jobApplicationsService = {
@@ -31,6 +32,7 @@ export const jobApplicationsService = {
 		form.append("area", input.area);
 		form.append("description", input.description);
 		form.append("cv", input.cv);
+		form.append("turnstileToken", input.turnstileToken);
 
 		const res = await fetch(`${API_URL}/api/job-applications`, {
 			method: "POST",

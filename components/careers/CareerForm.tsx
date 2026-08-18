@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Swal from "sweetalert2";
 import { jobApplicationsService, JOB_AREAS } from "@/services/jobApplicationsService";
+import Turnstile, { TurnstileHandle } from "@/components/Turnstile";
 
 const MAX_CV_SIZE_BYTES = 2 * 1024 * 1024;
 
@@ -25,6 +26,8 @@ const CareerForm: React.FC = () => {
 	const [cvFile, setCvFile] = useState<File | null>(null);
 	const [cvError, setCvError] = useState<string>("");
 	const [submitting, setSubmitting] = useState(false);
+	const [turnstileToken, setTurnstileToken] = useState("");
+	const turnstileRef = useRef<TurnstileHandle>(null);
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0] ?? null;
@@ -53,7 +56,7 @@ const CareerForm: React.FC = () => {
 		}
 		setSubmitting(true);
 		try {
-			await jobApplicationsService.apply({ ...data, cv: cvFile });
+			await jobApplicationsService.apply({ ...data, cv: cvFile, turnstileToken });
 			Swal.fire("Candidatura enviada!", "Entraremos em contacto em breve.", "success");
 			reset();
 			setCvFile(null);
@@ -61,6 +64,8 @@ const CareerForm: React.FC = () => {
 			Swal.fire("Erro", error instanceof Error ? error.message : "Não foi possível enviar a candidatura", "error");
 		} finally {
 			setSubmitting(false);
+			setTurnstileToken("");
+			turnstileRef.current?.reset();
 		}
 	};
 
@@ -115,7 +120,10 @@ const CareerForm: React.FC = () => {
 				{cvError && <span className="text-danger">{cvError}</span>}
 			</div>
 			<div className="form-group col-lg-12 col-md-12 col-sm-12">
-				<button type="submit" className="theme-btn btn-style-one" disabled={submitting}>
+				<Turnstile ref={turnstileRef} onVerify={setTurnstileToken} />
+			</div>
+			<div className="form-group col-lg-12 col-md-12 col-sm-12">
+				<button type="submit" className="theme-btn btn-style-one" disabled={submitting || !turnstileToken}>
 					<span>{submitting ? "A enviar..." : "Enviar Candidatura"}</span>
 				</button>
 			</div>
